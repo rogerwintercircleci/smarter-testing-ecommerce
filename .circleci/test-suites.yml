@@ -1,65 +1,40 @@
 # CircleCI Adaptive Testing Configuration
 # This file enables intelligent test selection based on code changes
 # Documentation: https://circleci.com/docs/guides/test/adaptive-testing/
+# Multiple test suites are separated by '---'
 
-test-suites:
-  # Unit Tests - Service layer tests
-  unit-tests:
-    name: unit-tests
-    discover:
-      # Find all unit test files (*.spec.ts pattern)
-      # These are tests co-located with source files in src/
-      command: find src -name "*.spec.ts" -type f | sed 's|^|/home/circleci/project/|'
-
-    run:
-      # Run only the selected tests using CircleCI's test.atoms variable
-      # This contains the subset of tests determined to be impacted by code changes
-      command: npm test -- << test.atoms >> --ci --maxWorkers=2 --passWithNoTests
-
-    analysis:
-      # Run tests individually with coverage to build impact mapping
-      # This determines which source files each test exercises
-      # --runInBand ensures sequential execution for accurate coverage
-      command: npm test -- << test.atoms >> --ci --coverage --runInBand --passWithNoTests
-
-    outputs:
-      test-results: test-results/jest
-      coverage: coverage
-
-  # Integration Tests - Cross-service integration tests
-  integration-tests:
-    name: integration-tests
-    discover:
-      # Find all integration test files in tests/integration/
-      command: find tests/integration -name "*.test.ts" -type f | sed 's|^|/home/circleci/project/|'
-
-    run:
-      # Run selected integration tests
-      command: npm test -- << test.atoms >> --ci --maxWorkers=2 --passWithNoTests
-
-    analysis:
-      # Sequential execution with coverage for integration tests
-      command: npm test -- << test.atoms >> --ci --coverage --runInBand --passWithNoTests
-
-    outputs:
-      test-results: test-results/jest
-      coverage: coverage
-
-  # E2E Tests - End-to-end API tests
-  e2e-tests:
-    name: e2e-tests
-    discover:
-      # Find all E2E test files
-      command: find tests/e2e -name "*.test.ts" -type f | sed 's|^|/home/circleci/project/|'
-
-    run:
-      # E2E tests typically run on single node due to state dependencies
-      command: npm test -- << test.atoms >> --ci --runInBand --passWithNoTests
-
-    analysis:
-      # E2E tests with coverage for impact analysis
-      command: npm test -- << test.atoms >> --ci --coverage --runInBand --passWithNoTests
-
-    outputs:
-      test-results: test-results/jest
-      coverage: coverage
+# Unit Tests - Service layer tests
+name: unit-tests
+discover: find src -name "*.spec.ts" -type f | sed 's|^|/home/circleci/project/|'
+run: npm test -- << test.atoms >> --ci --maxWorkers=2 --passWithNoTests
+analysis: npm test -- << test.atoms >> --ci --coverage --runInBand --passWithNoTests
+outputs:
+  junit: test-results/jest/results.xml
+  lcov: coverage/lcov.info
+options:
+  adaptive-testing: true
+  dynamic-batching: true
+---
+# Integration Tests - Cross-service integration tests
+name: integration-tests
+discover: find tests/integration -name "*.test.ts" -type f | sed 's|^|/home/circleci/project/|'
+run: npm test -- << test.atoms >> --ci --maxWorkers=2 --passWithNoTests
+analysis: npm test -- << test.atoms >> --ci --coverage --runInBand --passWithNoTests
+outputs:
+  junit: test-results/jest/results.xml
+  lcov: coverage/lcov.info
+options:
+  adaptive-testing: true
+  dynamic-batching: true
+---
+# E2E Tests - End-to-end API tests
+name: e2e-tests
+discover: find tests/e2e -name "*.test.ts" -type f | sed 's|^|/home/circleci/project/|'
+run: npm test -- << test.atoms >> --ci --runInBand --passWithNoTests
+analysis: npm test -- << test.atoms >> --ci --coverage --runInBand --passWithNoTests
+outputs:
+  junit: test-results/jest/results.xml
+  lcov: coverage/lcov.info
+options:
+  adaptive-testing: true
+  dynamic-batching: true
