@@ -366,4 +366,12 @@ export class UserService {
   private generateToken(): string {
     return randomBytes(32).toString('hex');
   }
+
+  /**
+   * Get user's full name
+   * Helper method for display purposes
+   */
+  getUserFullName(user: User): string {
+    return `${user.firstName} ${user.lastName}`.trim();
+  }
 }

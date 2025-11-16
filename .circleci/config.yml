@@ -210,6 +210,61 @@ jobs:
           path: coverage
           destination: coverage-final
 
+  # Job 10: ADAPTIVE TESTING - Unit Tests (Intelligent Test Selection)
+  test_unit_adaptive_intelligent:
+    executor: node-executor
+    parallelism: 4
+    steps:
+      - attach_workspace:
+          at: ~/project
+      - run:
+          name: Run Unit Tests (Adaptive - Intelligent Selection)
+          command: circleci tests run --suite unit-tests
+      - store_test_results:
+          path: test-results
+      - store_artifacts:
+          path: coverage
+          destination: coverage-adaptive-unit
+
+  # Job 11: ADAPTIVE TESTING - Integration Tests (Intelligent Test Selection)
+  test_integration_adaptive_intelligent:
+    executor: node-executor
+    parallelism: 2
+    steps:
+      - attach_workspace:
+          at: ~/project
+      - wait_for_db
+      - run:
+          name: Run Database Migrations
+          command: npm run db:migrate
+      - run:
+          name: Run Integration Tests (Adaptive - Intelligent Selection)
+          command: circleci tests run --suite integration-tests
+      - store_test_results:
+          path: test-results
+      - store_artifacts:
+          path: coverage
+          destination: coverage-adaptive-integration
+
+  # Job 12: ADAPTIVE TESTING - E2E Tests (Intelligent Test Selection)
+  test_e2e_adaptive_intelligent:
+    executor: node-executor
+    steps:
+      - attach_workspace:
+          at: ~/project
+      - wait_for_db
+      - run:
+          name: Run Database Migrations
+          command: npm run db:migrate
+      - run:
+          name: Seed Test Data
+          command: npm run db:seed
+      - run:
+          name: Run E2E Tests (Adaptive - Intelligent Selection)
+          command: circleci tests run --suite e2e-tests
+      - store_test_results:
+          path: test-results
+
 # Define workflows
 workflows:
   version: 2
@@ -296,3 +351,28 @@ workflows:
           requires:
             - test_e2e
             - test_performance
+
+  # NEW: Workflow WITH INTELLIGENT ADAPTIVE TESTING
+  # This workflow uses CircleCI's test impact analysis to run ONLY impacted tests
+  # Significantly faster than running all tests on every commit
+  test_adaptive_intelligent:
+    jobs:
+      - checkout_and_install:
+          filters:
+            branches:
+              only: adaptive-testing-demo
+      - lint_and_typecheck:
+          requires:
+            - checkout_and_install
+      - test_unit_adaptive_intelligent:
+          requires:
+            - lint_and_typecheck
+      - test_integration_adaptive_intelligent:
+          requires:
+            - test_unit_adaptive_intelligent
+      - test_e2e_adaptive_intelligent:
+          requires:
+            - test_integration_adaptive_intelligent
+      - build:
+          requires:
+            - test_e2e_adaptive_intelligent

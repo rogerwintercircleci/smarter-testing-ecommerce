@@ -1,246 +1,62 @@
-# CircleCI Test Suites Configuration
-# Advanced configuration for adaptive testing and test intelligence
+# CircleCI Adaptive Testing Configuration
+# This file enables intelligent test selection based on code changes
+# Documentation: https://circleci.com/docs/guides/test/adaptive-testing/
 
-# This file demonstrates how to organize tests into logical suites
-# for optimal parallel execution and intelligent test selection
+test-suites:
+  # Unit Tests - Service layer tests
+  unit-tests:
+    discover:
+      # Find all unit test files (*.spec.ts pattern)
+      # These are tests co-located with source files in src/
+      command: find src -name "*.spec.ts" -type f | sed 's|^|/home/circleci/project/|'
 
-test_suites:
-  # Unit Test Suites - Organized by service
-  unit_tests:
-    user_management:
-      description: "User management service unit tests"
-      test_pattern: "src/services/user-management/**/*.spec.ts"
-      estimated_duration: 45s
-      tags: ["unit", "user", "auth"]
-      dependencies: []
+    run:
+      # Run only the selected tests using CircleCI's test.atoms variable
+      # This contains the subset of tests determined to be impacted by code changes
+      command: npm test -- << test.atoms >> --ci --maxWorkers=2 --passWithNoTests
 
-    product_catalog:
-      description: "Product catalog service unit tests"
-      test_pattern: "src/services/product-catalog/**/*.spec.ts"
-      estimated_duration: 50s
-      tags: ["unit", "product", "catalog"]
-      dependencies: []
+    analysis:
+      # Run tests individually with coverage to build impact mapping
+      # This determines which source files each test exercises
+      # --runInBand ensures sequential execution for accurate coverage
+      command: npm test -- << test.atoms >> --ci --coverage --runInBand --passWithNoTests
 
-    order_processing:
-      description: "Order processing service unit tests"
-      test_pattern: "src/services/order-processing/**/*.spec.ts"
-      estimated_duration: 55s
-      tags: ["unit", "order", "payment"]
-      dependencies: []
+    outputs:
+      test-results: test-results/jest
+      coverage: coverage
 
-    notifications:
-      description: "Notification service unit tests"
-      test_pattern: "src/services/notifications/**/*.spec.ts"
-      estimated_duration: 30s
-      tags: ["unit", "notifications", "email"]
-      dependencies: []
+  # Integration Tests - Cross-service integration tests
+  integration-tests:
+    discover:
+      # Find all integration test files in tests/integration/
+      command: find tests/integration -name "*.test.ts" -type f | sed 's|^|/home/circleci/project/|'
 
-    analytics:
-      description: "Analytics service unit tests"
-      test_pattern: "src/services/analytics/**/*.spec.ts"
-      estimated_duration: 35s
-      tags: ["unit", "analytics", "reports"]
-      dependencies: []
+    run:
+      # Run selected integration tests
+      command: npm test -- << test.atoms >> --ci --maxWorkers=2 --passWithNoTests
 
-    shared_libraries:
-      description: "Shared libraries unit tests"
-      test_pattern: "src/libs/**/*.spec.ts"
-      estimated_duration: 40s
-      tags: ["unit", "libs", "utilities"]
-      dependencies: []
+    analysis:
+      # Sequential execution with coverage for integration tests
+      command: npm test -- << test.atoms >> --ci --coverage --runInBand --passWithNoTests
 
-  # Integration Test Suites
-  integration_tests:
-    database_operations:
-      description: "Database integration tests"
-      test_pattern: "tests/integration/database/**/*.test.ts"
-      estimated_duration: 120s
-      tags: ["integration", "database", "postgresql"]
-      dependencies: ["postgresql", "redis"]
+    outputs:
+      test-results: test-results/jest
+      coverage: coverage
 
-    service_communication:
-      description: "Inter-service communication tests"
-      test_pattern: "tests/integration/services/**/*.test.ts"
-      estimated_duration: 90s
-      tags: ["integration", "services", "api"]
-      dependencies: []
+  # E2E Tests - End-to-end API tests
+  e2e-tests:
+    discover:
+      # Find all E2E test files
+      command: find tests/e2e -name "*.test.ts" -type f | sed 's|^|/home/circleci/project/|'
 
-    external_apis:
-      description: "External API integration tests"
-      test_pattern: "tests/integration/external/**/*.test.ts"
-      estimated_duration: 60s
-      tags: ["integration", "external", "mocked"]
-      dependencies: []
+    run:
+      # E2E tests typically run on single node due to state dependencies
+      command: npm test -- << test.atoms >> --ci --runInBand --passWithNoTests
 
-    authentication_flows:
-      description: "Authentication flow integration tests"
-      test_pattern: "tests/integration/auth/**/*.test.ts"
-      estimated_duration: 75s
-      tags: ["integration", "auth", "jwt"]
-      dependencies: ["postgresql"]
+    analysis:
+      # E2E tests with coverage for impact analysis
+      command: npm test -- << test.atoms >> --ci --coverage --runInBand --passWithNoTests
 
-  # E2E Test Suites
-  e2e_tests:
-    rest_endpoints:
-      description: "REST API endpoint tests"
-      test_pattern: "tests/e2e/rest/**/*.test.ts"
-      estimated_duration: 180s
-      tags: ["e2e", "rest", "api"]
-      dependencies: ["postgresql", "redis", "full_stack"]
-
-    graphql_resolvers:
-      description: "GraphQL resolver tests"
-      test_pattern: "tests/e2e/graphql/**/*.test.ts"
-      estimated_duration: 100s
-      tags: ["e2e", "graphql", "api"]
-      dependencies: ["postgresql", "redis", "full_stack"]
-
-    complete_workflows:
-      description: "Complete user workflow tests"
-      test_pattern: "tests/e2e/workflows/**/*.test.ts"
-      estimated_duration: 200s
-      tags: ["e2e", "workflows", "critical"]
-      dependencies: ["postgresql", "redis", "full_stack"]
-
-  # Performance Test Suites
-  performance_tests:
-    load_tests:
-      description: "Load testing for critical endpoints"
-      test_pattern: "tests/performance/load/**/*.test.ts"
-      estimated_duration: 300s
-      tags: ["performance", "load", "stress"]
-      dependencies: ["postgresql", "redis", "full_stack"]
-
-    database_performance:
-      description: "Database query performance tests"
-      test_pattern: "tests/performance/database/**/*.test.ts"
-      estimated_duration: 120s
-      tags: ["performance", "database", "queries"]
-      dependencies: ["postgresql"]
-
-# Adaptive Testing Configuration
-adaptive_testing:
-  enabled: true
-
-  # Test Impact Analysis
-  impact_analysis:
-    enabled: true
-    # Map code changes to test suites
-    file_mappings:
-      - pattern: "src/services/user-management/**"
-        affects: ["user_management", "authentication_flows", "rest_endpoints"]
-
-      - pattern: "src/services/product-catalog/**"
-        affects: ["product_catalog", "rest_endpoints", "complete_workflows"]
-
-      - pattern: "src/services/order-processing/**"
-        affects: ["order_processing", "rest_endpoints", "complete_workflows"]
-
-      - pattern: "src/services/notifications/**"
-        affects: ["notifications", "complete_workflows"]
-
-      - pattern: "src/services/analytics/**"
-        affects: ["analytics"]
-
-      - pattern: "src/libs/auth/**"
-        affects: ["user_management", "authentication_flows", "shared_libraries"]
-
-      - pattern: "src/libs/database/**"
-        affects: ["shared_libraries", "database_operations", "all"]
-
-      - pattern: "src/libs/validation/**"
-        affects: ["shared_libraries", "all"]
-
-  # Intelligent Test Selection
-  test_selection:
-    strategy: "impact_based"  # Options: "all", "impact_based", "timing_based", "hybrid"
-
-    # Always run these critical tests
-    always_run:
-      - "authentication_flows"
-      - "database_operations"
-
-    # Run these tests on main branch only
-    main_branch_only:
-      - "performance_tests"
-
-    # Skip these tests on draft PRs
-    skip_on_draft:
-      - "performance_tests"
-      - "load_tests"
-
-  # Timing-based optimization
-  timing_optimization:
-    enabled: true
-    split_by_timing: true
-    timing_type: "testname"  # Options: "testname", "classname", "filename"
-
-  # Flaky test handling
-  flaky_test_detection:
-    enabled: true
-    retry_count: 2
-    quarantine_threshold: 3  # Quarantine after 3 failures
-
-# Parallel Execution Strategy
-parallelism:
-  unit_tests: 4
-  integration_tests: 2
-  e2e_tests: 1
-  performance_tests: 1
-
-# Resource Allocation
-resources:
-  small:
-    - "shared_libraries"
-    - "notifications"
-    - "analytics"
-
-  medium:
-    - "user_management"
-    - "product_catalog"
-    - "order_processing"
-    - "database_operations"
-    - "service_communication"
-    - "external_apis"
-    - "authentication_flows"
-
-  large:
-    - "rest_endpoints"
-    - "graphql_resolvers"
-    - "complete_workflows"
-    - "load_tests"
-    - "database_performance"
-
-# Reporting Configuration
-reporting:
-  junit:
-    enabled: true
-    output_directory: "test-results/jest"
-    output_name: "results.xml"
-
-  coverage:
-    enabled: true
-    output_directory: "coverage"
-    threshold:
-      global:
-        statements: 80
-        branches: 80
-        functions: 80
-        lines: 80
-
-  artifacts:
-    - "coverage/**"
-    - "test-results/**"
-    - "test-results/screenshots/**"
-    - "test-results/performance/**"
-
-# Notification Rules
-notifications:
-  on_failure:
-    - "slack"
-    - "email"
-  on_success:
-    - "slack"  # Only for main branch
-  on_flaky_test:
-    - "slack"
-    - "github_comment"
+    outputs:
+      test-results: test-results/jest
+      coverage: coverage
