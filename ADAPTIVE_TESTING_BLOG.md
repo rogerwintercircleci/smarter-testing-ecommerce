@@ -9,10 +9,10 @@
 We reduced our CI/CD build time from **~3.5 minutes to ~30 seconds** (85% faster) by implementing CircleCI's Adaptive Testing feature, which intelligently runs only the tests impacted by code changes.
 
 **Key Results:**
-- =¨ **85% faster builds** for targeted changes
-- <¯ **Runs only 50/684 tests** when changing UserService
+- =ï¿½ **85% faster builds** for targeted changes
+- <ï¿½ **Runs only 50/684 tests** when changing UserService
 - = **Still maintains 100% test coverage** on main branch
-- ¡ **Parallel execution** across 4 nodes for maximum speed
+- ï¿½ **Parallel execution** across 4 nodes for maximum speed
 
 ---
 
@@ -108,7 +108,7 @@ jobs:
           at: ~/project
       - run:
           name: Run Unit Tests (Adaptive - Intelligent Selection)
-          command: circleci tests run --suite unit-tests
+          command: circleci run testsuite "unit-tests"
       - store_test_results:
           path: test-results
 ```
@@ -175,10 +175,10 @@ workflows:
 | Scenario | Files Changed | Tests Run | Build Time | Speedup |
 |----------|--------------|-----------|------------|---------|
 | **Baseline (All Tests)** | Any | 684 | 3.5 min | - |
-| **UserService only** | 1 file | 50 | 30 sec | **85%** ¡ |
-| **ProductService only** | 1 file | 40 | 25 sec | **88%** ¡ |
-| **Shared utility** | 1 file | 150 | 1.2 min | **66%** ¡ |
-| **Multiple services** | 3 files | 200 | 1.5 min | **57%** ¡ |
+| **UserService only** | 1 file | 50 | 30 sec | **85%** ï¿½ |
+| **ProductService only** | 1 file | 40 | 25 sec | **88%** ï¿½ |
+| **Shared utility** | 1 file | 150 | 1.2 min | **66%** ï¿½ |
+| **Multiple services** | 3 files | 200 | 1.5 min | **57%** ï¿½ |
 
 ---
 
@@ -187,11 +187,11 @@ workflows:
 ### Compute Time Reduction
 
 **Before Adaptive Testing:**
-- Average PR: 5 commits × 3.5 min = **17.5 minutes**
+- Average PR: 5 commits ï¿½ 3.5 min = **17.5 minutes**
 - 100 PRs/month = **1,750 minutes** (29 hours)
 
 **After Adaptive Testing:**
-- Average PR: 5 commits × 0.5 min = **2.5 minutes**
+- Average PR: 5 commits ï¿½ 0.5 min = **2.5 minutes**
 - 100 PRs/month = **250 minutes** (4.2 hours)
 
 **Savings: 85% reduction** = **24.8 hours/month** of compute time
@@ -199,7 +199,7 @@ workflows:
 ### Developer Productivity
 
 - **Faster feedback loops**: 30 seconds vs 3.5 minutes
-- **More iterations**: Developers can test ’ commit ’ test faster
+- **More iterations**: Developers can test ï¿½ commit ï¿½ test faster
 - **Reduced context switching**: Less time waiting for builds
 
 ---
@@ -213,7 +213,7 @@ workflows:
 - **Refactoring**: Within single module
 - **High-frequency commits**: Many small PRs daily
 
-###   Maybe Not For:
+### ï¿½ Maybe Not For:
 
 - **Release branches**: Run full suite for safety
 - **Infrastructure changes**: May affect all tests
@@ -258,10 +258,10 @@ With adaptive testing:
 
 CircleCI's Adaptive Testing is a game-changer for teams with large test suites. By intelligently selecting only impacted tests, we achieved:
 
-- =€ **85% faster builds** for typical changes
-- =° **24+ hours/month** compute savings
-- ¡ **Faster developer feedback** loops
-- <¯ **Maintained 100% coverage** confidence
+- =ï¿½ **85% faster builds** for typical changes
+- =ï¿½ **24+ hours/month** compute savings
+- ï¿½ **Faster developer feedback** loops
+- <ï¿½ **Maintained 100% coverage** confidence
 
 The initial setup takes ~1 hour, but the ROI is immediate. If your team makes frequent small changes to a large codebase, adaptive testing is worth every minute of setup time.
 

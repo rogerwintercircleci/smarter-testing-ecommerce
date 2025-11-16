@@ -50,7 +50,7 @@ test_unit_adaptive:
 **Adaptive branch** (`.circleci/config.yml` + `test-suites.yml`):
 ```yaml
 test_unit_adaptive_intelligent:
-  command: circleci tests run --suite unit-tests
+  command: circleci run testsuite "unit-tests"
 ```
 - Runs ONLY impacted tests based on code changes
 - Configured via `.circleci/test-suites.yml`

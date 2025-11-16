@@ -211,6 +211,8 @@ jobs:
           destination: coverage-final
 
   # Job 10: ADAPTIVE TESTING - Unit Tests (Intelligent Test Selection)
+  # NOTE: Requires CircleCI Adaptive Testing preview feature to be enabled
+  # Request access: https://circleci.com/docs/guides/test/adaptive-testing/
   test_unit_adaptive_intelligent:
     executor: node-executor
     parallelism: 4
@@ -219,7 +221,10 @@ jobs:
           at: ~/project
       - run:
           name: Run Unit Tests (Adaptive - Intelligent Selection)
-          command: circleci tests run --suite unit-tests
+          command: |
+            # ADAPTIVE TESTING: Runs ONLY impacted tests based on code changes
+            # Uses test impact analysis from .circleci/test-suites.yml
+            circleci run testsuite "unit-tests"
       - store_test_results:
           path: test-results
       - store_artifacts:
@@ -227,6 +232,7 @@ jobs:
           destination: coverage-adaptive-unit
 
   # Job 11: ADAPTIVE TESTING - Integration Tests (Intelligent Test Selection)
+  # NOTE: Requires CircleCI Adaptive Testing preview feature to be enabled
   test_integration_adaptive_intelligent:
     executor: node-executor
     parallelism: 2
@@ -239,7 +245,10 @@ jobs:
           command: npm run db:migrate
       - run:
           name: Run Integration Tests (Adaptive - Intelligent Selection)
-          command: circleci tests run --suite integration-tests
+          command: |
+            # ADAPTIVE TESTING: Runs ONLY impacted tests based on code changes
+            # Uses test impact analysis from .circleci/test-suites.yml
+            circleci run testsuite "integration-tests"
       - store_test_results:
           path: test-results
       - store_artifacts:
@@ -247,6 +256,7 @@ jobs:
           destination: coverage-adaptive-integration
 
   # Job 12: ADAPTIVE TESTING - E2E Tests (Intelligent Test Selection)
+  # NOTE: Requires CircleCI Adaptive Testing preview feature to be enabled
   test_e2e_adaptive_intelligent:
     executor: node-executor
     steps:
@@ -261,7 +271,10 @@ jobs:
           command: npm run db:seed
       - run:
           name: Run E2E Tests (Adaptive - Intelligent Selection)
-          command: circleci tests run --suite e2e-tests
+          command: |
+            # ADAPTIVE TESTING: Runs ONLY impacted tests based on code changes
+            # Uses test impact analysis from .circleci/test-suites.yml
+            circleci run testsuite "e2e-tests"
       - store_test_results:
           path: test-results
 
