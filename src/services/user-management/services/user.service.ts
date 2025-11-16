@@ -386,4 +386,13 @@ export class UserService {
     const lastInitial = user.lastName?.charAt(0)?.toUpperCase() || '';
     return `${firstInitial}${lastInitial}`;
   }
+
+  /**
+   * Get user display name (prefers full name, falls back to email)
+   * DEMO: Final test of adaptive testing with proper coverage data
+   */
+  getUserDisplayName(user: User): string {
+    const fullName = this.getUserFullName(user);
+    return fullName || user.email;
+  }
 }
