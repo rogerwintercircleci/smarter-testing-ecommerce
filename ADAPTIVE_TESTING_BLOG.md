@@ -42,19 +42,65 @@ CircleCI's Adaptive Testing uses **test impact analysis** to determine which tes
 
 ### How It Works
 
-1. **Analysis Phase** (runs once on main branch)
-   - Runs each test individually with code coverage enabled
-   - Maps which source files each test exercises
-   - Stores this mapping for future use
+CircleCI's adaptive testing uses a two-phase approach:
 
-2. **Selection Phase** (runs on feature branches)
-   - Detects which files were modified in your commit
-   - Looks up which tests exercise those modified files
-   - Runs ONLY the impacted tests
+#### Phase 1: Analysis (One-Time Setup on Main Branch)
+- **When**: Runs on main/master branch commits
+- **What**: Executes ALL tests individually with coverage instrumentation
+- **Output**: Builds a mapping of "Test X covers files A, B, C"
+- **Speed**: Slower (~4-5 min for 684 tests) due to coverage overhead
+- **Frequency**: Only when main branch is updated
+- **Command**: `circleci run testsuite "unit-tests" --test-selection=all --test-analysis=all`
 
-3. **Parallel Execution**
-   - Still distributes selected tests across parallel nodes
-   - Uses timing data for optimal distribution
+#### Phase 2: Selection (Every Feature Branch Commit)
+- **When**: Runs on pull request branches
+- **What**: Detects modified files, runs ONLY tests that cover those files
+- **Input**: Uses impact mapping from analysis phase
+- **Speed**: Much faster (~30-45 sec for typical changes)
+- **Frequency**: Every commit to a feature branch
+- **Command**: `circleci run testsuite "unit-tests" --test-selection=impacted --test-analysis=none`
+
+#### Parallel Execution (Both Phases)
+- Selected tests are still distributed across parallel nodes (4 for unit, 2 for integration)
+- Uses historical timing data for optimal load balancing
+- Maximizes speed while maintaining test isolation
+
+---
+
+## Demonstration Workflow
+
+To properly demonstrate adaptive testing's benefits, follow this two-step process:
+
+### Step 1: Build Impact Data on Main Branch
+
+```bash
+# Merge your adaptive testing configuration to main
+git checkout main
+git merge adaptive-testing-demo
+git push origin main
+```
+
+**What happens:**
+- CircleCI runs the `test_adaptive_analysis` workflow
+- All 684 tests execute with coverage instrumentation
+- Test impact mapping is built and stored
+- Build takes ~4-5 minutes (one-time cost)
+
+### Step 2: Show Speed Improvement on Feature Branch
+
+```bash
+# Make a small change to demonstrate selective testing
+git checkout adaptive-testing-demo
+echo "// Demo: Added helper method" >> src/services/user-management/services/user.service.ts
+git commit -am "Demo: Small UserService change"
+git push origin adaptive-testing-demo
+```
+
+**What happens:**
+- CircleCI runs the `test_adaptive_intelligent` workflow
+- Only ~50 user-related tests execute (instead of 684)
+- Build completes in ~30-45 seconds
+- **85% faster than full test suite!**
 
 ---
 

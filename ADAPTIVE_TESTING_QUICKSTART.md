@@ -13,27 +13,41 @@ This repository showcases CircleCI's **Adaptive Testing** feature, which can red
 
 ## 🚀 Quick Demo
 
-### Step 1: View the Master Branch (Baseline)
+### Step 1: Merge to Main Branch (Analysis Phase - One Time Setup)
 
 ```bash
-git checkout master
+git checkout main
+git merge adaptive-testing-demo
+git push origin main
 ```
 
-**CircleCI behavior:**
-- Runs ALL 684 tests on every commit
+**CircleCI behavior on main:**
+- Runs ALL 684 tests with coverage analysis
+- Builds test impact mapping (which tests cover which files)
 - Uses test splitting by timing (4 nodes for unit, 2 for integration)
-- Build time: ~3.5 minutes
+- Build time: ~4-5 minutes (slower due to coverage instrumentation)
+- **This is a ONE-TIME cost** to build the impact data
 
-### Step 2: View the Adaptive Testing Branch
+### Step 2: Create a PR from Feature Branch (Selection Phase - Fast!)
 
 ```bash
 git checkout adaptive-testing-demo
+# Make a small change to UserService
+echo "// Demo comment" >> src/services/user-management/services/user.service.ts
+git commit -am "Demo: Small UserService change"
+git push origin adaptive-testing-demo
 ```
 
-**CircleCI behavior:**
-- Runs ONLY impacted tests (determined by code coverage analysis)
-- Still uses parallel execution
-- Build time: ~30 seconds for typical changes
+**CircleCI behavior on feature branch:**
+- Runs ONLY impacted tests (tests that cover UserService)
+- Still uses parallel execution across nodes
+- Build time: ~30-45 seconds for UserService changes
+- **85% faster** than running all tests!
+
+**Expected Results:**
+- Instead of 684 tests: Only ~50 user-related tests run
+- Instead of 4 minutes: Completes in ~30 seconds
+- Same confidence: Coverage data proves these are the only affected tests
 
 ### Step 3: Compare the Configuration
 
