@@ -8,7 +8,6 @@ import { NotificationService } from './notification.service';
 import { EmailProvider } from '../providers/email.provider';
 import { SMSProvider } from '../providers/sms.provider';
 import { WebhookProvider } from '../providers/webhook.provider';
-import { BadRequestError } from '@libs/errors';
 
 jest.mock('../providers/email.provider');
 jest.mock('../providers/sms.provider');
@@ -42,7 +41,7 @@ describe('NotificationService', () => {
 
   describe('sendWelcomeEmail', () => {
     it('should send welcome email successfully', async () => {
-      mockEmailProvider.sendEmail.mockResolvedValue({ messageId: 'msg-123' });
+      mockEmailProvider.sendEmail.mockResolvedValue({ messageId: 'msg-123', success: true });
 
       const result = await notificationService.sendWelcomeEmail(
         'user@example.com',
@@ -90,7 +89,7 @@ describe('NotificationService', () => {
     };
 
     it('should send order confirmation email', async () => {
-      mockEmailProvider.sendEmail.mockResolvedValue({ messageId: 'msg-456' });
+      mockEmailProvider.sendEmail.mockResolvedValue({ messageId: 'msg-456', success: true });
 
       const result = await notificationService.sendOrderConfirmation(orderData);
 
@@ -104,7 +103,7 @@ describe('NotificationService', () => {
     });
 
     it('should include order details in email', async () => {
-      mockEmailProvider.sendEmail.mockResolvedValue({ messageId: 'msg-456' });
+      mockEmailProvider.sendEmail.mockResolvedValue({ messageId: 'msg-456', success: true });
 
       await notificationService.sendOrderConfirmation(orderData);
 
@@ -117,7 +116,7 @@ describe('NotificationService', () => {
 
   describe('sendShippingNotification', () => {
     it('should send shipping notification email', async () => {
-      mockEmailProvider.sendEmail.mockResolvedValue({ messageId: 'msg-789' });
+      mockEmailProvider.sendEmail.mockResolvedValue({ messageId: 'msg-789', success: true });
 
       const result = await notificationService.sendShippingNotification(
         'customer@example.com',
@@ -138,7 +137,7 @@ describe('NotificationService', () => {
     });
 
     it('should send SMS if phone number provided', async () => {
-      mockEmailProvider.sendEmail.mockResolvedValue({ messageId: 'msg-789' });
+      mockEmailProvider.sendEmail.mockResolvedValue({ messageId: 'msg-789', success: true });
       mockSMSProvider.sendSMS.mockResolvedValue({ messageId: 'sms-123' });
 
       await notificationService.sendShippingNotification(
@@ -157,7 +156,7 @@ describe('NotificationService', () => {
 
   describe('sendPasswordResetEmail', () => {
     it('should send password reset email with token', async () => {
-      mockEmailProvider.sendEmail.mockResolvedValue({ messageId: 'msg-reset' });
+      mockEmailProvider.sendEmail.mockResolvedValue({ messageId: 'msg-reset', success: true });
 
       const result = await notificationService.sendPasswordResetEmail(
         'user@example.com',
@@ -172,12 +171,13 @@ describe('NotificationService', () => {
         data: {
           resetToken: 'reset-token-123',
           resetLink: expect.stringContaining('reset-token-123'),
+          expiresIn: '1 hour',
         },
       });
     });
 
     it('should include expiration time in email', async () => {
-      mockEmailProvider.sendEmail.mockResolvedValue({ messageId: 'msg-reset' });
+      mockEmailProvider.sendEmail.mockResolvedValue({ messageId: 'msg-reset', success: true });
 
       await notificationService.sendPasswordResetEmail(
         'user@example.com',
@@ -289,7 +289,7 @@ describe('NotificationService', () => {
 
   describe('sendBulkEmail', () => {
     it('should send email to multiple recipients', async () => {
-      mockEmailProvider.sendEmail.mockResolvedValue({ messageId: 'bulk-msg' });
+      mockEmailProvider.sendEmail.mockResolvedValue({ messageId: 'bulk-msg', success: true });
 
       const recipients = [
         'user1@example.com',
@@ -310,9 +310,9 @@ describe('NotificationService', () => {
 
     it('should track failures in bulk send', async () => {
       mockEmailProvider.sendEmail
-        .mockResolvedValueOnce({ messageId: 'msg-1' })
+        .mockResolvedValueOnce({ messageId: 'msg-1', success: true })
         .mockRejectedValueOnce(new Error('Failed'))
-        .mockResolvedValueOnce({ messageId: 'msg-3' });
+        .mockResolvedValueOnce({ messageId: 'msg-3', success: true });
 
       const recipients = ['user1@example.com', 'user2@example.com', 'user3@example.com'];
 
