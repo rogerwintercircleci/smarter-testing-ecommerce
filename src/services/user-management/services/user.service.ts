@@ -374,4 +374,15 @@ export class UserService {
   getUserFullName(user: User): string {
     return `${user.firstName} ${user.lastName}`.trim();
   }
+
+  /**
+   * Get user's initials
+   * Helper method for avatar displays
+   * DEMO: Testing adaptive testing - should only run ~50 user-related tests
+   */
+  getUserInitials(user: User): string {
+    const firstInitial = user.firstName?.charAt(0)?.toUpperCase() || '';
+    const lastInitial = user.lastName?.charAt(0)?.toUpperCase() || '';
+    return `${firstInitial}${lastInitial}`;
+  }
 }
