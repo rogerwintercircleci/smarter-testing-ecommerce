@@ -7,7 +7,7 @@
 name: unit-tests
 discover: find src -name "*.spec.ts" -type f | sed 's|^|/home/circleci/project/|'
 run: JEST_JUNIT_OUTPUT_FILE="<< outputs.junit >>" npm test -- << test.atoms >> --ci --maxWorkers=2 --passWithNoTests --reporters=default --reporters=jest-junit
-analysis: npm test -- << test.atoms >> --ci --coverage --coverageReporters=lcovonly --coverageDirectory=coverage --runInBand --passWithNoTests --coverageThreshold='{}' && cp coverage/lcov.info << outputs.lcov >>
+analysis: rm -rf coverage && npm test -- << test.atoms >> --ci --coverage --coverageReporters=lcov --coverageDirectory=coverage --runInBand --passWithNoTests --coverageThreshold='{}'
 outputs:
   junit: test-results/jest/results.xml
   lcov: coverage/lcov.info
@@ -19,7 +19,7 @@ options:
 name: integration-tests
 discover: find tests/integration -name "*.test.ts" -type f | sed 's|^|/home/circleci/project/|'
 run: JEST_JUNIT_OUTPUT_FILE="<< outputs.junit >>" npm test -- << test.atoms >> --ci --maxWorkers=2 --passWithNoTests --reporters=default --reporters=jest-junit
-analysis: npm test -- << test.atoms >> --ci --coverage --coverageReporters=lcovonly --coverageDirectory=coverage --runInBand --passWithNoTests --coverageThreshold='{}' && cp coverage/lcov.info << outputs.lcov >>
+analysis: rm -rf coverage && npm test -- << test.atoms >> --ci --coverage --coverageReporters=lcov --coverageDirectory=coverage --runInBand --passWithNoTests --coverageThreshold='{}'
 outputs:
   junit: test-results/jest/results.xml
   lcov: coverage/lcov.info
@@ -31,7 +31,7 @@ options:
 name: e2e-tests
 discover: find tests/e2e -name "*.test.ts" -type f | sed 's|^|/home/circleci/project/|'
 run: JEST_JUNIT_OUTPUT_FILE="<< outputs.junit >>" npm test -- << test.atoms >> --ci --runInBand --passWithNoTests --reporters=default --reporters=jest-junit
-analysis: npm test -- << test.atoms >> --ci --coverage --coverageReporters=lcovonly --coverageDirectory=coverage --runInBand --passWithNoTests --coverageThreshold='{}' && cp coverage/lcov.info << outputs.lcov >>
+analysis: rm -rf coverage && npm test -- << test.atoms >> --ci --coverage --coverageReporters=lcov --coverageDirectory=coverage --runInBand --passWithNoTests --coverageThreshold='{}'
 outputs:
   junit: test-results/jest/results.xml
   lcov: coverage/lcov.info
