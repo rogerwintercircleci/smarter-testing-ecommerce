@@ -5,6 +5,7 @@
 test-suites:
   # Unit Tests - Service layer tests
   unit-tests:
+    name: unit-tests
     discover:
       # Find all unit test files (*.spec.ts pattern)
       # These are tests co-located with source files in src/
@@ -27,6 +28,7 @@ test-suites:
 
   # Integration Tests - Cross-service integration tests
   integration-tests:
+    name: integration-tests
     discover:
       # Find all integration test files in tests/integration/
       command: find tests/integration -name "*.test.ts" -type f | sed 's|^|/home/circleci/project/|'
@@ -45,6 +47,7 @@ test-suites:
 
   # E2E Tests - End-to-end API tests
   e2e-tests:
+    name: e2e-tests
     discover:
       # Find all E2E test files
       command: find tests/e2e -name "*.test.ts" -type f | sed 's|^|/home/circleci/project/|'
