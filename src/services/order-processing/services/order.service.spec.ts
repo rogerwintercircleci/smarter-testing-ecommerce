@@ -28,6 +28,7 @@ describe('OrderService', () => {
       markAsDelivered: jest.fn(),
       getTotalRevenue: jest.fn(),
       getOrderStats: jest.fn(),
+      update: jest.fn(),
     } as unknown as jest.Mocked<OrderRepository>;
 
     orderService = new OrderService(mockOrderRepository);
@@ -333,6 +334,18 @@ describe('OrderService', () => {
       mockOrderRepository.findById.mockResolvedValue({
         id: 'order-123',
         subtotal: 100.00,
+        taxAmount: 10.00,
+        shippingCost: 10.00,
+      } as Order);
+
+      mockOrderRepository.update.mockResolvedValue({
+        id: 'order-123',
+        subtotal: 100.00,
+        taxAmount: 10.00,
+        shippingCost: 10.00,
+        discountCode: 'SAVE20',
+        discountAmount: 20.00,
+        total: 100.00,
       } as Order);
 
       const result = await orderService.applyDiscount('order-123', 'SAVE20', 20.00);
@@ -372,6 +385,7 @@ describe('OrderService', () => {
         taxAmount: 10.00,
         shippingCost: 15.00,
         discountAmount: 0,
+        calculateTotal: () => 125.00,
       } as Order;
 
       mockOrderRepository.findById.mockResolvedValue(mockOrder);
@@ -388,6 +402,7 @@ describe('OrderService', () => {
         taxAmount: 10.00,
         shippingCost: 15.00,
         discountAmount: 25.00,
+        calculateTotal: () => 100.00,
       } as Order;
 
       mockOrderRepository.findById.mockResolvedValue(mockOrder);

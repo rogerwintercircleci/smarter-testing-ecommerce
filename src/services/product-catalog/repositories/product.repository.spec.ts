@@ -540,7 +540,15 @@ describe('ProductRepository', () => {
         { id: '2', rating: 4.8, reviewCount: 150 },
       ] as Product[];
 
-      (mockRepository.find as jest.Mock).mockResolvedValue(mockProducts);
+      const mockBuilder = {
+        where: jest.fn().mockReturnThis(),
+        andWhere: jest.fn().mockReturnThis(),
+        orderBy: jest.fn().mockReturnThis(),
+        take: jest.fn().mockReturnThis(),
+        getMany: jest.fn().mockResolvedValue(mockProducts),
+      };
+
+      (mockRepository.createQueryBuilder as jest.Mock).mockReturnValue(mockBuilder);
 
       const result = await productRepository.findTopRated(10);
 
@@ -548,9 +556,22 @@ describe('ProductRepository', () => {
     });
 
     it('should only include products with minimum reviews', async () => {
+      const mockBuilder = {
+        where: jest.fn().mockReturnThis(),
+        andWhere: jest.fn().mockReturnThis(),
+        orderBy: jest.fn().mockReturnThis(),
+        take: jest.fn().mockReturnThis(),
+        getMany: jest.fn().mockResolvedValue([]),
+      };
+
+      (mockRepository.createQueryBuilder as jest.Mock).mockReturnValue(mockBuilder);
+
       await productRepository.findTopRated(10, 5);
 
-      expect(mockRepository.find).toHaveBeenCalled();
+      expect(mockBuilder.andWhere).toHaveBeenCalledWith(
+        'product.reviewCount >= :minReviews',
+        { minReviews: 5 }
+      );
     });
   });
 });

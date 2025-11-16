@@ -7,7 +7,6 @@
 import { Repository } from 'typeorm';
 import { OrderRepository } from './order.repository';
 import { Order, OrderStatus, PaymentStatus } from '../entities/order.entity';
-import { NotFoundError } from '@libs/errors';
 
 const mockRepository = {
   find: jest.fn(),
@@ -191,6 +190,7 @@ describe('OrderRepository', () => {
     it('should return order statistics', async () => {
       const mockBuilder = {
         select: jest.fn().mockReturnThis(),
+        addSelect: jest.fn().mockReturnThis(),
         where: jest.fn().mockReturnThis(),
         groupBy: jest.fn().mockReturnThis(),
         getRawMany: jest.fn().mockResolvedValue([
