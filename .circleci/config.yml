@@ -222,9 +222,16 @@ jobs:
       - run:
           name: Run Unit Tests (Adaptive - Intelligent Selection)
           command: |
-            # ADAPTIVE TESTING: Runs ONLY impacted tests based on code changes
-            # Uses test impact analysis from .circleci/test-suites.yml
-            circleci run testsuite "unit-tests"
+            # ADAPTIVE TESTING: Conditional logic based on branch
+            # Main branch: Run analysis to build impact data (slow, one-time)
+            # Feature branches: Run selection using impact data (fast, only impacted tests)
+            if [ "${CIRCLE_BRANCH}" = "main" ]; then
+              echo "📊 Running ANALYSIS mode on main branch - building test impact data"
+              circleci run testsuite "unit-tests" --test-selection=all --test-analysis=all
+            else
+              echo "⚡ Running SELECTION mode - only impacted tests"
+              circleci run testsuite "unit-tests" --test-selection=impacted --test-analysis=none
+            fi
       - store_test_results:
           path: test-results
       - store_artifacts:
@@ -246,9 +253,16 @@ jobs:
       - run:
           name: Run Integration Tests (Adaptive - Intelligent Selection)
           command: |
-            # ADAPTIVE TESTING: Runs ONLY impacted tests based on code changes
-            # Uses test impact analysis from .circleci/test-suites.yml
-            circleci run testsuite "integration-tests"
+            # ADAPTIVE TESTING: Conditional logic based on branch
+            # Main branch: Run analysis to build impact data (slow, one-time)
+            # Feature branches: Run selection using impact data (fast, only impacted tests)
+            if [ "${CIRCLE_BRANCH}" = "main" ]; then
+              echo "📊 Running ANALYSIS mode on main branch - building test impact data"
+              circleci run testsuite "integration-tests" --test-selection=all --test-analysis=all
+            else
+              echo "⚡ Running SELECTION mode - only impacted tests"
+              circleci run testsuite "integration-tests" --test-selection=impacted --test-analysis=none
+            fi
       - store_test_results:
           path: test-results
       - store_artifacts:
@@ -272,9 +286,16 @@ jobs:
       - run:
           name: Run E2E Tests (Adaptive - Intelligent Selection)
           command: |
-            # ADAPTIVE TESTING: Runs ONLY impacted tests based on code changes
-            # Uses test impact analysis from .circleci/test-suites.yml
-            circleci run testsuite "e2e-tests"
+            # ADAPTIVE TESTING: Conditional logic based on branch
+            # Main branch: Run analysis to build impact data (slow, one-time)
+            # Feature branches: Run selection using impact data (fast, only impacted tests)
+            if [ "${CIRCLE_BRANCH}" = "main" ]; then
+              echo "📊 Running ANALYSIS mode on main branch - building test impact data"
+              circleci run testsuite "e2e-tests" --test-selection=all --test-analysis=all
+            else
+              echo "⚡ Running SELECTION mode - only impacted tests"
+              circleci run testsuite "e2e-tests" --test-selection=impacted --test-analysis=none
+            fi
       - store_test_results:
           path: test-results
 
@@ -365,9 +386,34 @@ workflows:
             - test_e2e
             - test_performance
 
-  # NEW: Workflow WITH INTELLIGENT ADAPTIVE TESTING
-  # This workflow uses CircleCI's test impact analysis to run ONLY impacted tests
-  # Significantly faster than running all tests on every commit
+  # ADAPTIVE TESTING - Analysis Phase (Main Branch)
+  # Builds test impact data by running all tests with coverage analysis
+  # This is slower but only runs once to build the impact mapping
+  test_adaptive_analysis:
+    jobs:
+      - checkout_and_install:
+          filters:
+            branches:
+              only: main
+      - lint_and_typecheck:
+          requires:
+            - checkout_and_install
+      - test_unit_adaptive_intelligent:
+          requires:
+            - lint_and_typecheck
+      - test_integration_adaptive_intelligent:
+          requires:
+            - test_unit_adaptive_intelligent
+      - test_e2e_adaptive_intelligent:
+          requires:
+            - test_integration_adaptive_intelligent
+      - build:
+          requires:
+            - test_e2e_adaptive_intelligent
+
+  # ADAPTIVE TESTING - Selection Phase (Feature Branches)
+  # Uses test impact data to run ONLY impacted tests
+  # This is much faster - only runs tests affected by your changes
   test_adaptive_intelligent:
     jobs:
       - checkout_and_install:
