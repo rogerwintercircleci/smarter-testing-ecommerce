@@ -390,6 +390,7 @@ export class UserService {
   /**
    * Get user display name (prefers full name, falls back to email)
    * DEMO: Final test of adaptive testing with proper coverage data
+   * Updated: Verifying adaptive testing selects only user-related tests
    */
   getUserDisplayName(user: User): string {
     const fullName = this.getUserFullName(user);
