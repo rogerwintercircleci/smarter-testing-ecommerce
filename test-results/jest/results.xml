@@ -1,73 +1,1421 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="jest tests" tests="34" failures="0" errors="0" time="2.244">
-  <testsuite name="src\libs\validation\validator.spec.ts" errors="0" failures="0" skipped="0" timestamp="2025-11-15T23:53:07" time="2.045" tests="34">
-    <testcase classname="Validation Utilities › commonSchemas › email" name="should validate correct email" time="0.002" file="src\libs\validation\validator.spec.ts">
+<testsuites name="jest tests" tests="684" failures="0" errors="0" time="12.298">
+  <testsuite name="src\libs\auth\password.utils.spec.ts" errors="0" failures="0" skipped="0" timestamp="2025-12-02T23:35:46" time="4.003" tests="18">
+    <testcase classname="Password Utilities › hashPassword" name="should hash password" time="0.064" file="src\libs\auth\password.utils.spec.ts">
     </testcase>
-    <testcase classname="Validation Utilities › commonSchemas › email" name="should reject invalid email" time="0" file="src\libs\validation\validator.spec.ts">
+    <testcase classname="Password Utilities › hashPassword" name="should generate different hashes for same password" time="0.105" file="src\libs\auth\password.utils.spec.ts">
     </testcase>
-    <testcase classname="Validation Utilities › commonSchemas › email" name="should reject email without domain" time="0" file="src\libs\validation\validator.spec.ts">
+    <testcase classname="Password Utilities › hashPassword" name="should handle empty password" time="0.055" file="src\libs\auth\password.utils.spec.ts">
+    </testcase>
+    <testcase classname="Password Utilities › comparePassword" name="should return true for matching password" time="0.106" file="src\libs\auth\password.utils.spec.ts">
+    </testcase>
+    <testcase classname="Password Utilities › comparePassword" name="should return false for non-matching password" time="0.102" file="src\libs\auth\password.utils.spec.ts">
+    </testcase>
+    <testcase classname="Password Utilities › comparePassword" name="should be case-sensitive" time="0.102" file="src\libs\auth\password.utils.spec.ts">
+    </testcase>
+    <testcase classname="Password Utilities › validatePasswordStrength" name="should accept strong password" time="0.001" file="src\libs\auth\password.utils.spec.ts">
+    </testcase>
+    <testcase classname="Password Utilities › validatePasswordStrength" name="should reject password shorter than 8 characters" time="0.001" file="src\libs\auth\password.utils.spec.ts">
+    </testcase>
+    <testcase classname="Password Utilities › validatePasswordStrength" name="should reject password without uppercase letter" time="0" file="src\libs\auth\password.utils.spec.ts">
+    </testcase>
+    <testcase classname="Password Utilities › validatePasswordStrength" name="should reject password without lowercase letter" time="0.001" file="src\libs\auth\password.utils.spec.ts">
+    </testcase>
+    <testcase classname="Password Utilities › validatePasswordStrength" name="should reject password without number" time="0" file="src\libs\auth\password.utils.spec.ts">
+    </testcase>
+    <testcase classname="Password Utilities › validatePasswordStrength" name="should reject password without special character" time="0" file="src\libs\auth\password.utils.spec.ts">
+    </testcase>
+    <testcase classname="Password Utilities › validatePasswordStrength" name="should return multiple errors for very weak password" time="0.001" file="src\libs\auth\password.utils.spec.ts">
+    </testcase>
+    <testcase classname="Password Utilities › generateRandomPassword" name="should generate password of specified length" time="0" file="src\libs\auth\password.utils.spec.ts">
+    </testcase>
+    <testcase classname="Password Utilities › generateRandomPassword" name="should generate password with default length" time="0" file="src\libs\auth\password.utils.spec.ts">
+    </testcase>
+    <testcase classname="Password Utilities › generateRandomPassword" name="should generate valid strong password" time="0.001" file="src\libs\auth\password.utils.spec.ts">
+    </testcase>
+    <testcase classname="Password Utilities › generateRandomPassword" name="should generate different passwords each time" time="0" file="src\libs\auth\password.utils.spec.ts">
+    </testcase>
+    <testcase classname="Password Utilities › generateRandomPassword" name="should include all required character types" time="0" file="src\libs\auth\password.utils.spec.ts">
+    </testcase>
+  </testsuite>
+  <testsuite name="tests\e2e\api\user-endpoints.e2e.test.ts" errors="0" failures="0" skipped="0" timestamp="2025-12-02T23:35:46" time="4.104" tests="42">
+    <testcase classname="User REST API E2E Tests › POST /api/users/register" name="should register new user successfully" time="0.052" file="tests\e2e\api\user-endpoints.e2e.test.ts">
+    </testcase>
+    <testcase classname="User REST API E2E Tests › POST /api/users/register" name="should return 400 for invalid email format" time="0.004" file="tests\e2e\api\user-endpoints.e2e.test.ts">
+    </testcase>
+    <testcase classname="User REST API E2E Tests › POST /api/users/register" name="should return 400 for weak password" time="0.003" file="tests\e2e\api\user-endpoints.e2e.test.ts">
+    </testcase>
+    <testcase classname="User REST API E2E Tests › POST /api/users/register" name="should return 409 for duplicate email" time="0.005" file="tests\e2e\api\user-endpoints.e2e.test.ts">
+    </testcase>
+    <testcase classname="User REST API E2E Tests › POST /api/users/register" name="should validate required fields" time="0.003" file="tests\e2e\api\user-endpoints.e2e.test.ts">
+    </testcase>
+    <testcase classname="User REST API E2E Tests › POST /api/users/login" name="should login with valid credentials" time="0.004" file="tests\e2e\api\user-endpoints.e2e.test.ts">
+    </testcase>
+    <testcase classname="User REST API E2E Tests › POST /api/users/login" name="should return 401 for invalid credentials" time="0.002" file="tests\e2e\api\user-endpoints.e2e.test.ts">
+    </testcase>
+    <testcase classname="User REST API E2E Tests › POST /api/users/login" name="should return 401 for non-existent user" time="0.004" file="tests\e2e\api\user-endpoints.e2e.test.ts">
+    </testcase>
+    <testcase classname="User REST API E2E Tests › POST /api/users/login" name="should update last login timestamp" time="0.007" file="tests\e2e\api\user-endpoints.e2e.test.ts">
+    </testcase>
+    <testcase classname="User REST API E2E Tests › GET /api/users/profile" name="should get user profile with valid token" time="0.003" file="tests\e2e\api\user-endpoints.e2e.test.ts">
+    </testcase>
+    <testcase classname="User REST API E2E Tests › GET /api/users/profile" name="should return 401 without auth token" time="0.003" file="tests\e2e\api\user-endpoints.e2e.test.ts">
+    </testcase>
+    <testcase classname="User REST API E2E Tests › GET /api/users/profile" name="should return 401 with invalid token" time="0.003" file="tests\e2e\api\user-endpoints.e2e.test.ts">
+    </testcase>
+    <testcase classname="User REST API E2E Tests › PUT /api/users/profile" name="should update user profile" time="0.003" file="tests\e2e\api\user-endpoints.e2e.test.ts">
+    </testcase>
+    <testcase classname="User REST API E2E Tests › PUT /api/users/profile" name="should not allow email update through profile endpoint" time="0.002" file="tests\e2e\api\user-endpoints.e2e.test.ts">
+    </testcase>
+    <testcase classname="User REST API E2E Tests › PUT /api/users/profile" name="should validate phone number format" time="0.002" file="tests\e2e\api\user-endpoints.e2e.test.ts">
+    </testcase>
+    <testcase classname="User REST API E2E Tests › POST /api/users/verify-email" name="should verify email with valid token" time="0.003" file="tests\e2e\api\user-endpoints.e2e.test.ts">
+    </testcase>
+    <testcase classname="User REST API E2E Tests › POST /api/users/verify-email" name="should return 400 for invalid token" time="0.002" file="tests\e2e\api\user-endpoints.e2e.test.ts">
+    </testcase>
+    <testcase classname="User REST API E2E Tests › POST /api/users/forgot-password" name="should initiate password reset" time="0.003" file="tests\e2e\api\user-endpoints.e2e.test.ts">
+    </testcase>
+    <testcase classname="User REST API E2E Tests › POST /api/users/forgot-password" name="should not reveal if email exists" time="0.002" file="tests\e2e\api\user-endpoints.e2e.test.ts">
+    </testcase>
+    <testcase classname="User REST API E2E Tests › POST /api/users/reset-password" name="should reset password with valid token" time="0.003" file="tests\e2e\api\user-endpoints.e2e.test.ts">
+    </testcase>
+    <testcase classname="User REST API E2E Tests › POST /api/users/reset-password" name="should validate new password strength" time="0.003" file="tests\e2e\api\user-endpoints.e2e.test.ts">
+    </testcase>
+    <testcase classname="User REST API E2E Tests › POST /api/users/change-password" name="should change password for authenticated user" time="0.006" file="tests\e2e\api\user-endpoints.e2e.test.ts">
+    </testcase>
+    <testcase classname="User REST API E2E Tests › POST /api/users/change-password" name="should return 401 for incorrect current password" time="0.003" file="tests\e2e\api\user-endpoints.e2e.test.ts">
+    </testcase>
+    <testcase classname="User REST API E2E Tests › POST /api/users/change-password" name="should require authentication" time="0.003" file="tests\e2e\api\user-endpoints.e2e.test.ts">
+    </testcase>
+    <testcase classname="User REST API E2E Tests › GET /api/users (Admin Only)" name="should list all users for admin" time="0.003" file="tests\e2e\api\user-endpoints.e2e.test.ts">
+    </testcase>
+    <testcase classname="User REST API E2E Tests › GET /api/users (Admin Only)" name="should support pagination" time="0.004" file="tests\e2e\api\user-endpoints.e2e.test.ts">
+    </testcase>
+    <testcase classname="User REST API E2E Tests › GET /api/users (Admin Only)" name="should return 403 for non-admin users" time="0.003" file="tests\e2e\api\user-endpoints.e2e.test.ts">
+    </testcase>
+    <testcase classname="User REST API E2E Tests › GET /api/users (Admin Only)" name="should filter by status" time="0.003" file="tests\e2e\api\user-endpoints.e2e.test.ts">
+    </testcase>
+    <testcase classname="User REST API E2E Tests › GET /api/users (Admin Only)" name="should filter by role" time="0.003" file="tests\e2e\api\user-endpoints.e2e.test.ts">
+    </testcase>
+    <testcase classname="User REST API E2E Tests › GET /api/users/:id (Admin Only)" name="should get specific user by ID" time="0.004" file="tests\e2e\api\user-endpoints.e2e.test.ts">
+    </testcase>
+    <testcase classname="User REST API E2E Tests › GET /api/users/:id (Admin Only)" name="should return 404 for non-existent user" time="0.003" file="tests\e2e\api\user-endpoints.e2e.test.ts">
+    </testcase>
+    <testcase classname="User REST API E2E Tests › GET /api/users/:id (Admin Only)" name="should return 403 for non-admin users" time="0.003" file="tests\e2e\api\user-endpoints.e2e.test.ts">
+    </testcase>
+    <testcase classname="User REST API E2E Tests › PUT /api/users/:id (Admin Only)" name="should update user role" time="0.003" file="tests\e2e\api\user-endpoints.e2e.test.ts">
+    </testcase>
+    <testcase classname="User REST API E2E Tests › PUT /api/users/:id (Admin Only)" name="should suspend user account" time="0.004" file="tests\e2e\api\user-endpoints.e2e.test.ts">
+    </testcase>
+    <testcase classname="User REST API E2E Tests › PUT /api/users/:id (Admin Only)" name="should return 403 for non-admin users" time="0.003" file="tests\e2e\api\user-endpoints.e2e.test.ts">
+    </testcase>
+    <testcase classname="User REST API E2E Tests › DELETE /api/users/:id (Admin Only)" name="should soft delete user account" time="0.003" file="tests\e2e\api\user-endpoints.e2e.test.ts">
+    </testcase>
+    <testcase classname="User REST API E2E Tests › DELETE /api/users/:id (Admin Only)" name="should return 403 for non-admin users" time="0.003" file="tests\e2e\api\user-endpoints.e2e.test.ts">
+    </testcase>
+    <testcase classname="User REST API E2E Tests › Rate Limiting" name="should rate limit excessive login attempts" time="0.044" file="tests\e2e\api\user-endpoints.e2e.test.ts">
+    </testcase>
+    <testcase classname="User REST API E2E Tests › CORS Headers" name="should include CORS headers" time="0.006" file="tests\e2e\api\user-endpoints.e2e.test.ts">
+    </testcase>
+    <testcase classname="User REST API E2E Tests › Content-Type Validation" name="should reject non-JSON content" time="0.002" file="tests\e2e\api\user-endpoints.e2e.test.ts">
+    </testcase>
+    <testcase classname="User REST API E2E Tests › Input Sanitization" name="should sanitize XSS attempts" time="0.003" file="tests\e2e\api\user-endpoints.e2e.test.ts">
+    </testcase>
+    <testcase classname="User REST API E2E Tests › Input Sanitization" name="should reject SQL injection attempts" time="0.003" file="tests\e2e\api\user-endpoints.e2e.test.ts">
+    </testcase>
+  </testsuite>
+  <testsuite name="src\services\product-catalog\repositories\product.repository.spec.ts" errors="0" failures="0" skipped="0" timestamp="2025-12-02T23:35:46" time="4.189" tests="32">
+    <testcase classname="ProductRepository › findBySku" name="should find product by SKU" time="0.007" file="src\services\product-catalog\repositories\product.repository.spec.ts">
+    </testcase>
+    <testcase classname="ProductRepository › findBySku" name="should return null if product not found" time="0.001" file="src\services\product-catalog\repositories\product.repository.spec.ts">
+    </testcase>
+    <testcase classname="ProductRepository › findBySku" name="should be case-sensitive for SKU" time="0" file="src\services\product-catalog\repositories\product.repository.spec.ts">
+    </testcase>
+    <testcase classname="ProductRepository › skuExists" name="should return true if SKU exists" time="0.001" file="src\services\product-catalog\repositories\product.repository.spec.ts">
+    </testcase>
+    <testcase classname="ProductRepository › skuExists" name="should return false if SKU does not exist" time="0" file="src\services\product-catalog\repositories\product.repository.spec.ts">
+    </testcase>
+    <testcase classname="ProductRepository › createProduct" name="should create a new product" time="0" file="src\services\product-catalog\repositories\product.repository.spec.ts">
+    </testcase>
+    <testcase classname="ProductRepository › createProduct" name="should throw ConflictError if SKU already exists" time="0.012" file="src\services\product-catalog\repositories\product.repository.spec.ts">
+    </testcase>
+    <testcase classname="ProductRepository › findByStatus" name="should find all products with specified status" time="0.001" file="src\services\product-catalog\repositories\product.repository.spec.ts">
+    </testcase>
+    <testcase classname="ProductRepository › findByStatus" name="should return empty array if no products found" time="0" file="src\services\product-catalog\repositories\product.repository.spec.ts">
+    </testcase>
+    <testcase classname="ProductRepository › findByCategory" name="should find all products in category" time="0.001" file="src\services\product-catalog\repositories\product.repository.spec.ts">
+    </testcase>
+    <testcase classname="ProductRepository › findByCategory" name="should return empty array for category with no products" time="0" file="src\services\product-catalog\repositories\product.repository.spec.ts">
+    </testcase>
+    <testcase classname="ProductRepository › updateInventory" name="should update product inventory" time="0.001" file="src\services\product-catalog\repositories\product.repository.spec.ts">
+    </testcase>
+    <testcase classname="ProductRepository › updateInventory" name="should throw NotFoundError if product not found" time="0.002" file="src\services\product-catalog\repositories\product.repository.spec.ts">
+    </testcase>
+    <testcase classname="ProductRepository › updateInventory" name="should allow setting inventory to zero" time="0" file="src\services\product-catalog\repositories\product.repository.spec.ts">
+    </testcase>
+    <testcase classname="ProductRepository › decrementInventory" name="should decrement inventory by quantity" time="0" file="src\services\product-catalog\repositories\product.repository.spec.ts">
+    </testcase>
+    <testcase classname="ProductRepository › decrementInventory" name="should not allow negative inventory" time="0.001" file="src\services\product-catalog\repositories\product.repository.spec.ts">
+    </testcase>
+    <testcase classname="ProductRepository › decrementInventory" name="should handle exact inventory match" time="0" file="src\services\product-catalog\repositories\product.repository.spec.ts">
+    </testcase>
+    <testcase classname="ProductRepository › incrementInventory" name="should increment inventory by quantity" time="0" file="src\services\product-catalog\repositories\product.repository.spec.ts">
+    </testcase>
+    <testcase classname="ProductRepository › incrementInventory" name="should increment from zero inventory" time="0.001" file="src\services\product-catalog\repositories\product.repository.spec.ts">
+    </testcase>
+    <testcase classname="ProductRepository › findLowStock" name="should find products with inventory below threshold" time="0" file="src\services\product-catalog\repositories\product.repository.spec.ts">
+    </testcase>
+    <testcase classname="ProductRepository › findLowStock" name="should only return active products with low stock" time="0" file="src\services\product-catalog\repositories\product.repository.spec.ts">
+    </testcase>
+    <testcase classname="ProductRepository › findOnSale" name="should find products on sale" time="0.001" file="src\services\product-catalog\repositories\product.repository.spec.ts">
+    </testcase>
+    <testcase classname="ProductRepository › searchProducts" name="should search products by name" time="0" file="src\services\product-catalog\repositories\product.repository.spec.ts">
+    </testcase>
+    <testcase classname="ProductRepository › searchProducts" name="should support pagination" time="0.001" file="src\services\product-catalog\repositories\product.repository.spec.ts">
+    </testcase>
+    <testcase classname="ProductRepository › searchProducts" name="should filter by price range" time="0" file="src\services\product-catalog\repositories\product.repository.spec.ts">
+    </testcase>
+    <testcase classname="ProductRepository › searchProducts" name="should filter by category" time="0.001" file="src\services\product-catalog\repositories\product.repository.spec.ts">
+    </testcase>
+    <testcase classname="ProductRepository › updateRating" name="should update product rating and review count" time="0" file="src\services\product-catalog\repositories\product.repository.spec.ts">
+    </testcase>
+    <testcase classname="ProductRepository › incrementSoldCount" name="should increment sold count" time="0" file="src\services\product-catalog\repositories\product.repository.spec.ts">
+    </testcase>
+    <testcase classname="ProductRepository › findTopSelling" name="should find top selling products" time="0.001" file="src\services\product-catalog\repositories\product.repository.spec.ts">
+    </testcase>
+    <testcase classname="ProductRepository › findTopSelling" name="should limit results to specified count" time="0" file="src\services\product-catalog\repositories\product.repository.spec.ts">
+    </testcase>
+    <testcase classname="ProductRepository › findTopRated" name="should find top rated products" time="0" file="src\services\product-catalog\repositories\product.repository.spec.ts">
+    </testcase>
+    <testcase classname="ProductRepository › findTopRated" name="should only include products with minimum reviews" time="0.001" file="src\services\product-catalog\repositories\product.repository.spec.ts">
+    </testcase>
+  </testsuite>
+  <testsuite name="src\services\user-management\repositories\user.repository.spec.ts" errors="0" failures="0" skipped="0" timestamp="2025-12-02T23:35:46" time="4.21" tests="24">
+    <testcase classname="UserRepository › findByEmail" name="should find user by email" time="0.007" file="src\services\user-management\repositories\user.repository.spec.ts">
+    </testcase>
+    <testcase classname="UserRepository › findByEmail" name="should return null if user not found" time="0.001" file="src\services\user-management\repositories\user.repository.spec.ts">
+    </testcase>
+    <testcase classname="UserRepository › findByEmail" name="should be case-insensitive" time="0" file="src\services\user-management\repositories\user.repository.spec.ts">
+    </testcase>
+    <testcase classname="UserRepository › emailExists" name="should return true if email exists" time="0.001" file="src\services\user-management\repositories\user.repository.spec.ts">
+    </testcase>
+    <testcase classname="UserRepository › emailExists" name="should return false if email does not exist" time="0" file="src\services\user-management\repositories\user.repository.spec.ts">
+    </testcase>
+    <testcase classname="UserRepository › emailExists" name="should be case-insensitive" time="0" file="src\services\user-management\repositories\user.repository.spec.ts">
+    </testcase>
+    <testcase classname="UserRepository › createUser" name="should create a new user" time="0" file="src\services\user-management\repositories\user.repository.spec.ts">
+    </testcase>
+    <testcase classname="UserRepository › createUser" name="should throw ConflictError if email already exists" time="0.014" file="src\services\user-management\repositories\user.repository.spec.ts">
+    </testcase>
+    <testcase classname="UserRepository › createUser" name="should normalize email to lowercase" time="0.001" file="src\services\user-management\repositories\user.repository.spec.ts">
+    </testcase>
+    <testcase classname="UserRepository › findByRole" name="should find all users with specified role" time="0.001" file="src\services\user-management\repositories\user.repository.spec.ts">
+    </testcase>
+    <testcase classname="UserRepository › findByRole" name="should return empty array if no users with role" time="0" file="src\services\user-management\repositories\user.repository.spec.ts">
+    </testcase>
+    <testcase classname="UserRepository › findByStatus" name="should find all users with specified status" time="0" file="src\services\user-management\repositories\user.repository.spec.ts">
+    </testcase>
+    <testcase classname="UserRepository › updateLastLogin" name="should update last login timestamp" time="0.001" file="src\services\user-management\repositories\user.repository.spec.ts">
+    </testcase>
+    <testcase classname="UserRepository › updateLastLogin" name="should throw NotFoundError if user not found" time="0.001" file="src\services\user-management\repositories\user.repository.spec.ts">
+    </testcase>
+    <testcase classname="UserRepository › incrementLoginAttempts" name="should increment login attempts" time="0.001" file="src\services\user-management\repositories\user.repository.spec.ts">
+    </testcase>
+    <testcase classname="UserRepository › incrementLoginAttempts" name="should lock account after 5 failed attempts" time="0" file="src\services\user-management\repositories\user.repository.spec.ts">
+    </testcase>
+    <testcase classname="UserRepository › resetLoginAttempts" name="should reset login attempts to zero" time="0.001" file="src\services\user-management\repositories\user.repository.spec.ts">
+    </testcase>
+    <testcase classname="UserRepository › setEmailVerificationToken" name="should set email verification token" time="0" file="src\services\user-management\repositories\user.repository.spec.ts">
+    </testcase>
+    <testcase classname="UserRepository › verifyEmail" name="should verify email and clear token" time="0" file="src\services\user-management\repositories\user.repository.spec.ts">
+    </testcase>
+    <testcase classname="UserRepository › verifyEmail" name="should throw NotFoundError for invalid token" time="0" file="src\services\user-management\repositories\user.repository.spec.ts">
+    </testcase>
+    <testcase classname="UserRepository › setPasswordResetToken" name="should set password reset token with expiry" time="0.001" file="src\services\user-management\repositories\user.repository.spec.ts">
+    </testcase>
+    <testcase classname="UserRepository › resetPassword" name="should reset password and clear token" time="0.001" file="src\services\user-management\repositories\user.repository.spec.ts">
+    </testcase>
+    <testcase classname="UserRepository › resetPassword" name="should throw NotFoundError for invalid token" time="0" file="src\services\user-management\repositories\user.repository.spec.ts">
+    </testcase>
+    <testcase classname="UserRepository › resetPassword" name="should throw error for expired token" time="0.001" file="src\services\user-management\repositories\user.repository.spec.ts">
+    </testcase>
+  </testsuite>
+  <testsuite name="src\services\user-management\services\user.service.spec.ts" errors="0" failures="0" skipped="0" timestamp="2025-12-02T23:35:46" time="4.264" tests="25">
+    <testcase classname="UserService › register" name="should register a new user successfully" time="0.007" file="src\services\user-management\services\user.service.spec.ts">
+    </testcase>
+    <testcase classname="UserService › register" name="should reject weak passwords" time="0.014" file="src\services\user-management\services\user.service.spec.ts">
+    </testcase>
+    <testcase classname="UserService › register" name="should reject duplicate email" time="0.001" file="src\services\user-management\services\user.service.spec.ts">
+    </testcase>
+    <testcase classname="UserService › register" name="should generate verification token" time="0.001" file="src\services\user-management\services\user.service.spec.ts">
+    </testcase>
+    <testcase classname="UserService › login" name="should login successfully with correct credentials" time="0.001" file="src\services\user-management\services\user.service.spec.ts">
+    </testcase>
+    <testcase classname="UserService › login" name="should reject login for non-existent user" time="0.001" file="src\services\user-management\services\user.service.spec.ts">
+    </testcase>
+    <testcase classname="UserService › login" name="should reject login with incorrect password" time="0.003" file="src\services\user-management\services\user.service.spec.ts">
+    </testcase>
+    <testcase classname="UserService › login" name="should reject login for locked accounts" time="0.001" file="src\services\user-management\services\user.service.spec.ts">
+    </testcase>
+    <testcase classname="UserService › login" name="should reject login for unverified emails" time="0.001" file="src\services\user-management\services\user.service.spec.ts">
+    </testcase>
+    <testcase classname="UserService › login" name="should reject login for suspended accounts" time="0.001" file="src\services\user-management\services\user.service.spec.ts">
+    </testcase>
+    <testcase classname="UserService › verifyEmail" name="should verify email successfully" time="0" file="src\services\user-management\services\user.service.spec.ts">
+    </testcase>
+    <testcase classname="UserService › verifyEmail" name="should reject invalid verification token" time="0.001" file="src\services\user-management\services\user.service.spec.ts">
+    </testcase>
+    <testcase classname="UserService › requestPasswordReset" name="should generate password reset token" time="0" file="src\services\user-management\services\user.service.spec.ts">
+    </testcase>
+    <testcase classname="UserService › requestPasswordReset" name="should not reveal if email does not exist" time="0" file="src\services\user-management\services\user.service.spec.ts">
+    </testcase>
+    <testcase classname="UserService › resetPassword" name="should reset password successfully" time="0.001" file="src\services\user-management\services\user.service.spec.ts">
+    </testcase>
+    <testcase classname="UserService › resetPassword" name="should reject weak new password" time="0" file="src\services\user-management\services\user.service.spec.ts">
+    </testcase>
+    <testcase classname="UserService › getUserById" name="should return user profile" time="0.001" file="src\services\user-management\services\user.service.spec.ts">
+    </testcase>
+    <testcase classname="UserService › getUserById" name="should throw NotFoundError for non-existent user" time="0" file="src\services\user-management\services\user.service.spec.ts">
+    </testcase>
+    <testcase classname="UserService › updateProfile" name="should update user profile" time="0.001" file="src\services\user-management\services\user.service.spec.ts">
+    </testcase>
+    <testcase classname="UserService › updateProfile" name="should not allow updating email" time="0" file="src\services\user-management\services\user.service.spec.ts">
+    </testcase>
+    <testcase classname="UserService › updateProfile" name="should not allow updating password directly" time="0.001" file="src\services\user-management\services\user.service.spec.ts">
+    </testcase>
+    <testcase classname="UserService › changePassword" name="should change password with correct old password" time="0" file="src\services\user-management\services\user.service.spec.ts">
+    </testcase>
+    <testcase classname="UserService › changePassword" name="should reject with incorrect old password" time="0" file="src\services\user-management\services\user.service.spec.ts">
+    </testcase>
+    <testcase classname="UserService › refreshToken" name="should generate new access token with valid refresh token" time="0.001" file="src\services\user-management\services\user.service.spec.ts">
+    </testcase>
+    <testcase classname="UserService › refreshToken" name="should reject invalid refresh token" time="0.001" file="src\services\user-management\services\user.service.spec.ts">
+    </testcase>
+  </testsuite>
+  <testsuite name="src\services\order-processing\services\order.service.spec.ts" errors="0" failures="0" skipped="0" timestamp="2025-12-02T23:35:51" time="0.364" tests="24">
+    <testcase classname="OrderService › createOrder" name="should create order successfully" time="0.002" file="src\services\order-processing\services\order.service.spec.ts">
+    </testcase>
+    <testcase classname="OrderService › createOrder" name="should reject order with empty items" time="0.014" file="src\services\order-processing\services\order.service.spec.ts">
+    </testcase>
+    <testcase classname="OrderService › createOrder" name="should reject order with negative quantity" time="0.001" file="src\services\order-processing\services\order.service.spec.ts">
+    </testcase>
+    <testcase classname="OrderService › createOrder" name="should calculate subtotal correctly" time="0.001" file="src\services\order-processing\services\order.service.spec.ts">
+    </testcase>
+    <testcase classname="OrderService › createOrder" name="should calculate tax at 10%" time="0" file="src\services\order-processing\services\order.service.spec.ts">
+    </testcase>
+    <testcase classname="OrderService › createOrder" name="should add default shipping cost" time="0.001" file="src\services\order-processing\services\order.service.spec.ts">
+    </testcase>
+    <testcase classname="OrderService › getOrderById" name="should return order by ID" time="0" file="src\services\order-processing\services\order.service.spec.ts">
+    </testcase>
+    <testcase classname="OrderService › getOrderById" name="should throw NotFoundError for non-existent order" time="0" file="src\services\order-processing\services\order.service.spec.ts">
+    </testcase>
+    <testcase classname="OrderService › getUserOrders" name="should return all orders for user" time="0.001" file="src\services\order-processing\services\order.service.spec.ts">
+    </testcase>
+    <testcase classname="OrderService › getUserOrders" name="should return empty array for user with no orders" time="0" file="src\services\order-processing\services\order.service.spec.ts">
+    </testcase>
+    <testcase classname="OrderService › confirmOrder" name="should confirm pending order" time="0.001" file="src\services\order-processing\services\order.service.spec.ts">
+    </testcase>
+    <testcase classname="OrderService › processPayment" name="should mark payment as successful" time="0" file="src\services\order-processing\services\order.service.spec.ts">
+    </testcase>
+    <testcase classname="OrderService › processPayment" name="should handle payment failure" time="0" file="src\services\order-processing\services\order.service.spec.ts">
+    </testcase>
+    <testcase classname="OrderService › shipOrder" name="should ship confirmed paid order" time="0.001" file="src\services\order-processing\services\order.service.spec.ts">
+    </testcase>
+    <testcase classname="OrderService › deliverOrder" name="should mark order as delivered" time="0" file="src\services\order-processing\services\order.service.spec.ts">
+    </testcase>
+    <testcase classname="OrderService › cancelOrder" name="should cancel pending order" time="0.001" file="src\services\order-processing\services\order.service.spec.ts">
+    </testcase>
+    <testcase classname="OrderService › cancelOrder" name="should not cancel shipped order" time="0" file="src\services\order-processing\services\order.service.spec.ts">
+    </testcase>
+    <testcase classname="OrderService › applyDiscount" name="should apply valid discount code" time="0.001" file="src\services\order-processing\services\order.service.spec.ts">
+    </testcase>
+    <testcase classname="OrderService › applyDiscount" name="should reject discount greater than subtotal" time="0" file="src\services\order-processing\services\order.service.spec.ts">
+    </testcase>
+    <testcase classname="OrderService › applyDiscount" name="should reject negative discount" time="0.001" file="src\services\order-processing\services\order.service.spec.ts">
+    </testcase>
+    <testcase classname="OrderService › getOrderTotal" name="should calculate total with tax and shipping" time="0.001" file="src\services\order-processing\services\order.service.spec.ts">
+    </testcase>
+    <testcase classname="OrderService › getOrderTotal" name="should subtract discount from total" time="0.004" file="src\services\order-processing\services\order.service.spec.ts">
+    </testcase>
+    <testcase classname="OrderService › getTotalRevenue" name="should return total revenue from paid orders" time="0" file="src\services\order-processing\services\order.service.spec.ts">
+    </testcase>
+    <testcase classname="OrderService › getOrderStatistics" name="should return order stats by status" time="0.001" file="src\services\order-processing\services\order.service.spec.ts">
+    </testcase>
+  </testsuite>
+  <testsuite name="src\libs\auth\jwt.utils.spec.ts" errors="0" failures="0" skipped="0" timestamp="2025-12-02T23:35:46" time="4.589" tests="20">
+    <testcase classname="JWT Utilities › generateAccessToken" name="should generate valid access token" time="0.011" file="src\libs\auth\jwt.utils.spec.ts">
+    </testcase>
+    <testcase classname="JWT Utilities › generateAccessToken" name="should include payload data in token" time="0.002" file="src\libs\auth\jwt.utils.spec.ts">
+    </testcase>
+    <testcase classname="JWT Utilities › generateAccessToken" name="should generate different tokens for same payload" time="1.004" file="src\libs\auth\jwt.utils.spec.ts">
+    </testcase>
+    <testcase classname="JWT Utilities › generateRefreshToken" name="should generate valid refresh token" time="0.001" file="src\libs\auth\jwt.utils.spec.ts">
+    </testcase>
+    <testcase classname="JWT Utilities › generateRefreshToken" name="should generate different token than access token" time="0.003" file="src\libs\auth\jwt.utils.spec.ts">
+    </testcase>
+    <testcase classname="JWT Utilities › verifyAccessToken" name="should verify valid access token" time="0.002" file="src\libs\auth\jwt.utils.spec.ts">
+    </testcase>
+    <testcase classname="JWT Utilities › verifyAccessToken" name="should throw UnauthorizedError for invalid token" time="0.011" file="src\libs\auth\jwt.utils.spec.ts">
+    </testcase>
+    <testcase classname="JWT Utilities › verifyAccessToken" name="should throw UnauthorizedError for malformed token" time="0.001" file="src\libs\auth\jwt.utils.spec.ts">
+    </testcase>
+    <testcase classname="JWT Utilities › verifyAccessToken" name="should reject refresh token as access token" time="0.003" file="src\libs\auth\jwt.utils.spec.ts">
+    </testcase>
+    <testcase classname="JWT Utilities › verifyRefreshToken" name="should verify valid refresh token" time="0.003" file="src\libs\auth\jwt.utils.spec.ts">
+    </testcase>
+    <testcase classname="JWT Utilities › verifyRefreshToken" name="should throw UnauthorizedError for invalid token" time="0.001" file="src\libs\auth\jwt.utils.spec.ts">
+    </testcase>
+    <testcase classname="JWT Utilities › verifyRefreshToken" name="should reject access token as refresh token" time="0.003" file="src\libs\auth\jwt.utils.spec.ts">
+    </testcase>
+    <testcase classname="JWT Utilities › decodeToken" name="should decode token without verification" time="0.001" file="src\libs\auth\jwt.utils.spec.ts">
+    </testcase>
+    <testcase classname="JWT Utilities › decodeToken" name="should return null for invalid token" time="0.001" file="src\libs\auth\jwt.utils.spec.ts">
+    </testcase>
+    <testcase classname="JWT Utilities › decodeToken" name="should decode expired token" time="0.001" file="src\libs\auth\jwt.utils.spec.ts">
+    </testcase>
+    <testcase classname="JWT Utilities › extractTokenFromHeader" name="should extract token from valid Bearer header" time="0" file="src\libs\auth\jwt.utils.spec.ts">
+    </testcase>
+    <testcase classname="JWT Utilities › extractTokenFromHeader" name="should return null for missing header" time="0.001" file="src\libs\auth\jwt.utils.spec.ts">
+    </testcase>
+    <testcase classname="JWT Utilities › extractTokenFromHeader" name="should return null for malformed header" time="0" file="src\libs\auth\jwt.utils.spec.ts">
+    </testcase>
+    <testcase classname="JWT Utilities › extractTokenFromHeader" name="should return null for header without token" time="0" file="src\libs\auth\jwt.utils.spec.ts">
+    </testcase>
+    <testcase classname="JWT Utilities › extractTokenFromHeader" name="should return null for token without Bearer prefix" time="0.001" file="src\libs\auth\jwt.utils.spec.ts">
+    </testcase>
+  </testsuite>
+  <testsuite name="src\services\user-management\entities\user.entity.spec.ts" errors="0" failures="0" skipped="0" timestamp="2025-12-02T23:35:50" time="0.481" tests="33">
+    <testcase classname="User Entity › fullName getter" name="should return full name" time="0.001" file="src\services\user-management\entities\user.entity.spec.ts">
+    </testcase>
+    <testcase classname="User Entity › fullName getter" name="should handle different names" time="0.001" file="src\services\user-management\entities\user.entity.spec.ts">
+    </testcase>
+    <testcase classname="User Entity › fullName getter" name="should handle single character names" time="0" file="src\services\user-management\entities\user.entity.spec.ts">
+    </testcase>
+    <testcase classname="User Entity › isEmailVerified" name="should return true when email is verified" time="0" file="src\services\user-management\entities\user.entity.spec.ts">
+    </testcase>
+    <testcase classname="User Entity › isEmailVerified" name="should return false when email is not verified" time="0.001" file="src\services\user-management\entities\user.entity.spec.ts">
+    </testcase>
+    <testcase classname="User Entity › isEmailVerified" name="should return false when emailVerifiedAt is null" time="0" file="src\services\user-management\entities\user.entity.spec.ts">
+    </testcase>
+    <testcase classname="User Entity › isEmailVerified" name="should return true for past verification date" time="0.001" file="src\services\user-management\entities\user.entity.spec.ts">
+    </testcase>
+    <testcase classname="User Entity › isLocked" name="should return false when not locked" time="0" file="src\services\user-management\entities\user.entity.spec.ts">
+    </testcase>
+    <testcase classname="User Entity › isLocked" name="should return true when locked in future" time="0" file="src\services\user-management\entities\user.entity.spec.ts">
+    </testcase>
+    <testcase classname="User Entity › isLocked" name="should return false when lock expired" time="0" file="src\services\user-management\entities\user.entity.spec.ts">
+    </testcase>
+    <testcase classname="User Entity › isLocked" name="should return false when lockedUntil is null" time="0" file="src\services\user-management\entities\user.entity.spec.ts">
+    </testcase>
+    <testcase classname="User Entity › isLocked" name="should handle exact lock expiration time" time="0" file="src\services\user-management\entities\user.entity.spec.ts">
+    </testcase>
+    <testcase classname="User Entity › isActive" name="should return true for active unlocked user" time="0" file="src\services\user-management\entities\user.entity.spec.ts">
+    </testcase>
+    <testcase classname="User Entity › isActive" name="should return false for locked user" time="0" file="src\services\user-management\entities\user.entity.spec.ts">
+    </testcase>
+    <testcase classname="User Entity › isActive" name="should return false for pending user" time="0" file="src\services\user-management\entities\user.entity.spec.ts">
+    </testcase>
+    <testcase classname="User Entity › isActive" name="should return false for suspended user" time="0" file="src\services\user-management\entities\user.entity.spec.ts">
+    </testcase>
+    <testcase classname="User Entity › isActive" name="should return false for deleted user" time="0" file="src\services\user-management\entities\user.entity.spec.ts">
+    </testcase>
+    <testcase classname="User Entity › isActive" name="should return false for suspended and locked user" time="0" file="src\services\user-management\entities\user.entity.spec.ts">
+    </testcase>
+    <testcase classname="User Entity › toJSON" name="should exclude password from JSON" time="0" file="src\services\user-management\entities\user.entity.spec.ts">
+    </testcase>
+    <testcase classname="User Entity › toJSON" name="should exclude emailVerificationToken from JSON" time="0" file="src\services\user-management\entities\user.entity.spec.ts">
+    </testcase>
+    <testcase classname="User Entity › toJSON" name="should exclude passwordResetToken from JSON" time="0" file="src\services\user-management\entities\user.entity.spec.ts">
+    </testcase>
+    <testcase classname="User Entity › toJSON" name="should include safe fields in JSON" time="0.001" file="src\services\user-management\entities\user.entity.spec.ts">
+    </testcase>
+    <testcase classname="User Entity › toJSON" name="should include timestamps in JSON" time="0" file="src\services\user-management\entities\user.entity.spec.ts">
+    </testcase>
+    <testcase classname="User Entity › toJSON" name="should include optional fields when present" time="0" file="src\services\user-management\entities\user.entity.spec.ts">
+    </testcase>
+    <testcase classname="User Entity › Role-based checks" name="should identify admin role" time="0" file="src\services\user-management\entities\user.entity.spec.ts">
+    </testcase>
+    <testcase classname="User Entity › Role-based checks" name="should identify customer role" time="0" file="src\services\user-management\entities\user.entity.spec.ts">
+    </testcase>
+    <testcase classname="User Entity › Role-based checks" name="should identify vendor role" time="0" file="src\services\user-management\entities\user.entity.spec.ts">
+    </testcase>
+    <testcase classname="User Entity › Status transitions" name="should allow pending to active transition" time="0" file="src\services\user-management\entities\user.entity.spec.ts">
+    </testcase>
+    <testcase classname="User Entity › Status transitions" name="should allow active to suspended transition" time="0" file="src\services\user-management\entities\user.entity.spec.ts">
+    </testcase>
+    <testcase classname="User Entity › Status transitions" name="should allow suspended to active transition" time="0" file="src\services\user-management\entities\user.entity.spec.ts">
+    </testcase>
+    <testcase classname="User Entity › Login attempt tracking" name="should track login attempts" time="0" file="src\services\user-management\entities\user.entity.spec.ts">
+    </testcase>
+    <testcase classname="User Entity › Login attempt tracking" name="should handle multiple failed attempts" time="0" file="src\services\user-management\entities\user.entity.spec.ts">
+    </testcase>
+    <testcase classname="User Entity › Login attempt tracking" name="should reset login attempts" time="0" file="src\services\user-management\entities\user.entity.spec.ts">
+    </testcase>
+  </testsuite>
+  <testsuite name="src\services\order-processing\services\refund.service.spec.ts" errors="0" failures="0" skipped="0" timestamp="2025-12-02T23:35:51" time="0.384" tests="23">
+    <testcase classname="RefundService › createRefundRequest" name="should create a refund request" time="0.003" file="src\services\order-processing\services\refund.service.spec.ts">
+    </testcase>
+    <testcase classname="RefundService › createRefundRequest" name="should reject refund request for non-existent order" time="0.016" file="src\services\order-processing\services\refund.service.spec.ts">
+    </testcase>
+    <testcase classname="RefundService › createRefundRequest" name="should reject refund request for unpaid order" time="0.006" file="src\services\order-processing\services\refund.service.spec.ts">
+    </testcase>
+    <testcase classname="RefundService › createRefundRequest" name="should reject refund request after return window expired" time="0.002" file="src\services\order-processing\services\refund.service.spec.ts">
+    </testcase>
+    <testcase classname="RefundService › createRefundRequest" name="should calculate partial refund amount for partial return" time="0" file="src\services\order-processing\services\refund.service.spec.ts">
+    </testcase>
+    <testcase classname="RefundService › createRefundRequest" name="should require photos for defective items" time="0" file="src\services\order-processing\services\refund.service.spec.ts">
+    </testcase>
+    <testcase classname="RefundService › approveRefund" name="should approve a refund request" time="0.003" file="src\services\order-processing\services\refund.service.spec.ts">
+    </testcase>
+    <testcase classname="RefundService › approveRefund" name="should approve partial refund with adjusted amount" time="0" file="src\services\order-processing\services\refund.service.spec.ts">
+    </testcase>
+    <testcase classname="RefundService › rejectRefund" name="should reject a refund request" time="0.001" file="src\services\order-processing\services\refund.service.spec.ts">
+    </testcase>
+    <testcase classname="RefundService › processRefund" name="should process approved refund and issue payment" time="0" file="src\services\order-processing\services\refund.service.spec.ts">
+    </testcase>
+    <testcase classname="RefundService › processRefund" name="should not process refund that is not approved" time="0" file="src\services\order-processing\services\refund.service.spec.ts">
+    </testcase>
+    <testcase classname="RefundService › restockItems" name="should restock returned items to inventory" time="0.001" file="src\services\order-processing\services\refund.service.spec.ts">
+    </testcase>
+    <testcase classname="RefundService › restockItems" name="should not restock defective items" time="0.001" file="src\services\order-processing\services\refund.service.spec.ts">
+    </testcase>
+    <testcase classname="RefundService › getUserRefunds" name="should get all refund requests for a user" time="0" file="src\services\order-processing\services\refund.service.spec.ts">
+    </testcase>
+    <testcase classname="RefundService › calculateRefundAmount" name="should calculate full refund amount" time="0.001" file="src\services\order-processing\services\refund.service.spec.ts">
+    </testcase>
+    <testcase classname="RefundService › calculateRefundAmount" name="should calculate partial refund for subset of items" time="0.001" file="src\services\order-processing\services\refund.service.spec.ts">
+    </testcase>
+    <testcase classname="RefundService › calculateRefundAmount" name="should not include shipping in partial refund" time="0" file="src\services\order-processing\services\refund.service.spec.ts">
+    </testcase>
+    <testcase classname="RefundService › generateReturnLabel" name="should generate return shipping label" time="0.001" file="src\services\order-processing\services\refund.service.spec.ts">
+    </testcase>
+    <testcase classname="RefundService › trackReturn" name="should track return shipment status" time="0" file="src\services\order-processing\services\refund.service.spec.ts">
+    </testcase>
+    <testcase classname="RefundService › markReturnAsReceived" name="should mark return as received" time="0" file="src\services\order-processing\services\refund.service.spec.ts">
+    </testcase>
+    <testcase classname="RefundService › getRefundStatistics" name="should get refund statistics" time="0.001" file="src\services\order-processing\services\refund.service.spec.ts">
+    </testcase>
+    <testcase classname="RefundService › checkEligibility" name="should check if order is eligible for refund" time="0" file="src\services\order-processing\services\refund.service.spec.ts">
+    </testcase>
+    <testcase classname="RefundService › checkEligibility" name="should return false for order outside return window" time="0.001" file="src\services\order-processing\services\refund.service.spec.ts">
+    </testcase>
+  </testsuite>
+  <testsuite name="tests\integration\services\product-analytics-integration.test.ts" errors="0" failures="0" skipped="0" timestamp="2025-12-02T23:35:51" time="0.354" tests="20">
+    <testcase classname="Product and Analytics Integration Tests › Product Sales Tracking" name="should track product views in analytics" time="0.002" file="tests\integration\services\product-analytics-integration.test.ts">
+    </testcase>
+    <testcase classname="Product and Analytics Integration Tests › Product Sales Tracking" name="should update top selling products when sales occur" time="0" file="tests\integration\services\product-analytics-integration.test.ts">
+    </testcase>
+    <testcase classname="Product and Analytics Integration Tests › Product Sales Tracking" name="should track product purchases and update sold count" time="0.001" file="tests\integration\services\product-analytics-integration.test.ts">
+    </testcase>
+    <testcase classname="Product and Analytics Integration Tests › Inventory Analytics" name="should identify low stock products" time="0" file="tests\integration\services\product-analytics-integration.test.ts">
+    </testcase>
+    <testcase classname="Product and Analytics Integration Tests › Inventory Analytics" name="should track inventory changes" time="0.001" file="tests\integration\services\product-analytics-integration.test.ts">
+    </testcase>
+    <testcase classname="Product and Analytics Integration Tests › Product Performance Metrics" name="should calculate conversion rate for products" time="0.001" file="tests\integration\services\product-analytics-integration.test.ts">
+    </testcase>
+    <testcase classname="Product and Analytics Integration Tests › Product Performance Metrics" name="should track product revenue" time="0" file="tests\integration\services\product-analytics-integration.test.ts">
+    </testcase>
+    <testcase classname="Product and Analytics Integration Tests › Product Ratings and Reviews" name="should update top rated products list" time="0.001" file="tests\integration\services\product-analytics-integration.test.ts">
+    </testcase>
+    <testcase classname="Product and Analytics Integration Tests › Product Ratings and Reviews" name="should track rating changes" time="0" file="tests\integration\services\product-analytics-integration.test.ts">
+    </testcase>
+    <testcase classname="Product and Analytics Integration Tests › Dashboard Metrics Integration" name="should aggregate product metrics for dashboard" time="0.001" file="tests\integration\services\product-analytics-integration.test.ts">
+    </testcase>
+    <testcase classname="Product and Analytics Integration Tests › Dashboard Metrics Integration" name="should include product-specific metrics in reports" time="0.001" file="tests\integration\services\product-analytics-integration.test.ts">
+    </testcase>
+    <testcase classname="Product and Analytics Integration Tests › Sales Period Analytics" name="should track product sales by time period" time="0" file="tests\integration\services\product-analytics-integration.test.ts">
+    </testcase>
+    <testcase classname="Product and Analytics Integration Tests › Product Lifecycle Analytics" name="should track product from creation to first sale" time="0.001" file="tests\integration\services\product-analytics-integration.test.ts">
+    </testcase>
+    <testcase classname="Product and Analytics Integration Tests › Product Lifecycle Analytics" name="should track product status changes in analytics" time="0" file="tests\integration\services\product-analytics-integration.test.ts">
+    </testcase>
+    <testcase classname="Product and Analytics Integration Tests › Cross-Service Event Tracking" name="should track complete purchase funnel" time="0.001" file="tests\integration\services\product-analytics-integration.test.ts">
+    </testcase>
+    <testcase classname="Product and Analytics Integration Tests › Cross-Service Event Tracking" name="should calculate customer lifetime value with product purchases" time="0.001" file="tests\integration\services\product-analytics-integration.test.ts">
+    </testcase>
+    <testcase classname="Product and Analytics Integration Tests › Promotional Analytics" name="should track sales for discounted products" time="0" file="tests\integration\services\product-analytics-integration.test.ts">
+    </testcase>
+    <testcase classname="Product and Analytics Integration Tests › Promotional Analytics" name="should measure promotion effectiveness" time="0" file="tests\integration\services\product-analytics-integration.test.ts">
+    </testcase>
+    <testcase classname="Product and Analytics Integration Tests › Inventory Optimization" name="should identify fast-moving products for restocking" time="0.001" file="tests\integration\services\product-analytics-integration.test.ts">
+    </testcase>
+    <testcase classname="Product and Analytics Integration Tests › Inventory Optimization" name="should identify slow-moving products" time="0" file="tests\integration\services\product-analytics-integration.test.ts">
+    </testcase>
+  </testsuite>
+  <testsuite name="src\services\product-catalog\services\product.service.spec.ts" errors="0" failures="0" skipped="0" timestamp="2025-12-02T23:35:50" time="0.652" tests="39">
+    <testcase classname="ProductService › createProduct" name="should create a new product successfully" time="0.004" file="src\services\product-catalog\services\product.service.spec.ts">
+    </testcase>
+    <testcase classname="ProductService › createProduct" name="should reject negative price" time="0.015" file="src\services\product-catalog\services\product.service.spec.ts">
+    </testcase>
+    <testcase classname="ProductService › createProduct" name="should reject zero price" time="0.001" file="src\services\product-catalog\services\product.service.spec.ts">
+    </testcase>
+    <testcase classname="ProductService › createProduct" name="should reject negative inventory" time="0" file="src\services\product-catalog\services\product.service.spec.ts">
+    </testcase>
+    <testcase classname="ProductService › createProduct" name="should allow zero inventory" time="0.001" file="src\services\product-catalog\services\product.service.spec.ts">
+    </testcase>
+    <testcase classname="ProductService › createProduct" name="should reject duplicate SKU" time="0" file="src\services\product-catalog\services\product.service.spec.ts">
+    </testcase>
+    <testcase classname="ProductService › createProduct" name="should validate compareAtPrice is higher than price" time="0.001" file="src\services\product-catalog\services\product.service.spec.ts">
+    </testcase>
+    <testcase classname="ProductService › createProduct" name="should allow valid compareAtPrice" time="0" file="src\services\product-catalog\services\product.service.spec.ts">
+    </testcase>
+    <testcase classname="ProductService › getProductById" name="should return product by ID" time="0" file="src\services\product-catalog\services\product.service.spec.ts">
+    </testcase>
+    <testcase classname="ProductService › getProductById" name="should throw NotFoundError for non-existent product" time="0.001" file="src\services\product-catalog\services\product.service.spec.ts">
+    </testcase>
+    <testcase classname="ProductService › updateProduct" name="should update product successfully" time="0" file="src\services\product-catalog\services\product.service.spec.ts">
+    </testcase>
+    <testcase classname="ProductService › updateProduct" name="should reject negative price update" time="0.001" file="src\services\product-catalog\services\product.service.spec.ts">
+    </testcase>
+    <testcase classname="ProductService › updateProduct" name="should reject invalid compareAtPrice update" time="0" file="src\services\product-catalog\services\product.service.spec.ts">
+    </testcase>
+    <testcase classname="ProductService › deleteProduct" name="should delete product" time="0.001" file="src\services\product-catalog\services\product.service.spec.ts">
+    </testcase>
+    <testcase classname="ProductService › publishProduct" name="should publish draft product" time="0" file="src\services\product-catalog\services\product.service.spec.ts">
+    </testcase>
+    <testcase classname="ProductService › unpublishProduct" name="should unpublish active product" time="0.001" file="src\services\product-catalog\services\product.service.spec.ts">
+    </testcase>
+    <testcase classname="ProductService › updateInventory" name="should update inventory" time="0" file="src\services\product-catalog\services\product.service.spec.ts">
+    </testcase>
+    <testcase classname="ProductService › updateInventory" name="should reject negative inventory" time="0.001" file="src\services\product-catalog\services\product.service.spec.ts">
+    </testcase>
+    <testcase classname="ProductService › updateInventory" name="should allow zero inventory" time="0" file="src\services\product-catalog\services\product.service.spec.ts">
+    </testcase>
+    <testcase classname="ProductService › reserveInventory" name="should reserve inventory for purchase" time="0" file="src\services\product-catalog\services\product.service.spec.ts">
+    </testcase>
+    <testcase classname="ProductService › reserveInventory" name="should throw error when insufficient inventory" time="0.001" file="src\services\product-catalog\services\product.service.spec.ts">
+    </testcase>
+    <testcase classname="ProductService › reserveInventory" name="should reject zero quantity" time="0.001" file="src\services\product-catalog\services\product.service.spec.ts">
+    </testcase>
+    <testcase classname="ProductService › reserveInventory" name="should reject negative quantity" time="0.001" file="src\services\product-catalog\services\product.service.spec.ts">
+    </testcase>
+    <testcase classname="ProductService › restockInventory" name="should restock inventory" time="0.001" file="src\services\product-catalog\services\product.service.spec.ts">
+    </testcase>
+    <testcase classname="ProductService › restockInventory" name="should reject negative quantity" time="0" file="src\services\product-catalog\services\product.service.spec.ts">
+    </testcase>
+    <testcase classname="ProductService › restockInventory" name="should reject zero quantity" time="0" file="src\services\product-catalog\services\product.service.spec.ts">
+    </testcase>
+    <testcase classname="ProductService › getLowStockProducts" name="should return products with low stock" time="0.001" file="src\services\product-catalog\services\product.service.spec.ts">
+    </testcase>
+    <testcase classname="ProductService › getLowStockProducts" name="should use default threshold" time="0.004" file="src\services\product-catalog\services\product.service.spec.ts">
+    </testcase>
+    <testcase classname="ProductService › getProductsOnSale" name="should return products on sale" time="0" file="src\services\product-catalog\services\product.service.spec.ts">
+    </testcase>
+    <testcase classname="ProductService › searchProducts" name="should search products" time="0.001" file="src\services\product-catalog\services\product.service.spec.ts">
+    </testcase>
+    <testcase classname="ProductService › searchProducts" name="should pass search options to repository" time="0" file="src\services\product-catalog\services\product.service.spec.ts">
+    </testcase>
+    <testcase classname="ProductService › recordSale" name="should record product sale" time="0.001" file="src\services\product-catalog\services\product.service.spec.ts">
+    </testcase>
+    <testcase classname="ProductService › recordSale" name="should throw error for insufficient inventory" time="0.001" file="src\services\product-catalog\services\product.service.spec.ts">
+    </testcase>
+    <testcase classname="ProductService › updateProductRating" name="should update product rating" time="0" file="src\services\product-catalog\services\product.service.spec.ts">
+    </testcase>
+    <testcase classname="ProductService › updateProductRating" name="should reject invalid rating" time="0.001" file="src\services\product-catalog\services\product.service.spec.ts">
+    </testcase>
+    <testcase classname="ProductService › updateProductRating" name="should calculate new average rating correctly" time="0" file="src\services\product-catalog\services\product.service.spec.ts">
+    </testcase>
+    <testcase classname="ProductService › getTopSellingProducts" name="should return top selling products" time="0.001" file="src\services\product-catalog\services\product.service.spec.ts">
+    </testcase>
+    <testcase classname="ProductService › getTopRatedProducts" name="should return top rated products" time="0" file="src\services\product-catalog\services\product.service.spec.ts">
+    </testcase>
+    <testcase classname="ProductService › getTopRatedProducts" name="should use custom minimum review count" time="0" file="src\services\product-catalog\services\product.service.spec.ts">
+    </testcase>
+  </testsuite>
+  <testsuite name="src\libs\auth\auth.middleware.spec.ts" errors="0" failures="0" skipped="0" timestamp="2025-12-02T23:35:51" time="0.203" tests="19">
+    <testcase classname="Authentication Middleware › authenticate" name="should authenticate valid token" time="0.002" file="src\libs\auth\auth.middleware.spec.ts">
+    </testcase>
+    <testcase classname="Authentication Middleware › authenticate" name="should reject request without authorization header" time="0.001" file="src\libs\auth\auth.middleware.spec.ts">
+    </testcase>
+    <testcase classname="Authentication Middleware › authenticate" name="should reject invalid token" time="0" file="src\libs\auth\auth.middleware.spec.ts">
+    </testcase>
+    <testcase classname="Authentication Middleware › authenticate" name="should reject expired token" time="0.001" file="src\libs\auth\auth.middleware.spec.ts">
+    </testcase>
+    <testcase classname="Authentication Middleware › authenticate" name="should reject malformed authorization header" time="0" file="src\libs\auth\auth.middleware.spec.ts">
+    </testcase>
+    <testcase classname="Authentication Middleware › optionalAuthenticate" name="should attach user if valid token provided" time="0.001" file="src\libs\auth\auth.middleware.spec.ts">
+    </testcase>
+    <testcase classname="Authentication Middleware › optionalAuthenticate" name="should not fail if no token provided" time="0" file="src\libs\auth\auth.middleware.spec.ts">
+    </testcase>
+    <testcase classname="Authentication Middleware › optionalAuthenticate" name="should ignore invalid token and continue" time="0" file="src\libs\auth\auth.middleware.spec.ts">
+    </testcase>
+    <testcase classname="Authentication Middleware › optionalAuthenticate" name="should ignore expired token and continue" time="0" file="src\libs\auth\auth.middleware.spec.ts">
+    </testcase>
+    <testcase classname="Authentication Middleware › authorize" name="should authorize user with allowed role" time="0" file="src\libs\auth\auth.middleware.spec.ts">
+    </testcase>
+    <testcase classname="Authentication Middleware › authorize" name="should reject user without allowed role" time="0" file="src\libs\auth\auth.middleware.spec.ts">
+    </testcase>
+    <testcase classname="Authentication Middleware › authorize" name="should reject unauthenticated user" time="0" file="src\libs\auth\auth.middleware.spec.ts">
+    </testcase>
+    <testcase classname="Authentication Middleware › authorize" name="should handle single role" time="0" file="src\libs\auth\auth.middleware.spec.ts">
+    </testcase>
+    <testcase classname="Authentication Middleware › authorize" name="should handle multiple roles" time="0.001" file="src\libs\auth\auth.middleware.spec.ts">
+    </testcase>
+    <testcase classname="Authentication Middleware › authorizeOwnerOrAdmin" name="should allow resource owner to access" time="0" file="src\libs\auth\auth.middleware.spec.ts">
+    </testcase>
+    <testcase classname="Authentication Middleware › authorizeOwnerOrAdmin" name="should allow admin to access any resource" time="0" file="src\libs\auth\auth.middleware.spec.ts">
+    </testcase>
+    <testcase classname="Authentication Middleware › authorizeOwnerOrAdmin" name="should reject non-owner non-admin" time="0.001" file="src\libs\auth\auth.middleware.spec.ts">
+    </testcase>
+    <testcase classname="Authentication Middleware › authorizeOwnerOrAdmin" name="should reject unauthenticated user" time="0" file="src\libs\auth\auth.middleware.spec.ts">
+    </testcase>
+    <testcase classname="Authentication Middleware › authorizeOwnerOrAdmin" name="should work with custom getUserId function" time="0.001" file="src\libs\auth\auth.middleware.spec.ts">
+    </testcase>
+  </testsuite>
+  <testsuite name="src\libs\validation\validator.spec.ts" errors="0" failures="0" skipped="0" timestamp="2025-12-02T23:35:51" time="0.194" tests="34">
+    <testcase classname="Validation Utilities › commonSchemas › email" name="should validate correct email" time="0.004" file="src\libs\validation\validator.spec.ts">
+    </testcase>
+    <testcase classname="Validation Utilities › commonSchemas › email" name="should reject invalid email" time="0.001" file="src\libs\validation\validator.spec.ts">
+    </testcase>
+    <testcase classname="Validation Utilities › commonSchemas › email" name="should reject email without domain" time="0.001" file="src\libs\validation\validator.spec.ts">
     </testcase>
     <testcase classname="Validation Utilities › commonSchemas › email" name="should reject email without @" time="0" file="src\libs\validation\validator.spec.ts">
     </testcase>
-    <testcase classname="Validation Utilities › commonSchemas › uuid" name="should validate correct UUID" time="0" file="src\libs\validation\validator.spec.ts">
+    <testcase classname="Validation Utilities › commonSchemas › uuid" name="should validate correct UUID" time="0.001" file="src\libs\validation\validator.spec.ts">
     </testcase>
-    <testcase classname="Validation Utilities › commonSchemas › uuid" name="should reject invalid UUID" time="0.001" file="src\libs\validation\validator.spec.ts">
+    <testcase classname="Validation Utilities › commonSchemas › uuid" name="should reject invalid UUID" time="0" file="src\libs\validation\validator.spec.ts">
     </testcase>
     <testcase classname="Validation Utilities › commonSchemas › uuid" name="should reject UUID with wrong format" time="0" file="src\libs\validation\validator.spec.ts">
     </testcase>
-    <testcase classname="Validation Utilities › commonSchemas › password" name="should validate strong password" time="0" file="src\libs\validation\validator.spec.ts">
+    <testcase classname="Validation Utilities › commonSchemas › password" name="should validate strong password" time="0.001" file="src\libs\validation\validator.spec.ts">
     </testcase>
-    <testcase classname="Validation Utilities › commonSchemas › password" name="should reject short password" time="0.001" file="src\libs\validation\validator.spec.ts">
+    <testcase classname="Validation Utilities › commonSchemas › password" name="should reject short password" time="0" file="src\libs\validation\validator.spec.ts">
     </testcase>
-    <testcase classname="Validation Utilities › commonSchemas › password" name="should reject password without uppercase" time="0" file="src\libs\validation\validator.spec.ts">
+    <testcase classname="Validation Utilities › commonSchemas › password" name="should reject password without uppercase" time="0.001" file="src\libs\validation\validator.spec.ts">
     </testcase>
     <testcase classname="Validation Utilities › commonSchemas › password" name="should reject password without lowercase" time="0" file="src\libs\validation\validator.spec.ts">
     </testcase>
     <testcase classname="Validation Utilities › commonSchemas › password" name="should reject password without number" time="0" file="src\libs\validation\validator.spec.ts">
     </testcase>
-    <testcase classname="Validation Utilities › commonSchemas › password" name="should reject password without special character" time="0" file="src\libs\validation\validator.spec.ts">
+    <testcase classname="Validation Utilities › commonSchemas › password" name="should reject password without special character" time="0.001" file="src\libs\validation\validator.spec.ts">
     </testcase>
     <testcase classname="Validation Utilities › commonSchemas › pagination" name="should parse valid pagination params" time="0.001" file="src\libs\validation\validator.spec.ts">
     </testcase>
-    <testcase classname="Validation Utilities › commonSchemas › pagination" name="should use default values" time="0" file="src\libs\validation\validator.spec.ts">
+    <testcase classname="Validation Utilities › commonSchemas › pagination" name="should use default values" time="0.001" file="src\libs\validation\validator.spec.ts">
     </testcase>
     <testcase classname="Validation Utilities › commonSchemas › pagination" name="should reject negative page" time="0" file="src\libs\validation\validator.spec.ts">
     </testcase>
-    <testcase classname="Validation Utilities › commonSchemas › pagination" name="should reject zero page" time="0" file="src\libs\validation\validator.spec.ts">
+    <testcase classname="Validation Utilities › commonSchemas › pagination" name="should reject zero page" time="0.001" file="src\libs\validation\validator.spec.ts">
     </testcase>
-    <testcase classname="Validation Utilities › commonSchemas › pagination" name="should reject limit over 100" time="0.001" file="src\libs\validation\validator.spec.ts">
+    <testcase classname="Validation Utilities › commonSchemas › pagination" name="should reject limit over 100" time="0" file="src\libs\validation\validator.spec.ts">
     </testcase>
     <testcase classname="Validation Utilities › commonSchemas › dateRange" name="should parse valid date range" time="0" file="src\libs\validation\validator.spec.ts">
     </testcase>
     <testcase classname="Validation Utilities › commonSchemas › dateRange" name="should reject invalid date format" time="0" file="src\libs\validation\validator.spec.ts">
     </testcase>
-    <testcase classname="Validation Utilities › commonSchemas › search" name="should validate search query" time="0.001" file="src\libs\validation\validator.spec.ts">
+    <testcase classname="Validation Utilities › commonSchemas › search" name="should validate search query" time="0" file="src\libs\validation\validator.spec.ts">
     </testcase>
-    <testcase classname="Validation Utilities › commonSchemas › search" name="should reject empty search query" time="0.004" file="src\libs\validation\validator.spec.ts">
+    <testcase classname="Validation Utilities › commonSchemas › search" name="should reject empty search query" time="0.001" file="src\libs\validation\validator.spec.ts">
     </testcase>
     <testcase classname="Validation Utilities › commonSchemas › search" name="should reject too long search query" time="0" file="src\libs\validation\validator.spec.ts">
     </testcase>
-    <testcase classname="Validation Utilities › validate middleware" name="should validate request body and call next" time="0.001" file="src\libs\validation\validator.spec.ts">
+    <testcase classname="Validation Utilities › validate middleware" name="should validate request body and call next" time="0.002" file="src\libs\validation\validator.spec.ts">
     </testcase>
-    <testcase classname="Validation Utilities › validate middleware" name="should validate query params" time="0.001" file="src\libs\validation\validator.spec.ts">
+    <testcase classname="Validation Utilities › validate middleware" name="should validate query params" time="0" file="src\libs\validation\validator.spec.ts">
     </testcase>
-    <testcase classname="Validation Utilities › validate middleware" name="should validate route params" time="0" file="src\libs\validation\validator.spec.ts">
+    <testcase classname="Validation Utilities › validate middleware" name="should validate route params" time="0.001" file="src\libs\validation\validator.spec.ts">
     </testcase>
     <testcase classname="Validation Utilities › validate middleware" name="should call next with ValidationError for invalid data" time="0.001" file="src\libs\validation\validator.spec.ts">
     </testcase>
-    <testcase classname="Validation Utilities › validate middleware" name="should include error details in ValidationError" time="0" file="src\libs\validation\validator.spec.ts">
+    <testcase classname="Validation Utilities › validate middleware" name="should include error details in ValidationError" time="0.001" file="src\libs\validation\validator.spec.ts">
     </testcase>
     <testcase classname="Validation Utilities › validateData" name="should validate and return data" time="0" file="src\libs\validation\validator.spec.ts">
     </testcase>
-    <testcase classname="Validation Utilities › validateData" name="should throw ValidationError for invalid data" time="0.009" file="src\libs\validation\validator.spec.ts">
+    <testcase classname="Validation Utilities › validateData" name="should throw ValidationError for invalid data" time="0.015" file="src\libs\validation\validator.spec.ts">
     </testcase>
-    <testcase classname="Validation Utilities › validateData" name="should include field errors" time="0" file="src\libs\validation\validator.spec.ts">
+    <testcase classname="Validation Utilities › validateData" name="should include field errors" time="0.001" file="src\libs\validation\validator.spec.ts">
     </testcase>
     <testcase classname="Validation Utilities › safeParse" name="should return success result for valid data" time="0" file="src\libs\validation\validator.spec.ts">
     </testcase>
-    <testcase classname="Validation Utilities › safeParse" name="should return error result for invalid data" time="0" file="src\libs\validation\validator.spec.ts">
+    <testcase classname="Validation Utilities › safeParse" name="should return error result for invalid data" time="0.001" file="src\libs\validation\validator.spec.ts">
     </testcase>
-    <testcase classname="Validation Utilities › safeParse" name="should include error details in failure result" time="0.001" file="src\libs\validation\validator.spec.ts">
+    <testcase classname="Validation Utilities › safeParse" name="should include error details in failure result" time="0" file="src\libs\validation\validator.spec.ts">
+    </testcase>
+  </testsuite>
+  <testsuite name="src\services\product-catalog\entities\product.entity.spec.ts" errors="0" failures="0" skipped="0" timestamp="2025-12-02T23:35:51" time="0.314" tests="41">
+    <testcase classname="Product Entity › isInStock" name="should return true when product is active and has inventory" time="0.002" file="src\services\product-catalog\entities\product.entity.spec.ts">
+    </testcase>
+    <testcase classname="Product Entity › isInStock" name="should return false when inventory is zero" time="0" file="src\services\product-catalog\entities\product.entity.spec.ts">
+    </testcase>
+    <testcase classname="Product Entity › isInStock" name="should return false when product is draft" time="0.001" file="src\services\product-catalog\entities\product.entity.spec.ts">
+    </testcase>
+    <testcase classname="Product Entity › isInStock" name="should return false when product is out of stock status" time="0" file="src\services\product-catalog\entities\product.entity.spec.ts">
+    </testcase>
+    <testcase classname="Product Entity › isInStock" name="should return false when product is discontinued" time="0" file="src\services\product-catalog\entities\product.entity.spec.ts">
+    </testcase>
+    <testcase classname="Product Entity › isInStock" name="should return false when inventory is negative" time="0" file="src\services\product-catalog\entities\product.entity.spec.ts">
+    </testcase>
+    <testcase classname="Product Entity › isInStock" name="should return true with large inventory" time="0" file="src\services\product-catalog\entities\product.entity.spec.ts">
+    </testcase>
+    <testcase classname="Product Entity › isOnSale" name="should return true when compareAtPrice is higher than price" time="0" file="src\services\product-catalog\entities\product.entity.spec.ts">
+    </testcase>
+    <testcase classname="Product Entity › isOnSale" name="should return false when compareAtPrice is not set" time="0" file="src\services\product-catalog\entities\product.entity.spec.ts">
+    </testcase>
+    <testcase classname="Product Entity › isOnSale" name="should return false when compareAtPrice equals price" time="0.001" file="src\services\product-catalog\entities\product.entity.spec.ts">
+    </testcase>
+    <testcase classname="Product Entity › isOnSale" name="should return false when compareAtPrice is lower than price" time="0" file="src\services\product-catalog\entities\product.entity.spec.ts">
+    </testcase>
+    <testcase classname="Product Entity › isOnSale" name="should return false when compareAtPrice is zero" time="0" file="src\services\product-catalog\entities\product.entity.spec.ts">
+    </testcase>
+    <testcase classname="Product Entity › isOnSale" name="should handle small price differences" time="0" file="src\services\product-catalog\entities\product.entity.spec.ts">
+    </testcase>
+    <testcase classname="Product Entity › isOnSale" name="should handle large price differences" time="0.001" file="src\services\product-catalog\entities\product.entity.spec.ts">
+    </testcase>
+    <testcase classname="Product Entity › getDiscountPercentage" name="should calculate correct discount percentage" time="0" file="src\services\product-catalog\entities\product.entity.spec.ts">
+    </testcase>
+    <testcase classname="Product Entity › getDiscountPercentage" name="should return 0 when not on sale" time="0" file="src\services\product-catalog\entities\product.entity.spec.ts">
+    </testcase>
+    <testcase classname="Product Entity › getDiscountPercentage" name="should return 0 when compareAtPrice equals price" time="0" file="src\services\product-catalog\entities\product.entity.spec.ts">
+    </testcase>
+    <testcase classname="Product Entity › getDiscountPercentage" name="should return 0 when price is higher than compareAtPrice" time="0.001" file="src\services\product-catalog\entities\product.entity.spec.ts">
+    </testcase>
+    <testcase classname="Product Entity › getDiscountPercentage" name="should round discount percentage" time="0" file="src\services\product-catalog\entities\product.entity.spec.ts">
+    </testcase>
+    <testcase classname="Product Entity › getDiscountPercentage" name="should handle 50% discount" time="0" file="src\services\product-catalog\entities\product.entity.spec.ts">
+    </testcase>
+    <testcase classname="Product Entity › getDiscountPercentage" name="should handle small discounts" time="0" file="src\services\product-catalog\entities\product.entity.spec.ts">
+    </testcase>
+    <testcase classname="Product Entity › getDiscountPercentage" name="should handle large discounts" time="0" file="src\services\product-catalog\entities\product.entity.spec.ts">
+    </testcase>
+    <testcase classname="Product Entity › getDiscountPercentage" name="should handle fractional percentages" time="0.001" file="src\services\product-catalog\entities\product.entity.spec.ts">
+    </testcase>
+    <testcase classname="Product Entity › Product Status" name="should have draft status" time="0" file="src\services\product-catalog\entities\product.entity.spec.ts">
+    </testcase>
+    <testcase classname="Product Entity › Product Status" name="should have active status" time="0" file="src\services\product-catalog\entities\product.entity.spec.ts">
+    </testcase>
+    <testcase classname="Product Entity › Product Status" name="should have out of stock status" time="0.001" file="src\services\product-catalog\entities\product.entity.spec.ts">
+    </testcase>
+    <testcase classname="Product Entity › Product Status" name="should have discontinued status" time="0" file="src\services\product-catalog\entities\product.entity.spec.ts">
+    </testcase>
+    <testcase classname="Product Entity › Product Properties" name="should have required fields" time="0.001" file="src\services\product-catalog\entities\product.entity.spec.ts">
+    </testcase>
+    <testcase classname="Product Entity › Product Properties" name="should have optional category" time="0.003" file="src\services\product-catalog\entities\product.entity.spec.ts">
+    </testcase>
+    <testcase classname="Product Entity › Product Properties" name="should support multiple images" time="0" file="src\services\product-catalog\entities\product.entity.spec.ts">
+    </testcase>
+    <testcase classname="Product Entity › Product Properties" name="should support metadata as JSON" time="0.001" file="src\services\product-catalog\entities\product.entity.spec.ts">
+    </testcase>
+    <testcase classname="Product Entity › Product Properties" name="should track rating" time="0" file="src\services\product-catalog\entities\product.entity.spec.ts">
+    </testcase>
+    <testcase classname="Product Entity › Product Properties" name="should track review count" time="0" file="src\services\product-catalog\entities\product.entity.spec.ts">
+    </testcase>
+    <testcase classname="Product Entity › Product Properties" name="should track sold count" time="0" file="src\services\product-catalog\entities\product.entity.spec.ts">
+    </testcase>
+    <testcase classname="Product Entity › Product Properties" name="should have timestamps" time="0.001" file="src\services\product-catalog\entities\product.entity.spec.ts">
+    </testcase>
+    <testcase classname="Product Entity › Price Validation Scenarios" name="should handle free products" time="0" file="src\services\product-catalog\entities\product.entity.spec.ts">
+    </testcase>
+    <testcase classname="Product Entity › Price Validation Scenarios" name="should handle expensive products" time="0" file="src\services\product-catalog\entities\product.entity.spec.ts">
+    </testcase>
+    <testcase classname="Product Entity › Price Validation Scenarios" name="should handle decimal prices" time="0" file="src\services\product-catalog\entities\product.entity.spec.ts">
+    </testcase>
+    <testcase classname="Product Entity › Inventory Scenarios" name="should handle low inventory" time="0" file="src\services\product-catalog\entities\product.entity.spec.ts">
+    </testcase>
+    <testcase classname="Product Entity › Inventory Scenarios" name="should handle high inventory" time="0.001" file="src\services\product-catalog\entities\product.entity.spec.ts">
+    </testcase>
+    <testcase classname="Product Entity › Inventory Scenarios" name="should detect when inventory depleted" time="0" file="src\services\product-catalog\entities\product.entity.spec.ts">
+    </testcase>
+  </testsuite>
+  <testsuite name="src\services\analytics\services\analytics.service.spec.ts" errors="0" failures="0" skipped="0" timestamp="2025-12-02T23:35:51" time="0.33" tests="33">
+    <testcase classname="AnalyticsService › getTotalRevenue" name="should return total revenue from all orders" time="0.003" file="src\services\analytics\services\analytics.service.spec.ts">
+    </testcase>
+    <testcase classname="AnalyticsService › getTotalRevenue" name="should return zero when no orders" time="0.001" file="src\services\analytics\services\analytics.service.spec.ts">
+    </testcase>
+    <testcase classname="AnalyticsService › getRevenueByDateRange" name="should calculate revenue for date range" time="0.001" file="src\services\analytics\services\analytics.service.spec.ts">
+    </testcase>
+    <testcase classname="AnalyticsService › getRevenueByDateRange" name="should return zero for date range with no orders" time="0" file="src\services\analytics\services\analytics.service.spec.ts">
+    </testcase>
+    <testcase classname="AnalyticsService › getAverageOrderValue" name="should calculate average order value" time="0" file="src\services\analytics\services\analytics.service.spec.ts">
+    </testcase>
+    <testcase classname="AnalyticsService › getAverageOrderValue" name="should return zero when no orders" time="0.001" file="src\services\analytics\services\analytics.service.spec.ts">
+    </testcase>
+    <testcase classname="AnalyticsService › getAverageOrderValue" name="should handle decimal values correctly" time="0.001" file="src\services\analytics\services\analytics.service.spec.ts">
+    </testcase>
+    <testcase classname="AnalyticsService › getTopSellingProducts" name="should return top selling products" time="0.001" file="src\services\analytics\services\analytics.service.spec.ts">
+    </testcase>
+    <testcase classname="AnalyticsService › getTopSellingProducts" name="should default to top 10 if no limit specified" time="0.001" file="src\services\analytics\services\analytics.service.spec.ts">
+    </testcase>
+    <testcase classname="AnalyticsService › getTopRatedProducts" name="should return top rated products" time="0.001" file="src\services\analytics\services\analytics.service.spec.ts">
+    </testcase>
+    <testcase classname="AnalyticsService › getLowStockAlert" name="should return products with low stock" time="0" file="src\services\analytics\services\analytics.service.spec.ts">
+    </testcase>
+    <testcase classname="AnalyticsService › getLowStockAlert" name="should use default threshold of 10" time="0.003" file="src\services\analytics\services\analytics.service.spec.ts">
+    </testcase>
+    <testcase classname="AnalyticsService › getUserGrowthMetrics" name="should calculate user growth rate" time="0" file="src\services\analytics\services\analytics.service.spec.ts">
+    </testcase>
+    <testcase classname="AnalyticsService › getUserGrowthMetrics" name="should handle zero growth" time="0" file="src\services\analytics\services\analytics.service.spec.ts">
+    </testcase>
+    <testcase classname="AnalyticsService › getActiveUserCount" name="should return count of active users" time="0" file="src\services\analytics\services\analytics.service.spec.ts">
+    </testcase>
+    <testcase classname="AnalyticsService › getSalesMetricsByPeriod" name="should aggregate metrics for monthly period" time="0.001" file="src\services\analytics\services\analytics.service.spec.ts">
+    </testcase>
+    <testcase classname="AnalyticsService › getSalesMetricsByPeriod" name="should aggregate metrics for weekly period" time="0" file="src\services\analytics\services\analytics.service.spec.ts">
+    </testcase>
+    <testcase classname="AnalyticsService › getSalesMetricsByPeriod" name="should aggregate metrics for daily period" time="0.001" file="src\services\analytics\services\analytics.service.spec.ts">
+    </testcase>
+    <testcase classname="AnalyticsService › getConversionRate" name="should calculate conversion rate" time="0" file="src\services\analytics\services\analytics.service.spec.ts">
+    </testcase>
+    <testcase classname="AnalyticsService › getConversionRate" name="should return zero when no visitors" time="0" file="src\services\analytics\services\analytics.service.spec.ts">
+    </testcase>
+    <testcase classname="AnalyticsService › getConversionRate" name="should handle decimal conversion rates" time="0.001" file="src\services\analytics\services\analytics.service.spec.ts">
+    </testcase>
+    <testcase classname="AnalyticsService › getCustomerLifetimeValue" name="should calculate average customer lifetime value" time="0" file="src\services\analytics\services\analytics.service.spec.ts">
+    </testcase>
+    <testcase classname="AnalyticsService › getCustomerLifetimeValue" name="should return zero when no customers" time="0.001" file="src\services\analytics\services\analytics.service.spec.ts">
+    </testcase>
+    <testcase classname="AnalyticsService › getProductPerformance" name="should return performance metrics for product" time="0.001" file="src\services\analytics\services\analytics.service.spec.ts">
+    </testcase>
+    <testcase classname="AnalyticsService › trackEvent" name="should track user event" time="0" file="src\services\analytics\services\analytics.service.spec.ts">
+    </testcase>
+    <testcase classname="AnalyticsService › trackEvent" name="should track product view event" time="0" file="src\services\analytics\services\analytics.service.spec.ts">
+    </testcase>
+    <testcase classname="AnalyticsService › getEventsByUser" name="should return all events for user" time="0" file="src\services\analytics\services\analytics.service.spec.ts">
+    </testcase>
+    <testcase classname="AnalyticsService › getEventsByUser" name="should return empty array for user with no events" time="0" file="src\services\analytics\services\analytics.service.spec.ts">
+    </testcase>
+    <testcase classname="AnalyticsService › getDashboardMetrics" name="should return comprehensive dashboard metrics" time="0.001" file="src\services\analytics\services\analytics.service.spec.ts">
+    </testcase>
+    <testcase classname="AnalyticsService › getDashboardMetrics" name="should include growth metrics" time="0" file="src\services\analytics\services\analytics.service.spec.ts">
+    </testcase>
+    <testcase classname="AnalyticsService › exportReport" name="should generate revenue report" time="0.001" file="src\services\analytics\services\analytics.service.spec.ts">
+    </testcase>
+    <testcase classname="AnalyticsService › exportReport" name="should generate user report" time="0" file="src\services\analytics\services\analytics.service.spec.ts">
+    </testcase>
+    <testcase classname="AnalyticsService › exportReport" name="should generate product report" time="0" file="src\services\analytics\services\analytics.service.spec.ts">
+    </testcase>
+  </testsuite>
+  <testsuite name="src\services\order-processing\repositories\order.repository.spec.ts" errors="0" failures="0" skipped="0" timestamp="2025-12-02T23:35:51" time="0.39" tests="16">
+    <testcase classname="OrderRepository › findByOrderNumber" name="should find order by order number" time="0.003" file="src\services\order-processing\repositories\order.repository.spec.ts">
+    </testcase>
+    <testcase classname="OrderRepository › findByOrderNumber" name="should return null if not found" time="0" file="src\services\order-processing\repositories\order.repository.spec.ts">
+    </testcase>
+    <testcase classname="OrderRepository › findByUserId" name="should find all orders for user" time="0" file="src\services\order-processing\repositories\order.repository.spec.ts">
+    </testcase>
+    <testcase classname="OrderRepository › findByUserId" name="should sort by creation date descending" time="0.001" file="src\services\order-processing\repositories\order.repository.spec.ts">
+    </testcase>
+    <testcase classname="OrderRepository › findByStatus" name="should find orders by status" time="0.001" file="src\services\order-processing\repositories\order.repository.spec.ts">
+    </testcase>
+    <testcase classname="OrderRepository › findPendingOrders" name="should find all pending orders" time="0" file="src\services\order-processing\repositories\order.repository.spec.ts">
+    </testcase>
+    <testcase classname="OrderRepository › updateStatus" name="should update order status" time="0" file="src\services\order-processing\repositories\order.repository.spec.ts">
+    </testcase>
+    <testcase classname="OrderRepository › updatePaymentStatus" name="should update payment status" time="0.001" file="src\services\order-processing\repositories\order.repository.spec.ts">
+    </testcase>
+    <testcase classname="OrderRepository › updatePaymentStatus" name="should set paidAt timestamp when paid" time="0" file="src\services\order-processing\repositories\order.repository.spec.ts">
+    </testcase>
+    <testcase classname="OrderRepository › findOrdersByDateRange" name="should find orders within date range" time="0.001" file="src\services\order-processing\repositories\order.repository.spec.ts">
+    </testcase>
+    <testcase classname="OrderRepository › getTotalRevenue" name="should calculate total revenue" time="0.001" file="src\services\order-processing\repositories\order.repository.spec.ts">
+    </testcase>
+    <testcase classname="OrderRepository › getTotalRevenue" name="should filter by paid orders only" time="0" file="src\services\order-processing\repositories\order.repository.spec.ts">
+    </testcase>
+    <testcase classname="OrderRepository › getOrderStats" name="should return order statistics" time="0" file="src\services\order-processing\repositories\order.repository.spec.ts">
+    </testcase>
+    <testcase classname="OrderRepository › markAsShipped" name="should mark order as shipped" time="0.001" file="src\services\order-processing\repositories\order.repository.spec.ts">
+    </testcase>
+    <testcase classname="OrderRepository › markAsDelivered" name="should mark order as delivered" time="0" file="src\services\order-processing\repositories\order.repository.spec.ts">
+    </testcase>
+    <testcase classname="OrderRepository › cancelOrder" name="should cancel order" time="0.001" file="src\services\order-processing\repositories\order.repository.spec.ts">
+    </testcase>
+  </testsuite>
+  <testsuite name="src\services\product-catalog\services\review.service.spec.ts" errors="0" failures="0" skipped="0" timestamp="2025-12-02T23:35:51" time="0.172" tests="27">
+    <testcase classname="ReviewService › createReview" name="should create a review for a product" time="0.004" file="src\services\product-catalog\services\review.service.spec.ts">
+    </testcase>
+    <testcase classname="ReviewService › createReview" name="should mark review as verified purchase if user bought the product" time="0.001" file="src\services\product-catalog\services\review.service.spec.ts">
+    </testcase>
+    <testcase classname="ReviewService › createReview" name="should reject review with rating below 1" time="0.012" file="src\services\product-catalog\services\review.service.spec.ts">
+    </testcase>
+    <testcase classname="ReviewService › createReview" name="should reject review with rating above 5" time="0.001" file="src\services\product-catalog\services\review.service.spec.ts">
+    </testcase>
+    <testcase classname="ReviewService › createReview" name="should reject review for non-existent product" time="0.004" file="src\services\product-catalog\services\review.service.spec.ts">
+    </testcase>
+    <testcase classname="ReviewService › createReview" name="should reject duplicate review from same user for same product" time="0.001" file="src\services\product-catalog\services\review.service.spec.ts">
+    </testcase>
+    <testcase classname="ReviewService › createReview" name="should update product average rating after review creation" time="0" file="src\services\product-catalog\services\review.service.spec.ts">
+    </testcase>
+    <testcase classname="ReviewService › createReview" name="should allow review with only rating (no comment)" time="0.001" file="src\services\product-catalog\services\review.service.spec.ts">
+    </testcase>
+    <testcase classname="ReviewService › getProductReviews" name="should get all reviews for a product" time="0" file="src\services\product-catalog\services\review.service.spec.ts">
+    </testcase>
+    <testcase classname="ReviewService › getProductReviews" name="should get reviews with pagination" time="0" file="src\services\product-catalog\services\review.service.spec.ts">
+    </testcase>
+    <testcase classname="ReviewService › getProductReviews" name="should filter reviews by minimum rating" time="0" file="src\services\product-catalog\services\review.service.spec.ts">
+    </testcase>
+    <testcase classname="ReviewService › getProductReviews" name="should sort reviews by most helpful" time="0" file="src\services\product-catalog\services\review.service.spec.ts">
+    </testcase>
+    <testcase classname="ReviewService › getProductReviews" name="should get only verified purchase reviews" time="0" file="src\services\product-catalog\services\review.service.spec.ts">
+    </testcase>
+    <testcase classname="ReviewService › getUserReviews" name="should get all reviews by a user" time="0.001" file="src\services\product-catalog\services\review.service.spec.ts">
+    </testcase>
+    <testcase classname="ReviewService › updateReview" name="should update a review" time="0.001" file="src\services\product-catalog\services\review.service.spec.ts">
+    </testcase>
+    <testcase classname="ReviewService › updateReview" name="should only allow user to update their own review" time="0.001" file="src\services\product-catalog\services\review.service.spec.ts">
+    </testcase>
+    <testcase classname="ReviewService › updateReview" name="should update product rating after review update" time="0" file="src\services\product-catalog\services\review.service.spec.ts">
+    </testcase>
+    <testcase classname="ReviewService › deleteReview" name="should delete a review" time="0" file="src\services\product-catalog\services\review.service.spec.ts">
+    </testcase>
+    <testcase classname="ReviewService › deleteReview" name="should only allow user to delete their own review" time="0.001" file="src\services\product-catalog\services\review.service.spec.ts">
+    </testcase>
+    <testcase classname="ReviewService › deleteReview" name="should update product rating after review deletion" time="0.001" file="src\services\product-catalog\services\review.service.spec.ts">
+    </testcase>
+    <testcase classname="ReviewService › markReviewAsHelpful" name="should mark a review as helpful" time="0" file="src\services\product-catalog\services\review.service.spec.ts">
+    </testcase>
+    <testcase classname="ReviewService › markReviewAsHelpful" name="should prevent user from marking their own review as helpful" time="0.001" file="src\services\product-catalog\services\review.service.spec.ts">
+    </testcase>
+    <testcase classname="ReviewService › getProductRatingDistribution" name="should get rating distribution for a product" time="0.001" file="src\services\product-catalog\services\review.service.spec.ts">
+    </testcase>
+    <testcase classname="ReviewService › getAverageRating" name="should calculate average rating for a product" time="0" file="src\services\product-catalog\services\review.service.spec.ts">
+    </testcase>
+    <testcase classname="ReviewService › getAverageRating" name="should return 0 for product with no reviews" time="0.001" file="src\services\product-catalog\services\review.service.spec.ts">
+    </testcase>
+    <testcase classname="ReviewService › getReviewCount" name="should get total review count for a product" time="0" file="src\services\product-catalog\services\review.service.spec.ts">
+    </testcase>
+    <testcase classname="ReviewService › getReviewSummary" name="should get complete review summary for a product" time="0.001" file="src\services\product-catalog\services\review.service.spec.ts">
+    </testcase>
+  </testsuite>
+  <testsuite name="src\services\inventory\services\inventory.service.spec.ts" errors="0" failures="0" skipped="0" timestamp="2025-12-02T23:35:51" time="0.185" tests="28">
+    <testcase classname="InventoryService › getStock" name="should get current stock level for a product" time="0.002" file="src\services\inventory\services\inventory.service.spec.ts">
+    </testcase>
+    <testcase classname="InventoryService › getStock" name="should calculate available stock (quantity - reserved)" time="0.001" file="src\services\inventory\services\inventory.service.spec.ts">
+    </testcase>
+    <testcase classname="InventoryService › adjustInventory" name="should increase inventory quantity" time="0" file="src\services\inventory\services\inventory.service.spec.ts">
+    </testcase>
+    <testcase classname="InventoryService › adjustInventory" name="should decrease inventory quantity" time="0.001" file="src\services\inventory\services\inventory.service.spec.ts">
+    </testcase>
+    <testcase classname="InventoryService › adjustInventory" name="should reject adjustment that would make quantity negative" time="0.016" file="src\services\inventory\services\inventory.service.spec.ts">
+    </testcase>
+    <testcase classname="InventoryService › adjustInventory" name="should record inventory adjustment in history" time="0.002" file="src\services\inventory\services\inventory.service.spec.ts">
+    </testcase>
+    <testcase classname="InventoryService › reserveStock" name="should reserve stock for an order" time="0.001" file="src\services\inventory\services\inventory.service.spec.ts">
+    </testcase>
+    <testcase classname="InventoryService › reserveStock" name="should reject reservation if insufficient available stock" time="0.001" file="src\services\inventory\services\inventory.service.spec.ts">
+    </testcase>
+    <testcase classname="InventoryService › reserveStock" name="should set expiration time for reservation" time="0" file="src\services\inventory\services\inventory.service.spec.ts">
+    </testcase>
+    <testcase classname="InventoryService › releaseReservation" name="should release a stock reservation" time="0.001" file="src\services\inventory\services\inventory.service.spec.ts">
+    </testcase>
+    <testcase classname="InventoryService › releaseReservation" name="should update available quantity after releasing reservation" time="0" file="src\services\inventory\services\inventory.service.spec.ts">
+    </testcase>
+    <testcase classname="InventoryService › confirmReservation" name="should convert reservation to actual inventory deduction" time="0.001" file="src\services\inventory\services\inventory.service.spec.ts">
+    </testcase>
+    <testcase classname="InventoryService › checkAvailability" name="should check if quantity is available in stock" time="0" file="src\services\inventory\services\inventory.service.spec.ts">
+    </testcase>
+    <testcase classname="InventoryService › checkAvailability" name="should return false if requested quantity exceeds available stock" time="0" file="src\services\inventory\services\inventory.service.spec.ts">
+    </testcase>
+    <testcase classname="InventoryService › getLowStockProducts" name="should get products below minimum stock level" time="0.001" file="src\services\inventory\services\inventory.service.spec.ts">
+    </testcase>
+    <testcase classname="InventoryService › getLowStockProducts" name="should filter low stock by threshold percentage" time="0.001" file="src\services\inventory\services\inventory.service.spec.ts">
+    </testcase>
+    <testcase classname="InventoryService › getOutOfStockProducts" name="should get products with zero stock" time="0" file="src\services\inventory\services\inventory.service.spec.ts">
+    </testcase>
+    <testcase classname="InventoryService › setMinStockLevel" name="should set minimum stock level for a product" time="0" file="src\services\inventory\services\inventory.service.spec.ts">
+    </testcase>
+    <testcase classname="InventoryService › setMinStockLevel" name="should reject negative minimum stock level" time="0.008" file="src\services\inventory\services\inventory.service.spec.ts">
+    </testcase>
+    <testcase classname="InventoryService › setReorderPoint" name="should set reorder point for automatic restocking" time="0.001" file="src\services\inventory\services\inventory.service.spec.ts">
+    </testcase>
+    <testcase classname="InventoryService › getInventoryHistory" name="should get inventory adjustment history" time="0" file="src\services\inventory\services\inventory.service.spec.ts">
+    </testcase>
+    <testcase classname="InventoryService › getInventoryHistory" name="should filter history by date range" time="0" file="src\services\inventory\services\inventory.service.spec.ts">
+    </testcase>
+    <testcase classname="InventoryService › releaseExpiredReservations" name="should release all expired stock reservations" time="0" file="src\services\inventory\services\inventory.service.spec.ts">
+    </testcase>
+    <testcase classname="InventoryService › getStockValue" name="should calculate total value of inventory" time="0" file="src\services\inventory\services\inventory.service.spec.ts">
+    </testcase>
+    <testcase classname="InventoryService › bulkUpdateInventory" name="should update inventory for multiple products" time="0.001" file="src\services\inventory\services\inventory.service.spec.ts">
+    </testcase>
+    <testcase classname="InventoryService › getInventoryTurnover" name="should calculate inventory turnover rate" time="0.001" file="src\services\inventory\services\inventory.service.spec.ts">
+    </testcase>
+    <testcase classname="InventoryService › predictRestockDate" name="should predict when product will need restocking" time="0" file="src\services\inventory\services\inventory.service.spec.ts">
+    </testcase>
+    <testcase classname="InventoryService › transferStock" name="should transfer stock between warehouses/locations" time="0.001" file="src\services\inventory\services\inventory.service.spec.ts">
+    </testcase>
+  </testsuite>
+  <testsuite name="src\services\wishlist\services\wishlist.service.spec.ts" errors="0" failures="0" skipped="0" timestamp="2025-12-02T23:35:51" time="0.172" tests="22">
+    <testcase classname="WishlistService › addToWishlist" name="should add a product to user wishlist" time="0.003" file="src\services\wishlist\services\wishlist.service.spec.ts">
+    </testcase>
+    <testcase classname="WishlistService › addToWishlist" name="should reject adding non-existent product to wishlist" time="0.012" file="src\services\wishlist\services\wishlist.service.spec.ts">
+    </testcase>
+    <testcase classname="WishlistService › addToWishlist" name="should reject adding duplicate product to wishlist" time="0.007" file="src\services\wishlist\services\wishlist.service.spec.ts">
+    </testcase>
+    <testcase classname="WishlistService › addToWishlist" name="should add product with note" time="0.001" file="src\services\wishlist\services\wishlist.service.spec.ts">
+    </testcase>
+    <testcase classname="WishlistService › getWishlist" name="should get user wishlist with product details" time="0.001" file="src\services\wishlist\services\wishlist.service.spec.ts">
+    </testcase>
+    <testcase classname="WishlistService › getWishlist" name="should return empty array for user with no wishlist items" time="0.001" file="src\services\wishlist\services\wishlist.service.spec.ts">
+    </testcase>
+    <testcase classname="WishlistService › getWishlist" name="should sort wishlist by most recently added" time="0" file="src\services\wishlist\services\wishlist.service.spec.ts">
+    </testcase>
+    <testcase classname="WishlistService › getWishlist" name="should filter wishlist by price range" time="0" file="src\services\wishlist\services\wishlist.service.spec.ts">
+    </testcase>
+    <testcase classname="WishlistService › removeFromWishlist" name="should remove a product from wishlist" time="0.001" file="src\services\wishlist\services\wishlist.service.spec.ts">
+    </testcase>
+    <testcase classname="WishlistService › removeFromWishlist" name="should throw error when removing non-existent wishlist item" time="0" file="src\services\wishlist\services\wishlist.service.spec.ts">
+    </testcase>
+    <testcase classname="WishlistService › clearWishlist" name="should remove all items from user wishlist" time="0.001" file="src\services\wishlist\services\wishlist.service.spec.ts">
+    </testcase>
+    <testcase classname="WishlistService › getWishlistCount" name="should get total items in user wishlist" time="0" file="src\services\wishlist\services\wishlist.service.spec.ts">
+    </testcase>
+    <testcase classname="WishlistService › isInWishlist" name="should return true if product is in wishlist" time="0" file="src\services\wishlist\services\wishlist.service.spec.ts">
+    </testcase>
+    <testcase classname="WishlistService › isInWishlist" name="should return false if product is not in wishlist" time="0.001" file="src\services\wishlist\services\wishlist.service.spec.ts">
+    </testcase>
+    <testcase classname="WishlistService › moveToCart" name="should move wishlist item to shopping cart" time="0" file="src\services\wishlist\services\wishlist.service.spec.ts">
+    </testcase>
+    <testcase classname="WishlistService › shareWishlist" name="should generate shareable link for wishlist" time="0.001" file="src\services\wishlist\services\wishlist.service.spec.ts">
+    </testcase>
+    <testcase classname="WishlistService › shareWishlist" name="should generate unique share token" time="0.001" file="src\services\wishlist\services\wishlist.service.spec.ts">
+    </testcase>
+    <testcase classname="WishlistService › getSharedWishlist" name="should get wishlist by share token" time="0" file="src\services\wishlist\services\wishlist.service.spec.ts">
+    </testcase>
+    <testcase classname="WishlistService › getWishlistTotalValue" name="should calculate total value of wishlist items" time="0.001" file="src\services\wishlist\services\wishlist.service.spec.ts">
+    </testcase>
+    <testcase classname="WishlistService › getPriceDropAlerts" name="should get items with price drops" time="0" file="src\services\wishlist\services\wishlist.service.spec.ts">
+    </testcase>
+    <testcase classname="WishlistService › getOutOfStockItems" name="should get wishlist items that are out of stock" time="0" file="src\services\wishlist\services\wishlist.service.spec.ts">
+    </testcase>
+    <testcase classname="WishlistService › addMultipleToWishlist" name="should add multiple products to wishlist at once" time="0.001" file="src\services\wishlist\services\wishlist.service.spec.ts">
+    </testcase>
+  </testsuite>
+  <testsuite name="src\services\order-processing\services\cart.service.spec.ts" errors="0" failures="0" skipped="0" timestamp="2025-12-02T23:35:51" time="0.162" tests="21">
+    <testcase classname="CartService › getCart" name="should get empty cart for new user" time="0.004" file="src\services\order-processing\services\cart.service.spec.ts">
+    </testcase>
+    <testcase classname="CartService › getCart" name="should get existing cart" time="0.001" file="src\services\order-processing\services\cart.service.spec.ts">
+    </testcase>
+    <testcase classname="CartService › addItem" name="should add new item to cart" time="0.001" file="src\services\order-processing\services\cart.service.spec.ts">
+    </testcase>
+    <testcase classname="CartService › addItem" name="should increment quantity if item exists" time="0.001" file="src\services\order-processing\services\cart.service.spec.ts">
+    </testcase>
+    <testcase classname="CartService › addItem" name="should reject negative quantity" time="0.011" file="src\services\order-processing\services\cart.service.spec.ts">
+    </testcase>
+    <testcase classname="CartService › addItem" name="should reject zero quantity" time="0" file="src\services\order-processing\services\cart.service.spec.ts">
+    </testcase>
+    <testcase classname="CartService › addItem" name="should update cart subtotal" time="0.001" file="src\services\order-processing\services\cart.service.spec.ts">
+    </testcase>
+    <testcase classname="CartService › addItem" name="should update item count" time="0" file="src\services\order-processing\services\cart.service.spec.ts">
+    </testcase>
+    <testcase classname="CartService › updateItemQuantity" name="should update item quantity" time="0.001" file="src\services\order-processing\services\cart.service.spec.ts">
+    </testcase>
+    <testcase classname="CartService › updateItemQuantity" name="should throw error for non-existent item" time="0" file="src\services\order-processing\services\cart.service.spec.ts">
+    </testcase>
+    <testcase classname="CartService › updateItemQuantity" name="should reject negative quantity" time="0.001" file="src\services\order-processing\services\cart.service.spec.ts">
+    </testcase>
+    <testcase classname="CartService › updateItemQuantity" name="should remove item if quantity is zero" time="0" file="src\services\order-processing\services\cart.service.spec.ts">
+    </testcase>
+    <testcase classname="CartService › removeItem" name="should remove item from cart" time="0.001" file="src\services\order-processing\services\cart.service.spec.ts">
+    </testcase>
+    <testcase classname="CartService › removeItem" name="should throw error when removing non-existent item" time="0" file="src\services\order-processing\services\cart.service.spec.ts">
+    </testcase>
+    <testcase classname="CartService › removeItem" name="should update subtotal after removal" time="0.001" file="src\services\order-processing\services\cart.service.spec.ts">
+    </testcase>
+    <testcase classname="CartService › clearCart" name="should clear all items from cart" time="0" file="src\services\order-processing\services\cart.service.spec.ts">
+    </testcase>
+    <testcase classname="CartService › clearCart" name="should work on empty cart" time="0" file="src\services\order-processing\services\cart.service.spec.ts">
+    </testcase>
+    <testcase classname="CartService › getCartItemCount" name="should return total item count" time="0" file="src\services\order-processing\services\cart.service.spec.ts">
+    </testcase>
+    <testcase classname="CartService › getCartItemCount" name="should return zero for empty cart" time="0" file="src\services\order-processing\services\cart.service.spec.ts">
+    </testcase>
+    <testcase classname="CartService › getCartSubtotal" name="should calculate cart subtotal" time="0" file="src\services\order-processing\services\cart.service.spec.ts">
+    </testcase>
+    <testcase classname="CartService › getCartSubtotal" name="should return zero for empty cart" time="0" file="src\services\order-processing\services\cart.service.spec.ts">
+    </testcase>
+  </testsuite>
+  <testsuite name="src\services\order-processing\entities\order.entity.spec.ts" errors="0" failures="0" skipped="0" timestamp="2025-12-02T23:35:51" time="0.548" tests="49">
+    <testcase classname="Order Entity › calculateTotal" name="should calculate total correctly" time="0.002" file="src\services\order-processing\entities\order.entity.spec.ts">
+    </testcase>
+    <testcase classname="Order Entity › calculateTotal" name="should include tax in total" time="0" file="src\services\order-processing\entities\order.entity.spec.ts">
+    </testcase>
+    <testcase classname="Order Entity › calculateTotal" name="should include shipping cost in total" time="0" file="src\services\order-processing\entities\order.entity.spec.ts">
+    </testcase>
+    <testcase classname="Order Entity › calculateTotal" name="should subtract discount from total" time="0.001" file="src\services\order-processing\entities\order.entity.spec.ts">
+    </testcase>
+    <testcase classname="Order Entity › calculateTotal" name="should handle all components together" time="0" file="src\services\order-processing\entities\order.entity.spec.ts">
+    </testcase>
+    <testcase classname="Order Entity › calculateTotal" name="should handle zero amounts" time="0.002" file="src\services\order-processing\entities\order.entity.spec.ts">
+    </testcase>
+    <testcase classname="Order Entity › calculateSubtotal" name="should calculate subtotal from items" time="0" file="src\services\order-processing\entities\order.entity.spec.ts">
+    </testcase>
+    <testcase classname="Order Entity › calculateSubtotal" name="should handle single item" time="0" file="src\services\order-processing\entities\order.entity.spec.ts">
+    </testcase>
+    <testcase classname="Order Entity › calculateSubtotal" name="should handle empty items" time="0" file="src\services\order-processing\entities\order.entity.spec.ts">
+    </testcase>
+    <testcase classname="Order Entity › calculateSubtotal" name="should handle multiple items correctly" time="0.001" file="src\services\order-processing\entities\order.entity.spec.ts">
+    </testcase>
+    <testcase classname="Order Entity › canBeCancelled" name="should allow cancellation for pending orders" time="0" file="src\services\order-processing\entities\order.entity.spec.ts">
+    </testcase>
+    <testcase classname="Order Entity › canBeCancelled" name="should allow cancellation for confirmed orders" time="0" file="src\services\order-processing\entities\order.entity.spec.ts">
+    </testcase>
+    <testcase classname="Order Entity › canBeCancelled" name="should not allow cancellation for processing orders" time="0.001" file="src\services\order-processing\entities\order.entity.spec.ts">
+    </testcase>
+    <testcase classname="Order Entity › canBeCancelled" name="should not allow cancellation for shipped orders" time="0" file="src\services\order-processing\entities\order.entity.spec.ts">
+    </testcase>
+    <testcase classname="Order Entity › canBeCancelled" name="should not allow cancellation for delivered orders" time="0" file="src\services\order-processing\entities\order.entity.spec.ts">
+    </testcase>
+    <testcase classname="Order Entity › canBeCancelled" name="should not allow cancellation for already cancelled orders" time="0" file="src\services\order-processing\entities\order.entity.spec.ts">
+    </testcase>
+    <testcase classname="Order Entity › canBeCancelled" name="should not allow cancellation for refunded orders" time="0" file="src\services\order-processing\entities\order.entity.spec.ts">
+    </testcase>
+    <testcase classname="Order Entity › isFulfilled" name="should return true when order is delivered" time="0.001" file="src\services\order-processing\entities\order.entity.spec.ts">
+    </testcase>
+    <testcase classname="Order Entity › isFulfilled" name="should return false when order is pending" time="0" file="src\services\order-processing\entities\order.entity.spec.ts">
+    </testcase>
+    <testcase classname="Order Entity › isFulfilled" name="should return false when order is shipped but not delivered" time="0" file="src\services\order-processing\entities\order.entity.spec.ts">
+    </testcase>
+    <testcase classname="Order Entity › isFulfilled" name="should return false when order is cancelled" time="0" file="src\services\order-processing\entities\order.entity.spec.ts">
+    </testcase>
+    <testcase classname="Order Entity › isPaid" name="should return true when payment is complete" time="0" file="src\services\order-processing\entities\order.entity.spec.ts">
+    </testcase>
+    <testcase classname="Order Entity › isPaid" name="should return false when payment is pending" time="0.001" file="src\services\order-processing\entities\order.entity.spec.ts">
+    </testcase>
+    <testcase classname="Order Entity › isPaid" name="should return false when payment failed" time="0" file="src\services\order-processing\entities\order.entity.spec.ts">
+    </testcase>
+    <testcase classname="Order Entity › isPaid" name="should return false when payment is refunded" time="0" file="src\services\order-processing\entities\order.entity.spec.ts">
+    </testcase>
+    <testcase classname="Order Entity › getTotalItemsCount" name="should count total items across all line items" time="0.001" file="src\services\order-processing\entities\order.entity.spec.ts">
+    </testcase>
+    <testcase classname="Order Entity › getTotalItemsCount" name="should handle single item" time="0" file="src\services\order-processing\entities\order.entity.spec.ts">
+    </testcase>
+    <testcase classname="Order Entity › getTotalItemsCount" name="should handle empty items" time="0" file="src\services\order-processing\entities\order.entity.spec.ts">
+    </testcase>
+    <testcase classname="Order Entity › getTotalItemsCount" name="should sum quantities correctly" time="0" file="src\services\order-processing\entities\order.entity.spec.ts">
+    </testcase>
+    <testcase classname="Order Entity › OrderItem › calculateSubtotal" name="should calculate subtotal correctly" time="0" file="src\services\order-processing\entities\order.entity.spec.ts">
+    </testcase>
+    <testcase classname="Order Entity › OrderItem › calculateSubtotal" name="should handle different quantities" time="0.001" file="src\services\order-processing\entities\order.entity.spec.ts">
+    </testcase>
+    <testcase classname="Order Entity › OrderItem › calculateSubtotal" name="should handle single quantity" time="0" file="src\services\order-processing\entities\order.entity.spec.ts">
+    </testcase>
+    <testcase classname="Order Entity › OrderItem › calculateSubtotal" name="should handle decimal prices" time="0" file="src\services\order-processing\entities\order.entity.spec.ts">
+    </testcase>
+    <testcase classname="Order Entity › Order Properties" name="should have required order number" time="0" file="src\services\order-processing\entities\order.entity.spec.ts">
+    </testcase>
+    <testcase classname="Order Entity › Order Properties" name="should have shipping address" time="0" file="src\services\order-processing\entities\order.entity.spec.ts">
+    </testcase>
+    <testcase classname="Order Entity › Order Properties" name="should support optional billing address" time="0.001" file="src\services\order-processing\entities\order.entity.spec.ts">
+    </testcase>
+    <testcase classname="Order Entity › Order Properties" name="should support payment method" time="0" file="src\services\order-processing\entities\order.entity.spec.ts">
+    </testcase>
+    <testcase classname="Order Entity › Order Properties" name="should support tracking number" time="0" file="src\services\order-processing\entities\order.entity.spec.ts">
+    </testcase>
+    <testcase classname="Order Entity › Order Properties" name="should support discount code" time="0" file="src\services\order-processing\entities\order.entity.spec.ts">
+    </testcase>
+    <testcase classname="Order Entity › Order Properties" name="should support order notes" time="0" file="src\services\order-processing\entities\order.entity.spec.ts">
+    </testcase>
+    <testcase classname="Order Entity › Order Status Transitions" name="should track pending status" time="0" file="src\services\order-processing\entities\order.entity.spec.ts">
+    </testcase>
+    <testcase classname="Order Entity › Order Status Transitions" name="should track confirmed status" time="0" file="src\services\order-processing\entities\order.entity.spec.ts">
+    </testcase>
+    <testcase classname="Order Entity › Order Status Transitions" name="should track processing status" time="0" file="src\services\order-processing\entities\order.entity.spec.ts">
+    </testcase>
+    <testcase classname="Order Entity › Order Status Transitions" name="should track shipped status" time="0" file="src\services\order-processing\entities\order.entity.spec.ts">
+    </testcase>
+    <testcase classname="Order Entity › Order Status Transitions" name="should track delivered status" time="0" file="src\services\order-processing\entities\order.entity.spec.ts">
+    </testcase>
+    <testcase classname="Order Entity › Timestamps" name="should track payment timestamp" time="0.001" file="src\services\order-processing\entities\order.entity.spec.ts">
+    </testcase>
+    <testcase classname="Order Entity › Timestamps" name="should track shipping timestamp" time="0" file="src\services\order-processing\entities\order.entity.spec.ts">
+    </testcase>
+    <testcase classname="Order Entity › Timestamps" name="should track delivery timestamp" time="0" file="src\services\order-processing\entities\order.entity.spec.ts">
+    </testcase>
+    <testcase classname="Order Entity › Timestamps" name="should track cancellation timestamp" time="0" file="src\services\order-processing\entities\order.entity.spec.ts">
+    </testcase>
+  </testsuite>
+  <testsuite name="src\libs\errors\base.error.spec.ts" errors="0" failures="0" skipped="0" timestamp="2025-12-02T23:35:51" time="0.109" tests="16">
+    <testcase classname="Custom Error Classes › BaseError" name="should create error with correct properties" time="0.001" file="src\libs\errors\base.error.spec.ts">
+    </testcase>
+    <testcase classname="Custom Error Classes › BaseError" name="should have proper stack trace" time="0.007" file="src\libs\errors\base.error.spec.ts">
+    </testcase>
+    <testcase classname="Custom Error Classes › BaseError" name="should serialize to JSON correctly" time="0.001" file="src\libs\errors\base.error.spec.ts">
+    </testcase>
+    <testcase classname="Custom Error Classes › BadRequestError" name="should have status code 400" time="0" file="src\libs\errors\base.error.spec.ts">
+    </testcase>
+    <testcase classname="Custom Error Classes › BadRequestError" name="should use default message" time="0.001" file="src\libs\errors\base.error.spec.ts">
+    </testcase>
+    <testcase classname="Custom Error Classes › UnauthorizedError" name="should have status code 401" time="0" file="src\libs\errors\base.error.spec.ts">
+    </testcase>
+    <testcase classname="Custom Error Classes › UnauthorizedError" name="should use default message" time="0" file="src\libs\errors\base.error.spec.ts">
+    </testcase>
+    <testcase classname="Custom Error Classes › ForbiddenError" name="should have status code 403" time="0.001" file="src\libs\errors\base.error.spec.ts">
+    </testcase>
+    <testcase classname="Custom Error Classes › NotFoundError" name="should have status code 404" time="0" file="src\libs\errors\base.error.spec.ts">
+    </testcase>
+    <testcase classname="Custom Error Classes › ConflictError" name="should have status code 409" time="0" file="src\libs\errors\base.error.spec.ts">
+    </testcase>
+    <testcase classname="Custom Error Classes › ValidationError" name="should have status code 422" time="0.001" file="src\libs\errors\base.error.spec.ts">
+    </testcase>
+    <testcase classname="Custom Error Classes › ValidationError" name="should include errors in JSON" time="0" file="src\libs\errors\base.error.spec.ts">
+    </testcase>
+    <testcase classname="Custom Error Classes › RateLimitError" name="should have status code 429" time="0.001" file="src\libs\errors\base.error.spec.ts">
+    </testcase>
+    <testcase classname="Custom Error Classes › InternalServerError" name="should have status code 500" time="0" file="src\libs\errors\base.error.spec.ts">
+    </testcase>
+    <testcase classname="Custom Error Classes › InternalServerError" name="should not be operational" time="0" file="src\libs\errors\base.error.spec.ts">
+    </testcase>
+    <testcase classname="Custom Error Classes › ServiceUnavailableError" name="should have status code 503" time="0" file="src\libs\errors\base.error.spec.ts">
+    </testcase>
+  </testsuite>
+  <testsuite name="src\services\promotions\services\discount.service.spec.ts" errors="0" failures="0" skipped="0" timestamp="2025-12-02T23:35:51" time="0.175" tests="30">
+    <testcase classname="DiscountService › createDiscount" name="should create a percentage discount code" time="0.003" file="src\services\promotions\services\discount.service.spec.ts">
+    </testcase>
+    <testcase classname="DiscountService › createDiscount" name="should create a fixed amount discount code" time="0" file="src\services\promotions\services\discount.service.spec.ts">
+    </testcase>
+    <testcase classname="DiscountService › createDiscount" name="should create a free shipping discount" time="0.001" file="src\services\promotions\services\discount.service.spec.ts">
+    </testcase>
+    <testcase classname="DiscountService › createDiscount" name="should reject percentage discount over 100%" time="0.012" file="src\services\promotions\services\discount.service.spec.ts">
+    </testcase>
+    <testcase classname="DiscountService › createDiscount" name="should reject negative discount values" time="0" file="src\services\promotions\services\discount.service.spec.ts">
+    </testcase>
+    <testcase classname="DiscountService › createDiscount" name="should create discount with minimum purchase requirement" time="0.001" file="src\services\promotions\services\discount.service.spec.ts">
+    </testcase>
+    <testcase classname="DiscountService › createDiscount" name="should create discount with maximum discount cap" time="0" file="src\services\promotions\services\discount.service.spec.ts">
+    </testcase>
+    <testcase classname="DiscountService › createDiscount" name="should create discount with usage limit" time="0" file="src\services\promotions\services\discount.service.spec.ts">
+    </testcase>
+    <testcase classname="DiscountService › createDiscount" name="should create discount with per-user limit" time="0.001" file="src\services\promotions\services\discount.service.spec.ts">
+    </testcase>
+    <testcase classname="DiscountService › createDiscount" name="should normalize discount code to uppercase" time="0" file="src\services\promotions\services\discount.service.spec.ts">
+    </testcase>
+    <testcase classname="DiscountService › validateDiscount" name="should validate an active discount code" time="0.001" file="src\services\promotions\services\discount.service.spec.ts">
+    </testcase>
+    <testcase classname="DiscountService › validateDiscount" name="should reject non-existent discount code" time="0" file="src\services\promotions\services\discount.service.spec.ts">
+    </testcase>
+    <testcase classname="DiscountService › validateDiscount" name="should reject inactive discount code" time="0.003" file="src\services\promotions\services\discount.service.spec.ts">
+    </testcase>
+    <testcase classname="DiscountService › validateDiscount" name="should reject expired discount code" time="0" file="src\services\promotions\services\discount.service.spec.ts">
+    </testcase>
+    <testcase classname="DiscountService › validateDiscount" name="should reject discount that has not started yet" time="0.001" file="src\services\promotions\services\discount.service.spec.ts">
+    </testcase>
+    <testcase classname="DiscountService › validateDiscount" name="should reject discount that reached max usage limit" time="0" file="src\services\promotions\services\discount.service.spec.ts">
+    </testcase>
+    <testcase classname="DiscountService › applyDiscount" name="should apply percentage discount to order" time="0.001" file="src\services\promotions\services\discount.service.spec.ts">
+    </testcase>
+    <testcase classname="DiscountService › applyDiscount" name="should apply fixed amount discount to order" time="0" file="src\services\promotions\services\discount.service.spec.ts">
+    </testcase>
+    <testcase classname="DiscountService › applyDiscount" name="should apply free shipping discount" time="0" file="src\services\promotions\services\discount.service.spec.ts">
+    </testcase>
+    <testcase classname="DiscountService › applyDiscount" name="should cap percentage discount at maximum amount" time="0.001" file="src\services\promotions\services\discount.service.spec.ts">
+    </testcase>
+    <testcase classname="DiscountService › applyDiscount" name="should reject discount if order does not meet minimum purchase" time="0" file="src\services\promotions\services\discount.service.spec.ts">
+    </testcase>
+    <testcase classname="DiscountService › applyDiscount" name="should not allow discount to exceed order subtotal" time="0" file="src\services\promotions\services\discount.service.spec.ts">
+    </testcase>
+    <testcase classname="DiscountService › applyDiscount" name="should increment usage count when discount is applied" time="0.001" file="src\services\promotions\services\discount.service.spec.ts">
+    </testcase>
+    <testcase classname="DiscountService › applyDiscount" name="should reject discount if user has exceeded per-user limit" time="0" file="src\services\promotions\services\discount.service.spec.ts">
+    </testcase>
+    <testcase classname="DiscountService › getActiveDiscounts" name="should return all active discounts" time="0.001" file="src\services\promotions\services\discount.service.spec.ts">
+    </testcase>
+    <testcase classname="DiscountService › deactivateDiscount" name="should deactivate a discount code" time="0" file="src\services\promotions\services\discount.service.spec.ts">
+    </testcase>
+    <testcase classname="DiscountService › getDiscountUsageStats" name="should return usage statistics for a discount" time="0.001" file="src\services\promotions\services\discount.service.spec.ts">
+    </testcase>
+    <testcase classname="DiscountService › calculateSavings" name="should calculate total savings from discount" time="0" file="src\services\promotions\services\discount.service.spec.ts">
+    </testcase>
+    <testcase classname="DiscountService › calculateSavings" name="should calculate savings for fixed amount discount" time="0" file="src\services\promotions\services\discount.service.spec.ts">
+    </testcase>
+    <testcase classname="DiscountService › deleteDiscount" name="should delete a discount code" time="0.001" file="src\services\promotions\services\discount.service.spec.ts">
+    </testcase>
+  </testsuite>
+  <testsuite name="tests\integration\services\user-auth-integration.test.ts" errors="0" failures="0" skipped="0" timestamp="2025-12-02T23:35:46" time="5.381" tests="19">
+    <testcase classname="User Authentication Integration Tests › Complete Registration Flow" name="should register user and send verification email" time="0.063" file="tests\integration\services\user-auth-integration.test.ts">
+    </testcase>
+    <testcase classname="User Authentication Integration Tests › Complete Registration Flow" name="should hash password during registration" time="0.053" file="tests\integration\services\user-auth-integration.test.ts">
+    </testcase>
+    <testcase classname="User Authentication Integration Tests › Complete Registration Flow" name="should reject weak passwords" time="0.014" file="tests\integration\services\user-auth-integration.test.ts">
+    </testcase>
+    <testcase classname="User Authentication Integration Tests › Email Verification Flow" name="should verify email and activate account" time="0.001" file="tests\integration\services\user-auth-integration.test.ts">
+    </testcase>
+    <testcase classname="User Authentication Integration Tests › Email Verification Flow" name="should reject invalid verification token" time="0" file="tests\integration\services\user-auth-integration.test.ts">
+    </testcase>
+    <testcase classname="User Authentication Integration Tests › Login Flow" name="should login user with correct credentials" time="0.11" file="tests\integration\services\user-auth-integration.test.ts">
+    </testcase>
+    <testcase classname="User Authentication Integration Tests › Login Flow" name="should reject login with incorrect password" time="0.105" file="tests\integration\services\user-auth-integration.test.ts">
+    </testcase>
+    <testcase classname="User Authentication Integration Tests › Login Flow" name="should lock account after 5 failed login attempts" time="0.109" file="tests\integration\services\user-auth-integration.test.ts">
+    </testcase>
+    <testcase classname="User Authentication Integration Tests › Login Flow" name="should prevent login for locked account" time="0.054" file="tests\integration\services\user-auth-integration.test.ts">
+    </testcase>
+    <testcase classname="User Authentication Integration Tests › Login Flow" name="should require email verification before login" time="0.11" file="tests\integration\services\user-auth-integration.test.ts">
+    </testcase>
+    <testcase classname="User Authentication Integration Tests › Password Reset Flow" name="should initiate password reset and send email" time="0.001" file="tests\integration\services\user-auth-integration.test.ts">
+    </testcase>
+    <testcase classname="User Authentication Integration Tests › Password Reset Flow" name="should complete password reset with valid token" time="0.056" file="tests\integration\services\user-auth-integration.test.ts">
+    </testcase>
+    <testcase classname="User Authentication Integration Tests › Password Reset Flow" name="should reject weak password in reset" time="0" file="tests\integration\services\user-auth-integration.test.ts">
+    </testcase>
+    <testcase classname="User Authentication Integration Tests › Password Reset Flow" name="should not reveal if email exists" time="0.001" file="tests\integration\services\user-auth-integration.test.ts">
+    </testcase>
+    <testcase classname="User Authentication Integration Tests › JWT Token Operations" name="should generate valid JWT token on login" time="0.11" file="tests\integration\services\user-auth-integration.test.ts">
+    </testcase>
+    <testcase classname="User Authentication Integration Tests › JWT Token Operations" name="should include user role in token" time="0.111" file="tests\integration\services\user-auth-integration.test.ts">
+    </testcase>
+    <testcase classname="User Authentication Integration Tests › Account Status Validation" name="should prevent login for suspended account" time="0.054" file="tests\integration\services\user-auth-integration.test.ts">
+    </testcase>
+    <testcase classname="User Authentication Integration Tests › Account Status Validation" name="should prevent login for deleted account" time="0.053" file="tests\integration\services\user-auth-integration.test.ts">
+    </testcase>
+    <testcase classname="User Authentication Integration Tests › Multi-step Authentication Flows" name="should handle complete user lifecycle" time="0.202" file="tests\integration\services\user-auth-integration.test.ts">
+    </testcase>
+  </testsuite>
+  <testsuite name="src\services\notifications\services\notification.service.spec.ts" errors="0" failures="0" skipped="0" timestamp="2025-12-02T23:35:46" time="11.6" tests="29">
+    <testcase classname="NotificationService › sendWelcomeEmail" name="should send welcome email successfully" time="0.008" file="src\services\notifications\services\notification.service.spec.ts">
+    </testcase>
+    <testcase classname="NotificationService › sendWelcomeEmail" name="should reject invalid email" time="0.019" file="src\services\notifications\services\notification.service.spec.ts">
+    </testcase>
+    <testcase classname="NotificationService › sendWelcomeEmail" name="should handle email provider failure" time="0.001" file="src\services\notifications\services\notification.service.spec.ts">
+    </testcase>
+    <testcase classname="NotificationService › sendOrderConfirmation" name="should send order confirmation email" time="0.001" file="src\services\notifications\services\notification.service.spec.ts">
+    </testcase>
+    <testcase classname="NotificationService › sendOrderConfirmation" name="should include order details in email" time="0.002" file="src\services\notifications\services\notification.service.spec.ts">
+    </testcase>
+    <testcase classname="NotificationService › sendShippingNotification" name="should send shipping notification email" time="0" file="src\services\notifications\services\notification.service.spec.ts">
+    </testcase>
+    <testcase classname="NotificationService › sendShippingNotification" name="should send SMS if phone number provided" time="0.001" file="src\services\notifications\services\notification.service.spec.ts">
+    </testcase>
+    <testcase classname="NotificationService › sendPasswordResetEmail" name="should send password reset email with token" time="0" file="src\services\notifications\services\notification.service.spec.ts">
+    </testcase>
+    <testcase classname="NotificationService › sendPasswordResetEmail" name="should include expiration time in email" time="0" file="src\services\notifications\services\notification.service.spec.ts">
+    </testcase>
+    <testcase classname="NotificationService › sendSMSNotification" name="should send SMS successfully" time="0.001" file="src\services\notifications\services\notification.service.spec.ts">
+    </testcase>
+    <testcase classname="NotificationService › sendSMSNotification" name="should reject invalid phone number" time="0" file="src\services\notifications\services\notification.service.spec.ts">
+    </testcase>
+    <testcase classname="NotificationService › sendSMSNotification" name="should reject message that is too long" time="0.001" file="src\services\notifications\services\notification.service.spec.ts">
+    </testcase>
+    <testcase classname="NotificationService › sendSMSNotification" name="should handle SMS provider failure" time="0" file="src\services\notifications\services\notification.service.spec.ts">
+    </testcase>
+    <testcase classname="NotificationService › sendWebhook" name="should send webhook notification" time="0.001" file="src\services\notifications\services\notification.service.spec.ts">
+    </testcase>
+    <testcase classname="NotificationService › sendWebhook" name="should reject invalid URL" time="0" file="src\services\notifications\services\notification.service.spec.ts">
+    </testcase>
+    <testcase classname="NotificationService › sendWebhook" name="should retry on failure" time="2.015" file="src\services\notifications\services\notification.service.spec.ts">
+    </testcase>
+    <testcase classname="NotificationService › sendWebhook" name="should give up after max retries" time="6.019" file="src\services\notifications\services\notification.service.spec.ts">
+    </testcase>
+    <testcase classname="NotificationService › sendBulkEmail" name="should send email to multiple recipients" time="0" file="src\services\notifications\services\notification.service.spec.ts">
+    </testcase>
+    <testcase classname="NotificationService › sendBulkEmail" name="should track failures in bulk send" time="0.001" file="src\services\notifications\services\notification.service.spec.ts">
+    </testcase>
+    <testcase classname="NotificationService › sendBulkEmail" name="should reject empty recipient list" time="0.001" file="src\services\notifications\services\notification.service.spec.ts">
+    </testcase>
+    <testcase classname="NotificationService › getUserPreferences" name="should get notification preferences for user" time="0" file="src\services\notifications\services\notification.service.spec.ts">
+    </testcase>
+    <testcase classname="NotificationService › getUserPreferences" name="should return default preferences for new user" time="0.001" file="src\services\notifications\services\notification.service.spec.ts">
+    </testcase>
+    <testcase classname="NotificationService › updateUserPreferences" name="should update notification preferences" time="0" file="src\services\notifications\services\notification.service.spec.ts">
+    </testcase>
+    <testcase classname="NotificationService › updateUserPreferences" name="should not send emails if disabled in preferences" time="0.001" file="src\services\notifications\services\notification.service.spec.ts">
+    </testcase>
+    <testcase classname="NotificationService › scheduleNotification" name="should schedule notification for future delivery" time="0" file="src\services\notifications\services\notification.service.spec.ts">
+    </testcase>
+    <testcase classname="NotificationService › scheduleNotification" name="should reject past scheduled time" time="0.001" file="src\services\notifications\services\notification.service.spec.ts">
+    </testcase>
+    <testcase classname="NotificationService › getNotificationHistory" name="should return notification history for user" time="0.001" file="src\services\notifications\services\notification.service.spec.ts">
+    </testcase>
+    <testcase classname="NotificationService › getNotificationHistory" name="should filter history by type" time="0" file="src\services\notifications\services\notification.service.spec.ts">
+    </testcase>
+    <testcase classname="NotificationService › getNotificationHistory" name="should limit history results" time="0" file="src\services\notifications\services\notification.service.spec.ts">
     </testcase>
   </testsuite>
 </testsuites>

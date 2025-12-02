@@ -73,7 +73,8 @@ jobs:
           paths:
             - dist
 
-  test_unit_adaptive_analysis:
+  # Analysis Phase Jobs (run ALL tests with coverage)
+  test_unit_smarter_analysis:
     executor: node-executor
     parallelism: 4
     steps:
@@ -86,9 +87,10 @@ jobs:
           path: test-results
       - store_artifacts:
           path: coverage
-          destination: coverage-adaptive-analysis
+          destination: coverage-smarter-analysis
 
-  test_unit_adaptive_selection:
+  # Selection Phase Jobs (run ONLY impacted tests)
+  test_unit_smarter_selection:
     executor: node-executor
     parallelism: 4
     steps:
@@ -101,9 +103,9 @@ jobs:
           path: test-results
       - store_artifacts:
           path: coverage
-          destination: coverage-adaptive-selection
+          destination: coverage-smarter-selection
 
-  test_integration_adaptive_analysis:
+  test_integration_smarter_analysis:
     executor: node-executor
     parallelism: 2
     steps:
@@ -120,9 +122,9 @@ jobs:
           path: test-results
       - store_artifacts:
           path: coverage
-          destination: coverage-adaptive-analysis
+          destination: coverage-smarter-analysis
 
-  test_integration_adaptive_selection:
+  test_integration_smarter_selection:
     executor: node-executor
     parallelism: 2
     steps:
@@ -139,9 +141,9 @@ jobs:
           path: test-results
       - store_artifacts:
           path: coverage
-          destination: coverage-adaptive-selection
+          destination: coverage-smarter-selection
 
-  test_e2e_adaptive_analysis:
+  test_e2e_smarter_analysis:
     executor: node-executor
     steps:
       - attach_workspace:
@@ -160,9 +162,9 @@ jobs:
           path: test-results
       - store_artifacts:
           path: coverage
-          destination: coverage-adaptive-analysis
+          destination: coverage-smarter-analysis
 
-  test_e2e_adaptive_selection:
+  test_e2e_smarter_selection:
     executor: node-executor
     steps:
       - attach_workspace:
@@ -181,51 +183,55 @@ jobs:
           path: test-results
       - store_artifacts:
           path: coverage
-          destination: coverage-adaptive-selection
+          destination: coverage-smarter-selection
 
 workflows:
   version: 2
 
-  test_adaptive_analysis:
+  # Main branch: Run ALL tests with analysis (default configuration)
+  # The analysis phase can be configured to run on any branch
+  test_smarter_analysis:
     jobs:
       - checkout_and_install:
           filters:
             branches:
-              only: master
+              only: main
       - lint_and_typecheck:
           requires:
             - checkout_and_install
-      - test_unit_adaptive_analysis:
+      - test_unit_smarter_analysis:
           requires:
             - lint_and_typecheck
-      - test_integration_adaptive_analysis:
+      - test_integration_smarter_analysis:
           requires:
-            - test_unit_adaptive_analysis
-      - test_e2e_adaptive_analysis:
+            - test_unit_smarter_analysis
+      - test_e2e_smarter_analysis:
           requires:
-            - test_integration_adaptive_analysis
+            - test_integration_smarter_analysis
       - build:
           requires:
-            - test_e2e_adaptive_analysis
+            - test_e2e_smarter_analysis
 
-  test_adaptive_intelligent:
+  # Feature branches: Run ONLY impacted tests
+  # The selection workflow can run on any branch you configure
+  test_smarter_intelligent:
     jobs:
       - checkout_and_install:
           filters:
             branches:
-              only: adaptive-testing-demo
+              only: smarter-testing-demo
       - lint_and_typecheck:
           requires:
             - checkout_and_install
-      - test_unit_adaptive_selection:
+      - test_unit_smarter_selection:
           requires:
             - lint_and_typecheck
-      - test_integration_adaptive_selection:
+      - test_integration_smarter_selection:
           requires:
-            - test_unit_adaptive_selection
-      - test_e2e_adaptive_selection:
+            - test_unit_smarter_selection
+      - test_e2e_smarter_selection:
           requires:
-            - test_integration_adaptive_selection
+            - test_integration_smarter_selection
       - build:
           requires:
-            - test_e2e_adaptive_selection
+            - test_e2e_smarter_selection

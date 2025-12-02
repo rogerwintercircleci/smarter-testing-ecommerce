@@ -33,7 +33,7 @@ module.exports = {
   verbose: true,
   testTimeout: 30000,
   maxWorkers: '50%',
-  // CircleCI adaptive testing configuration
+  // CircleCI Smarter Testing configuration
   reporters: [
     'default',
     [

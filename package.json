@@ -1,7 +1,7 @@
 {
-  "name": "ecommerce-adaptive-testing",
+  "name": "smarter-testing-ecommerce",
   "version": "1.0.0",
-  "description": "Production-grade e-commerce platform API demonstrating CircleCI adaptive testing with 500+ tests",
+  "description": "Production-grade e-commerce platform API demonstrating CircleCI Smarter Testing with 684 tests",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
@@ -29,7 +29,7 @@
     "microservices",
     "typescript",
     "circleci",
-    "adaptive-testing",
+    "smarter-testing",
     "tdd"
   ],
   "author": "CircleCI Demo",
