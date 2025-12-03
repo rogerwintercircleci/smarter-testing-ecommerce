@@ -1,4 +1,3 @@
-// Demo: Testing full-test-run-paths trigger
 module.exports = {
   preset: 'ts-jest',
   testEnvironment: 'node',

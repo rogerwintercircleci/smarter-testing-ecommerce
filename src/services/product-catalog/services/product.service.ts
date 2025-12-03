@@ -3,8 +3,6 @@
  *
  * Business logic layer for product management
  * Implements all functionality to pass tests in product.service.spec.ts
- *
- * Demo: Test Scenario 2 - ProductService change
  */
 
 import { ProductRepository, SearchProductsOptions, SearchProductsResult } from '../repositories/product.repository';
