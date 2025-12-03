@@ -3,6 +3,8 @@
  *
  * Business logic layer for user management
  * Implements all functionality to pass tests in user.service.spec.ts
+ *
+ * Demo: Testing Smarter Testing selection mode
  */
 
 import { UserRepository } from '../repositories/user.repository';
