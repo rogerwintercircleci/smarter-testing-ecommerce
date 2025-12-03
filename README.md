@@ -54,3 +54,4 @@ This project includes pre-configured CircleCI pipelines demonstrating Smarter Te
 ## License
 
 MIT License
+
