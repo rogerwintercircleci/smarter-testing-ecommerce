@@ -55,3 +55,4 @@ module.exports = {
   resetMocks: true,
   restoreMocks: true
 };
+// Demo: Test Scenario 4 - Config change
