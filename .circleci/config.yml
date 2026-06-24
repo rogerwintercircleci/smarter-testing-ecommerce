@@ -6,7 +6,7 @@ orbs:
 executors:
   node-executor:
     docker:
-      - image: cimg/node:18.19
+      - image: cimg/node:22.23
       - image: cimg/postgres:15.5
         environment:
           POSTGRES_USER: postgres
