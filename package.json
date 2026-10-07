@@ -1,28 +1,30 @@
 {
   "name": "smarter-testing-ecommerce",
   "version": "1.0.0",
-  "description": "Production-grade e-commerce platform API demonstrating CircleCI Smarter Testing with 684 tests",
+  "description": "Demo e-commerce API for the CircleCI Smarter Testing tutorial: test impact analysis and dynamic test splitting with Jest",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js",
     "dev": "ts-node src/index.ts",
     "test": "jest",
-    "test:unit": "jest --testPathPattern=unit",
-    "test:integration": "jest --testPathPattern=integration",
-    "test:e2e": "jest --testPathPattern=e2e",
-    "test:performance": "jest --testPathPattern=performance",
     "test:coverage": "jest --coverage",
     "test:watch": "jest --watch",
-    "test:ci": "jest --ci --coverage --maxWorkers=2 --reporters=default --reporters=jest-junit",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
     "format": "prettier --write \"src/**/*.ts\" \"tests/**/*.ts\"",
     "format:check": "prettier --check \"src/**/*.ts\" \"tests/**/*.ts\"",
-    "typecheck": "tsc --noEmit",
-    "db:migrate": "ts-node src/libs/database/migrate.ts",
-    "db:seed": "ts-node src/libs/database/seed.ts",
-    "docs:generate": "tsoa spec-and-routes && swagger-jsdoc -d swaggerDef.js src/**/*.ts -o docs/openapi.json"
+    "typecheck": "tsc --noEmit && tsc --noEmit -p tests/integration/tsconfig.json",
+    "test:integration": "jest -c jest.integration.config.js",
+    "db:up": "docker run -d --rm --name st-postgres -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=ecommerce_test_db -p 5432:5432 postgres:16-alpine",
+    "db:down": "docker stop st-postgres",
+    "demo:analyze": "scripts/demo.sh analyze",
+    "demo:leaf": "scripts/demo.sh leaf",
+    "demo:shared": "scripts/demo.sh shared",
+    "demo:new-test": "scripts/demo.sh new-test",
+    "demo:config": "scripts/demo.sh config",
+    "demo:blind-spot": "scripts/demo.sh blind-spot",
+    "demo:reset": "scripts/demo.sh reset"
   },
   "keywords": [
     "ecommerce",
@@ -62,6 +64,7 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@circleci/jest-circleci-coverage": "^0.4.747",
     "@faker-js/faker": "^8.3.1",
     "@types/bcrypt": "^5.0.2",
     "@types/compression": "^1.8.1",
@@ -80,6 +83,7 @@
     "eslint-plugin-jest": "^27.6.3",
     "faker": "^5.5.3",
     "jest": "^29.7.0",
+    "jest-environment-node": "^29.7.0",
     "jest-junit": "^16.0.0",
     "nock": "^13.5.0",
     "prettier": "^3.2.4",
@@ -91,7 +95,6 @@
     "typescript": "^5.3.3"
   },
   "engines": {
-    "node": ">=20.0.0",
-    "npm": ">=9.0.0"
+    "node": ">=22.0.0"
   }
 }

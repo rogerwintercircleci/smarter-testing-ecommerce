@@ -4,15 +4,15 @@
  * Testing complete authentication workflows across services
  */
 
-import { UserService } from '../../../src/services/user-management/services/user.service';
-import { UserRepository } from '../../../src/services/user-management/repositories/user.repository';
-import { NotificationService } from '../../../src/services/notifications/services/notification.service';
-import { hashPassword } from '../../../src/libs/auth/password.utils';
-import { verifyToken } from '../../../src/libs/auth/jwt.utils';
-import { UnauthorizedError, BadRequestError } from '../../../src/libs/errors';
+import { UserService } from '../../src/services/user-management/services/user.service';
+import { UserRepository } from '../../src/services/user-management/repositories/user.repository';
+import { NotificationService } from '../../src/services/notifications/services/notification.service';
+import { hashPassword } from '../../src/libs/auth/password.utils';
+import { verifyToken } from '../../src/libs/auth/jwt.utils';
+import { UnauthorizedError, BadRequestError } from '../../src/libs/errors';
 
-jest.mock('../../../src/services/user-management/repositories/user.repository');
-jest.mock('../../../src/services/notifications/services/notification.service');
+jest.mock('../../src/services/user-management/repositories/user.repository');
+jest.mock('../../src/services/notifications/services/notification.service');
 
 describe('User Authentication Integration Tests', () => {
   let userService: UserService;
