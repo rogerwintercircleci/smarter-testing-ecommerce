@@ -42,7 +42,7 @@ Each step matches a section of the tutorial.
 | `npm run demo:shared` | The base error class every service uses |
 | `npm run demo:new-test` | Adds a new test file |
 | `npm run demo:config` | `jest.config.js`, which triggers a full run |
-| `npm run demo:blind-spot` | An enum member; coverage can't see it, so the type check catches it |
+| `npm run demo:coverage-gap` | An enum member; coverage can't see it, so the type check catches it |
 | `npm run demo:reset` | Deletes the `demo/*` branches |
 
 ## Running the tests directly

@@ -23,7 +23,7 @@
     "demo:shared": "scripts/demo.sh shared",
     "demo:new-test": "scripts/demo.sh new-test",
     "demo:config": "scripts/demo.sh config",
-    "demo:blind-spot": "scripts/demo.sh blind-spot",
+    "demo:coverage-gap": "scripts/demo.sh coverage-gap",
     "demo:reset": "scripts/demo.sh reset"
   },
   "keywords": [

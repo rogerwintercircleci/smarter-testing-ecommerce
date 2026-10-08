@@ -1,5 +1,5 @@
-Committed on branch demo/blind-spot. To see the same selection in CircleCI:
-  git push -u origin demo/blind-spot
+Committed on branch demo/coverage-gap. To see the same selection in CircleCI:
+  git push -u origin demo/coverage-gap
 
 ▶ circleci testsuite run "unit tests" --local --run-tests=impacted --analyze-tests=none
 

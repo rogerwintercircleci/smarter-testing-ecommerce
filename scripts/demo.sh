@@ -5,7 +5,7 @@
 #   scripts/demo.sh <scenario>   make a change on a demo/<scenario> branch and preview selection
 #   scripts/demo.sh reset        delete demo branches and return to main
 #
-# Scenarios: leaf, shared, new-test, config, blind-spot
+# Scenarios: leaf, shared, new-test, config, coverage-gap
 #
 # Everything here uses --local: impact data stays in .circleci/ on your machine
 # and nothing is sent to CircleCI.
@@ -95,14 +95,14 @@ TS
     commit config
     preview
     ;;
-  blind-spot)
-    start_branch blind-spot
+  coverage-gap)
+    start_branch coverage-gap
     # Remove an enum member. Code that uses it no longer compiles, but enum
     # definitions run when the module loads, outside any test, so coverage
     # never links this file to the tests that depend on it.
     sed -i.bak "/APPROVED = 'approved',/d" src/services/order-processing/entities/refund.entity.ts
     rm -f src/services/order-processing/entities/refund.entity.ts.bak
-    commit blind-spot
+    commit coverage-gap
     preview
     echo
     echo "▶ npm run typecheck   (the CI job that catches what coverage can't see)"
