@@ -1,41 +1,40 @@
-name: unit-tests
-discover: find src -name "*.spec.ts" -type f | sed 's|^|/home/circleci/project/|'
-run: JEST_JUNIT_OUTPUT_FILE="<< outputs.junit >>" npm test -- << test.atoms >> --ci --maxWorkers=2 --passWithNoTests --reporters=default --reporters=jest-junit
-analysis: rm -rf coverage && npm test -- << test.atoms >> --ci --coverage --coverageReporters=lcov --coverageDirectory=coverage/tmp --runInBand --passWithNoTests --coverageThreshold='{}' && mv coverage/tmp/lcov.info << outputs.lcov >>
-outputs:
-  junit: test-results/jest/results.xml
-  lcov: coverage/lcov.info
-options:
-  adaptive-testing: true
-  dynamic-batching: true
-  full-test-run-paths:
-    - package-lock.json
-    - jest.config.js
+# Smarter Testing suite definitions.
+# Reference: https://circleci.com/docs/reference/testsuite-configuration-reference/
 ---
-name: integration-tests
-discover: find tests/integration -name "*.test.ts" -type f | sed 's|^|/home/circleci/project/|'
-run: JEST_JUNIT_OUTPUT_FILE="<< outputs.junit >>" npm test -- << test.atoms >> --ci --maxWorkers=2 --passWithNoTests --reporters=default --reporters=jest-junit
-analysis: rm -rf coverage && npm test -- << test.atoms >> --ci --coverage --coverageReporters=lcov --coverageDirectory=coverage/tmp --runInBand --passWithNoTests --coverageThreshold='{}' && mv coverage/tmp/lcov.info << outputs.lcov >>
+name: unit tests
+discover: npx jest --listTests
+run: JEST_JUNIT_OUTPUT_FILE="<< outputs.junit >>" npx jest --ci << test.atoms >>
+analysis: CIRCLECI_COVERAGE="<< outputs.circleci-coverage >>" npx jest --ci --runInBand << test.atoms >>
 outputs:
-  junit: test-results/jest/results.xml
-  lcov: coverage/lcov.info
+  junit: test-results/unit/results.xml
 options:
-  adaptive-testing: true
-  dynamic-batching: true
+  store-test-results: true
+  impact-key: unit
+  test-impact-analysis: true
+  # Files that coverage can't attribute to individual tests.
+  # A change to any of them runs the whole suite.
   full-test-run-paths:
     - package-lock.json
+    - tsconfig.json
     - jest.config.js
+    - jest.shared.js
+    - tests/setup.ts
 ---
-name: e2e-tests
-discover: find tests/e2e -name "*.test.ts" -type f | sed 's|^|/home/circleci/project/|'
-run: JEST_JUNIT_OUTPUT_FILE="<< outputs.junit >>" npm test -- << test.atoms >> --ci --runInBand --passWithNoTests --reporters=default --reporters=jest-junit
-analysis: rm -rf coverage && npm test -- << test.atoms >> --ci --coverage --coverageReporters=lcov --coverageDirectory=coverage/tmp --runInBand --passWithNoTests --coverageThreshold='{}' && mv coverage/tmp/lcov.info << outputs.lcov >>
+name: integration tests
+discover: npx jest -c jest.integration.config.js --listTests
+run: JEST_JUNIT_OUTPUT_FILE="<< outputs.junit >>" npx jest -c jest.integration.config.js --ci << test.atoms >>
+analysis: CIRCLECI_COVERAGE="<< outputs.circleci-coverage >>" npx jest -c jest.integration.config.js --ci --runInBand << test.atoms >>
 outputs:
-  junit: test-results/jest/results.xml
-  lcov: coverage/lcov.info
+  junit: test-results/integration/results.xml
 options:
-  adaptive-testing: true
-  dynamic-batching: true
+  store-test-results: true
+  impact-key: integration
+  test-impact-analysis: true
+  dynamic-test-splitting: true
   full-test-run-paths:
     - package-lock.json
-    - jest.config.js
+    - tsconfig.json
+    - jest.integration.config.js
+    - jest.shared.js
+    - tests/setup.ts
+    - tests/integration/support/**

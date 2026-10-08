@@ -4,16 +4,16 @@
  * Testing how product operations affect analytics and reporting
  */
 
-import { ProductService } from '../../../src/services/product-catalog/services/product.service';
-import { ProductRepository } from '../../../src/services/product-catalog/repositories/product.repository';
-import { AnalyticsService } from '../../../src/services/analytics/services/analytics.service';
-import { OrderRepository } from '../../../src/services/order-processing/repositories/order.repository';
-import { UserRepository } from '../../../src/services/user-management/repositories/user.repository';
-import { ProductStatus } from '../../../src/services/product-catalog/entities/product.entity';
+import { ProductService } from '../../src/services/product-catalog/services/product.service';
+import { ProductRepository } from '../../src/services/product-catalog/repositories/product.repository';
+import { AnalyticsService } from '../../src/services/analytics/services/analytics.service';
+import { OrderRepository } from '../../src/services/order-processing/repositories/order.repository';
+import { UserRepository } from '../../src/services/user-management/repositories/user.repository';
+import { ProductStatus } from '../../src/services/product-catalog/entities/product.entity';
 
-jest.mock('../../../src/services/product-catalog/repositories/product.repository');
-jest.mock('../../../src/services/order-processing/repositories/order.repository');
-jest.mock('../../../src/services/user-management/repositories/user.repository');
+jest.mock('../../src/services/product-catalog/repositories/product.repository');
+jest.mock('../../src/services/order-processing/repositories/order.repository');
+jest.mock('../../src/services/user-management/repositories/user.repository');
 
 describe('Product and Analytics Integration Tests', () => {
   let productService: ProductService;

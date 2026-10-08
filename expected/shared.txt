@@ -1,0 +1,36 @@
+Committed on branch demo/shared. To see the same selection in CircleCI:
+  git push -u origin demo/shared
+
+▶ circleci testsuite run "unit tests" --local --run-tests=impacted --analyze-tests=none
+
+Selecting tests...
+Found test impact version: 1
+Using 'impact-key' 'unit'
+- 0 new test atoms
+- 0 test atoms impacted by new files
+- 17 test atoms impacted by modified files
+- 0 test atoms impacted by removed files
+- 0 test atoms failed previously
+- 0 test atoms with no source file mappings in impact data
+- 0 test atoms impacted by include rule
+- 0 test atoms impacted by full test run paths
+Selected 17 test atoms, Skipped 8 test atoms in Nms
+Running 17 test atoms
+  PASS  src/libs/auth/auth.middleware.spec.ts
+  PASS  src/libs/auth/jwt.utils.spec.ts
+  PASS  src/libs/errors/base.error.spec.ts
+  PASS  src/libs/validation/validator.spec.ts
+  PASS  src/services/inventory/services/inventory.service.spec.ts
+  PASS  src/services/notifications/services/notification.service.spec.ts
+  PASS  src/services/order-processing/services/cart.service.spec.ts
+  PASS  src/services/order-processing/services/order.service.spec.ts
+  PASS  src/services/order-processing/services/refund.service.spec.ts
+  PASS  src/services/product-catalog/repositories/product.repository.spec.ts
+  PASS  src/services/product-catalog/services/product.service.spec.ts
+  PASS  src/services/product-catalog/services/review.service.spec.ts
+  PASS  src/services/promotions/services/discount.service.spec.ts
+  PASS  src/services/user-management/repositories/user.repository.spec.ts
+  PASS  src/services/user-management/services/user.service.spec.ts
+  PASS  src/services/wishlist/services/wishlist.service.spec.ts
+  PASS  tests/workflows/user-auth.workflow.test.ts
+  Tests:       432 passed, 432 total

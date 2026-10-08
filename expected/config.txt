@@ -1,0 +1,45 @@
+Committed on branch demo/config. To see the same selection in CircleCI:
+  git push -u origin demo/config
+
+▶ circleci testsuite run "unit tests" --local --run-tests=impacted --analyze-tests=none
+
+Selecting tests...
+Found test impact version: 1
+Using 'impact-key' 'unit'
+Selecting all test atoms, 'full-test-run-paths' detected modified file: jest.config.js
+- 0 new test atoms
+- 0 test atoms impacted by new files
+- 0 test atoms impacted by modified files
+- 0 test atoms impacted by removed files
+- 0 test atoms failed previously
+- 0 test atoms with no source file mappings in impact data
+- 0 test atoms impacted by include rule
+- 25 test atoms impacted by full test run paths
+Selected 25 test atoms, Skipped 0 test atoms in Nms
+Running 25 test atoms
+  PASS  src/libs/auth/auth.middleware.spec.ts
+  PASS  src/libs/auth/jwt.utils.spec.ts
+  PASS  src/libs/auth/password.utils.spec.ts
+  PASS  src/libs/errors/base.error.spec.ts
+  PASS  src/libs/validation/validator.spec.ts
+  PASS  src/services/analytics/services/analytics.service.spec.ts
+  PASS  src/services/inventory/services/inventory.service.spec.ts
+  PASS  src/services/notifications/services/notification.service.spec.ts
+  PASS  src/services/order-processing/entities/order.entity.spec.ts
+  PASS  src/services/order-processing/repositories/order.repository.spec.ts
+  PASS  src/services/order-processing/services/cart.service.spec.ts
+  PASS  src/services/order-processing/services/order.service.spec.ts
+  PASS  src/services/order-processing/services/refund.service.spec.ts
+  PASS  src/services/product-catalog/entities/product.entity.spec.ts
+  PASS  src/services/product-catalog/repositories/product.repository.spec.ts
+  PASS  src/services/product-catalog/services/product.service.spec.ts
+  PASS  src/services/product-catalog/services/review.service.spec.ts
+  PASS  src/services/promotions/services/discount.service.spec.ts
+  PASS  src/services/user-management/entities/user.entity.spec.ts
+  PASS  src/services/user-management/repositories/user.repository.spec.ts
+  PASS  src/services/user-management/services/user.service.spec.ts
+  PASS  src/services/wishlist/services/wishlist.service.spec.ts
+  PASS  tests/workflows/product-analytics.workflow.test.ts
+  PASS  tests/workflows/user-auth.workflow.test.ts
+  PASS  tests/workflows/user-endpoints.workflow.test.ts
+  Tests:       684 passed, 684 total

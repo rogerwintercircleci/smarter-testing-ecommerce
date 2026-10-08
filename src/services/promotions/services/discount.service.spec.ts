@@ -13,6 +13,9 @@ describe('DiscountService', () => {
   let mockDiscountRepository: jest.Mocked<DiscountRepository>;
 
   beforeEach(() => {
+    jest.useRealTimers();
+    jest.restoreAllMocks();
+
     mockDiscountRepository = {
       create: jest.fn(),
       findById: jest.fn(),
@@ -209,7 +212,7 @@ describe('DiscountService', () => {
         value: 20,
         isActive: true,
         usageCount: 5,
-        expiresAt: new Date('2025-12-31'),
+        expiresAt: new Date('2030-12-31'),
       };
 
       mockDiscountRepository.findByCode.mockResolvedValue(mockDiscount as any);

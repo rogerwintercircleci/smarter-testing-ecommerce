@@ -1,58 +1,68 @@
-# Smarter Testing Demo - E-Commerce Platform
+# Smarter Testing demo: test impact analysis and dynamic test splitting with Jest
 
-A production-grade e-commerce platform built with Test-Driven Development (TDD), designed to demonstrate CircleCI's Smarter Testing capabilities.
+This repo is the companion project for the CircleCI tutorial on [Smarter Testing](https://circleci.com/docs/guides/test/getting-started-with-smarter-testing/). It's a TypeScript e-commerce API with two Jest test suites:
 
-## Project Overview
+| Suite | Files | What it tests | Runs where |
+|---|---|---|---|
+| `unit tests` | `src/**/*.spec.ts`, `tests/workflows/` | Services and libraries, with collaborators mocked | Anywhere, in seconds |
+| `integration tests` | `tests/integration/` | Repositories and services against a real PostgreSQL database | Locally with Docker; in CI with a Postgres service container across 3 parallel nodes |
 
-This project showcases how CircleCI's Smarter Testing can dramatically reduce CI/CD build times by intelligently selecting only impacted tests and distributing them optimally across parallel execution nodes.
+You'll use it to see how CircleCI:
 
-### Test Suite
+- **selects only the tests a change affects** (test impact analysis), and explains why each one was picked
+- **balances the selected tests across parallel nodes** while they run (dynamic test splitting)
 
-- **684 tests** across **25 test files**
-- Unit tests, integration tests, and E2E tests
-- Built using strict TDD methodology
+> **Cost note.** Test impact analysis and dynamic test splitting are paid Smarter Testing features, billed on stored test results with a free allowance on every plan. Running `circleci testsuite` with `--local` (all of the `npm run demo:*` scripts) uses data on your machine and sends nothing to CircleCI. Use a personal organization on the Free plan to follow along in CI, and see [pricing](https://circleci.com/pricing/) for your plan's allowance.
 
-### Technology Stack
+## Prerequisites
 
-- **Language:** TypeScript 5.x
-- **Runtime:** Node.js 18+
-- **Test Framework:** Jest with ts-jest
-- **Database:** PostgreSQL with TypeORM
-- **CI/CD:** CircleCI with Smarter Testing
+- Node.js 22+
+- [CircleCI CLI](https://circleci.com/docs/guides/toolkit/local-cli/) v1, logged in (`circleci auth login`), with the testsuite extension: `circleci extension install testsuite`
+- Docker (only for running the integration suite locally)
 
-## Quick Start
+## Checklist
+
+Each step matches a section of the tutorial.
+
+- [ ] **Fork and build.** `gh repo fork <this repo> --clone`, then follow the project in CircleCI. The first build is your baseline. *(5 min)*
+- [ ] **Validate the suites.** `circleci testsuite doctor "unit tests"`: every check passes. *(2 min)*
+- [ ] **Build local impact data.** `npm run demo:analyze` reports `Analyzed 25 tests`. *(1 min)*
+- [ ] **Preview selection.** Run each scenario and compare your output with `expected/`. *(10 min)*
+  - `npm run demo:leaf`: a one-line change to the user service
+  - `npm run demo:shared`: a change to shared error code
+  - `npm run demo:new-test`: a brand-new test file
+  - `npm run demo:config`: a Jest config change (full run)
+  - `npm run demo:blind-spot`: a change coverage can't see, caught by the type check
+  - `npm run demo:reset`: delete the `demo/*` branches
+- [ ] **See it in CI.** Wait for the `main` build to go green, then `git push -u origin demo/shared`. *(10 min)*
+- [ ] **Compare splitting.** Open the integration job's **Timing** tab for a run with and without `dynamic-test-splitting`. *(10 min)*
+
+## Running the tests directly
 
 ```bash
-# Clone the repository
-git clone https://github.com/rogerwintercircleci/smarter-testing-ecommerce.git
-cd smarter-testing-ecommerce
+npm ci
+npm test                        # unit tests
 
-# Install dependencies
-npm install
-
-# Run all tests
-npm test
+npm run db:up                   # Postgres 16 on localhost:5432
+npm run test:integration        # integration tests
+npm run db:down
 ```
 
-## CircleCI Configuration
+## Where things are
 
-This project includes pre-configured CircleCI pipelines demonstrating Smarter Testing:
+| Path | Purpose |
+|---|---|
+| `.circleci/test-suites.yml` | Smarter Testing suite definitions |
+| `.circleci/config.yml` | Pipeline: lint and type check, unit tests, integration tests (parallelism 3) |
+| `jest.shared.js` | Jest settings shared by both suites, including the coverage environment and reporters |
+| `jest.config.js`, `jest.integration.config.js` | Per-suite Jest config |
+| `scripts/demo.sh` | The scenario scripts behind `npm run demo:*` |
+| `expected/` | Output from the scenarios, for comparison |
 
-- **`.circleci/config.yml`** - Main workflow configuration with analysis and selection modes
-- **`.circleci/test-suites.yml`** - Test suite definitions for Smarter Testing
+## Turning it off
 
-### Workflows
-
-1. **Analysis Workflow** (`test_smarter_analysis`) - Runs on `main` branch, executes all tests with coverage to build test impact mapping
-2. **Selection Workflow** (`test_smarter_intelligent`) - Runs on `smarter-testing-demo` branch, executes only impacted tests
-
-## Learn More
-
-- [CircleCI Smarter Testing Documentation](https://circleci.com/docs/guides/test/smarter-testing/)
-- [Smarter Testing Launch Announcement](https://circleci.com/blog/smarter-testing/)
+Delete the `test-impact-analysis` and `dynamic-test-splitting` lines from `.circleci/test-suites.yml`. `circleci testsuite run` keeps working with free features (static timing-based splitting and rerunning failed tests), or you can replace it with `npx jest`.
 
 ## License
 
-MIT License
-
-
+MIT

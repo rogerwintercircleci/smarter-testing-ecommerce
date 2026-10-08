@@ -1,237 +1,62 @@
 version: 2.1
 
-orbs:
-  node: circleci/node@5.1.0
-
 executors:
-  node-executor:
+  node:
     docker:
-      - image: cimg/node:18.19
-      - image: cimg/postgres:15.5
+      - image: cimg/node:22.23.3
+  node-with-postgres:
+    docker:
+      - image: cimg/node:22.23.3
+        environment:
+          DB_HOST: localhost
+          DB_NAME: ecommerce_test_db
+      - image: cimg/postgres:16.15
         environment:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
           POSTGRES_DB: ecommerce_test_db
-      - image: redis:7.2
-    working_directory: ~/project
-    resource_class: medium
 
 commands:
-  install_dependencies:
-    steps:
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "package.json" }}
-            - v1-dependencies-
-      - run:
-          name: Install Dependencies
-          command: npm ci
-      - save_cache:
-          paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
-
-  wait_for_db:
-    steps:
-      - run:
-          name: Wait for PostgreSQL
-          command: dockerize -wait tcp://localhost:5432 -timeout 1m
-
-jobs:
-  checkout_and_install:
-    executor: node-executor
+  install:
     steps:
       - checkout
-      - install_dependencies
-      - persist_to_workspace:
-          root: ~/project
+      - restore_cache:
+          keys:
+            - npm-v1-{{ checksum "package-lock.json" }}
+      - run: npm ci
+      - save_cache:
+          key: npm-v1-{{ checksum "package-lock.json" }}
           paths:
-            - .
+            - ~/.npm
 
-  lint_and_typecheck:
-    executor: node-executor
+jobs:
+  lint-and-typecheck:
+    executor: node
     steps:
-      - attach_workspace:
-          at: ~/project
-      - run:
-          name: Run ESLint
-          command: npm run lint
-      - run:
-          name: Run TypeScript type check
-          command: npm run typecheck
+      - install
+      - run: npm run lint
+      # Type errors can reach code that tests never execute; check every commit.
+      - run: npm run typecheck
 
-  build:
-    executor: node-executor
+  unit-tests:
+    executor: node
     steps:
-      - attach_workspace:
-          at: ~/project
-      - run:
-          name: Build TypeScript
-          command: npm run build
-      - persist_to_workspace:
-          root: ~/project
-          paths:
-            - dist
+      - install
+      - run: circleci testsuite run "unit tests"
 
-  # Analysis Phase Jobs (run ALL tests with coverage)
-  test_unit_smarter_analysis:
-    executor: node-executor
-    parallelism: 4
+  integration-tests:
+    executor: node-with-postgres
+    parallelism: 3
     steps:
-      - attach_workspace:
-          at: ~/project
+      - install
       - run:
-          name: Run Unit Tests (Analysis Mode)
-          command: circleci run testsuite "unit-tests" --test-selection=all --test-analysis=all
-      - store_test_results:
-          path: test-results
-      - store_artifacts:
-          path: coverage
-          destination: coverage-smarter-analysis
-
-  # Selection Phase Jobs (run ONLY impacted tests)
-  test_unit_smarter_selection:
-    executor: node-executor
-    parallelism: 4
-    steps:
-      - attach_workspace:
-          at: ~/project
-      - run:
-          name: Run Unit Tests (Selection Mode)
-          command: circleci run testsuite "unit-tests" --test-selection=impacted --test-analysis=none
-      - store_test_results:
-          path: test-results
-      - store_artifacts:
-          path: coverage
-          destination: coverage-smarter-selection
-
-  test_integration_smarter_analysis:
-    executor: node-executor
-    parallelism: 2
-    steps:
-      - attach_workspace:
-          at: ~/project
-      - wait_for_db
-      - run:
-          name: Run Database Migrations
-          command: npm run db:migrate
-      - run:
-          name: Run Integration Tests (Analysis Mode)
-          command: circleci run testsuite "integration-tests" --test-selection=all --test-analysis=all
-      - store_test_results:
-          path: test-results
-      - store_artifacts:
-          path: coverage
-          destination: coverage-smarter-analysis
-
-  test_integration_smarter_selection:
-    executor: node-executor
-    parallelism: 2
-    steps:
-      - attach_workspace:
-          at: ~/project
-      - wait_for_db
-      - run:
-          name: Run Database Migrations
-          command: npm run db:migrate
-      - run:
-          name: Run Integration Tests (Selection Mode)
-          command: circleci run testsuite "integration-tests" --test-selection=impacted --test-analysis=none
-      - store_test_results:
-          path: test-results
-      - store_artifacts:
-          path: coverage
-          destination: coverage-smarter-selection
-
-  test_e2e_smarter_analysis:
-    executor: node-executor
-    steps:
-      - attach_workspace:
-          at: ~/project
-      - wait_for_db
-      - run:
-          name: Run Database Migrations
-          command: npm run db:migrate
-      - run:
-          name: Seed Test Data
-          command: npm run db:seed
-      - run:
-          name: Run E2E Tests (Analysis Mode)
-          command: circleci run testsuite "e2e-tests" --test-selection=all --test-analysis=all
-      - store_test_results:
-          path: test-results
-      - store_artifacts:
-          path: coverage
-          destination: coverage-smarter-analysis
-
-  test_e2e_smarter_selection:
-    executor: node-executor
-    steps:
-      - attach_workspace:
-          at: ~/project
-      - wait_for_db
-      - run:
-          name: Run Database Migrations
-          command: npm run db:migrate
-      - run:
-          name: Seed Test Data
-          command: npm run db:seed
-      - run:
-          name: Run E2E Tests (Selection Mode)
-          command: circleci run testsuite "e2e-tests" --test-selection=impacted --test-analysis=none
-      - store_test_results:
-          path: test-results
-      - store_artifacts:
-          path: coverage
-          destination: coverage-smarter-selection
+          name: Wait for Postgres
+          command: dockerize -wait tcp://localhost:5432 -timeout 1m
+      - run: circleci testsuite run "integration tests"
 
 workflows:
-  version: 2
-
-  # Main branch: Run ALL tests with analysis (default configuration)
-  # The analysis phase can be configured to run on any branch
-  test_smarter_analysis:
+  test:
     jobs:
-      - checkout_and_install:
-          filters:
-            branches:
-              only: main
-      - lint_and_typecheck:
-          requires:
-            - checkout_and_install
-      - test_unit_smarter_analysis:
-          requires:
-            - lint_and_typecheck
-      - test_integration_smarter_analysis:
-          requires:
-            - test_unit_smarter_analysis
-      - test_e2e_smarter_analysis:
-          requires:
-            - test_integration_smarter_analysis
-      - build:
-          requires:
-            - test_e2e_smarter_analysis
-
-  # Feature branches: Run ONLY impacted tests
-  # The selection workflow can run on any branch you configure
-  test_smarter_intelligent:
-    jobs:
-      - checkout_and_install:
-          filters:
-            branches:
-              only: smarter-testing-demo
-      - lint_and_typecheck:
-          requires:
-            - checkout_and_install
-      - test_unit_smarter_selection:
-          requires:
-            - lint_and_typecheck
-      - test_integration_smarter_selection:
-          requires:
-            - test_unit_smarter_selection
-      - test_e2e_smarter_selection:
-          requires:
-            - test_integration_smarter_selection
-      - build:
-          requires:
-            - test_e2e_smarter_selection
+      - lint-and-typecheck
+      - unit-tests
+      - integration-tests

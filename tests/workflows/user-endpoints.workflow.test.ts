@@ -6,8 +6,8 @@
 
 import request from 'supertest';
 import { Express } from 'express';
-import { createApp } from '../../../src/app';
-import { generateToken } from '../../../src/libs/auth/jwt.utils';
+import { createApp } from '../../src/app';
+import { generateToken } from '../../src/libs/auth/jwt.utils';
 
 describe('User REST API E2E Tests', () => {
   let app: Express;

@@ -1,0 +1,21 @@
+Committed on branch demo/leaf. To see the same selection in CircleCI:
+  git push -u origin demo/leaf
+
+▶ circleci testsuite run "unit tests" --local --run-tests=impacted --analyze-tests=none
+
+Selecting tests...
+Found test impact version: 1
+Using 'impact-key' 'unit'
+- 0 new test atoms
+- 0 test atoms impacted by new files
+- 2 test atoms impacted by modified files
+- 0 test atoms impacted by removed files
+- 0 test atoms failed previously
+- 0 test atoms with no source file mappings in impact data
+- 0 test atoms impacted by include rule
+- 0 test atoms impacted by full test run paths
+Selected 2 test atoms, Skipped 23 test atoms in Nms
+Running 2 test atoms
+  PASS  src/services/user-management/services/user.service.spec.ts
+  PASS  tests/workflows/user-auth.workflow.test.ts
+  Tests:       44 passed, 44 total
