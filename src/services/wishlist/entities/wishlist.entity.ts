@@ -1,4 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn } from 'typeorm';
+import { numericTransformer } from '@libs/database/numeric.transformer';
 
 @Entity('wishlist_items')
 export class WishlistItem {
@@ -14,7 +15,7 @@ export class WishlistItem {
   @Column({ nullable: true })
   note: string;
 
-  @Column({ nullable: true })
+  @Column('decimal', { precision: 10, scale: 2, nullable: true, transformer: numericTransformer })
   priceWhenAdded: number;
 
   @CreateDateColumn()

@@ -109,11 +109,11 @@ describe('Discount codes (DiscountService + DiscountRepository, real Postgres)',
     await create({ code: 'TENOFF', type: DiscountType.FIXED_AMOUNT, value: 10 });
 
     const normal = await service.applyDiscount({ code: 'TENOFF', orderSubtotal: 45, userId: 'u1' });
-    expect(Number(normal.discountAmount)).toBe(10);
+    expect(normal.discountAmount).toBe(10);
     expect(normal.finalAmount).toBe(35);
 
     const small = await service.applyDiscount({ code: 'TENOFF', orderSubtotal: 6, userId: 'u1' });
-    expect(Number(small.discountAmount)).toBe(6);
+    expect(small.discountAmount).toBe(6);
     expect(small.finalAmount).toBe(0);
   });
 
@@ -136,6 +136,25 @@ describe('Discount codes (DiscountService + DiscountRepository, real Postgres)',
     await expect(
       service.applyDiscount({ code: 'BIGSPEND', orderSubtotal: 100, userId: 'u1' })
     ).resolves.toHaveProperty('discountAmount', 15);
+  });
+
+  it('supports minimum purchase and cap amounts with cents', async () => {
+    await create({ code: 'CENTS', value: 20, minPurchaseAmount: 49.99, maxDiscountAmount: 12.5 });
+
+    const stored = await discounts.findByCode('CENTS');
+    expect(stored!.minPurchaseAmount).toBe(49.99);
+    expect(stored!.maxDiscountAmount).toBe(12.5);
+    await expect(
+      service.applyDiscount({ code: 'CENTS', orderSubtotal: 49.98, userId: 'u1' })
+    ).rejects.toThrow('Order must meet minimum purchase amount of $49.99');
+    await expect(service.applyDiscount({ code: 'CENTS', orderSubtotal: 50, userId: 'u1' })).resolves.toMatchObject({
+      discountAmount: 10,
+      finalAmount: 40,
+    });
+    await expect(service.applyDiscount({ code: 'CENTS', orderSubtotal: 100, userId: 'u1' })).resolves.toMatchObject({
+      discountAmount: 12.5,
+      finalAmount: 87.5,
+    });
   });
 
   it('counts redemptions and stops at the usage limit', async () => {
@@ -179,7 +198,8 @@ describe('Discount codes (DiscountService + DiscountRepository, real Postgres)',
 
     await expect(service.calculateSavings('preview', 100)).resolves.toBe(25);
     await expect(service.calculateSavings('preview', 1000)).resolves.toBe(40);
-    expect(Number(await service.calculateSavings('fiver', 3))).toBe(3);
+    await expect(service.calculateSavings('fiver', 3)).resolves.toBe(3);
+    await expect(service.calculateSavings('fiver', 30)).resolves.toBe(5);
     await expect(service.calculateSavings('nope', 100)).resolves.toBe(0);
     expect((await discounts.findById(pct.id)).usageCount).toBe(0);
   });

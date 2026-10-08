@@ -71,6 +71,20 @@ describe('Password reset (UserService + UserRepository, real Postgres)', () => {
     await expect(service.login('swap@example.com', OLD_PASSWORD)).rejects.toThrow('Invalid credentials');
   });
 
+  it('consumes the reset token so it cannot be replayed', async () => {
+    const user = await verifiedUser('replay@example.com');
+    await service.requestPasswordReset('replay@example.com');
+    const token = notifier.lastTokenFor('replay@example.com', 'password-reset')!;
+
+    await service.resetPassword(token, NEW_PASSWORD);
+
+    const stored = await users.findById(user.id);
+    expect(stored.passwordResetToken).toBeNull();
+    expect(stored.passwordResetExpires).toBeNull();
+    await expect(service.resetPassword(token, 'An0ther!Password')).rejects.toBeInstanceOf(NotFoundError);
+    await expect(bcrypt.compare(NEW_PASSWORD, (await users.findById(user.id)).password)).resolves.toBe(true);
+  });
+
   it('rejects an unknown reset token', async () => {
     await verifiedUser('nobody-asked@example.com');
     await expect(service.resetPassword('a'.repeat(64), NEW_PASSWORD)).rejects.toBeInstanceOf(NotFoundError);

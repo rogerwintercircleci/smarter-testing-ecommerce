@@ -47,6 +47,15 @@ describe('Email verification (UserService + UserRepository, real Postgres)', () 
     expect(stored.emailVerifiedAt!.getTime()).toBeGreaterThanOrEqual(before - 1000);
   });
 
+  it('consumes the verification token so it cannot be used again', async () => {
+    const { user, token } = await register('once@example.com');
+
+    await service.verifyEmail(token);
+
+    expect((await users.findById(user.id)).emailVerificationToken).toBeNull();
+    await expect(service.verifyEmail(token)).rejects.toBeInstanceOf(NotFoundError);
+  });
+
   it('rejects an unknown verification token', async () => {
     await register('someone@example.com');
     await expect(service.verifyEmail('f'.repeat(64))).rejects.toBeInstanceOf(NotFoundError);

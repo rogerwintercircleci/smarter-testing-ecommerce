@@ -51,7 +51,7 @@ export class RefundRepository extends BaseRepository<RefundRequest> {
   async getTotalRefundedAmount(startDate?: Date, endDate?: Date): Promise<number> {
     let query = this.repository
       .createQueryBuilder('refund')
-      .select('SUM(refund.totalRefundAmount)', 'total')
+      .select('SUM(refund.refundAmount)', 'total')
       .where('refund.status = :status', { status: RefundStatus.COMPLETED });
 
     if (startDate) {

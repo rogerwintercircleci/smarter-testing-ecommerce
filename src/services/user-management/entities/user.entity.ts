@@ -56,18 +56,18 @@ export class User {
   @Column({ nullable: true })
   phoneNumber?: string;
 
-  @Column({ nullable: true })
+  @Column({ type: 'varchar', nullable: true })
   @Index()
-  emailVerificationToken?: string;
+  emailVerificationToken?: string | null;
 
   @Column({ type: 'timestamp', nullable: true })
   emailVerifiedAt?: Date;
 
-  @Column({ nullable: true })
-  passwordResetToken?: string;
+  @Column({ type: 'varchar', nullable: true })
+  passwordResetToken?: string | null;
 
   @Column({ type: 'timestamp', nullable: true })
-  passwordResetExpires?: Date;
+  passwordResetExpires?: Date | null;
 
   @Column({ type: 'timestamp', nullable: true })
   lastLoginAt?: Date;
@@ -76,7 +76,7 @@ export class User {
   loginAttempts!: number;
 
   @Column({ type: 'timestamp', nullable: true })
-  lockedUntil?: Date;
+  lockedUntil?: Date | null;
 
   @CreateDateColumn()
   createdAt!: Date;

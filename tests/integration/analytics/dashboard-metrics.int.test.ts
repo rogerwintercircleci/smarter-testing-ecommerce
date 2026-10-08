@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 import { DataSource } from 'typeorm';
-import { createTestDatabase, dropTestDatabase } from '../support/database';
+import { createTestDatabase, dropTestDatabase, truncateAll } from '../support/database';
 import { addMinutes, bulkInsert, cents, orderRow, productRow, seededRandom } from '../support/fixtures';
 import { User, UserRole, UserStatus } from '../../../src/services/user-management/entities/user.entity';
 import { Product, ProductStatus } from '../../../src/services/product-catalog/entities/product.entity';
@@ -178,5 +178,78 @@ describe('Analytics dashboard metrics (AnalyticsService + repositories, real Pos
 
     expect(cents(report.data.totalRevenue as number)).toBe(paidRevenueCents());
     expect(report.data.orderCount).toBe(ORDER_COUNT);
+  });
+
+  it('sums revenue for a date range as a number', async () => {
+    const from = new Date('2025-02-01T00:00:00.000Z');
+    const to = new Date('2025-02-28T23:59:59.999Z');
+    const expected = orderRows
+      .filter((o) => o.createdAt! >= from && o.createdAt! <= to)
+      .reduce((sum, o) => sum + cents(o.total!), 0);
+    expect(expected).toBeGreaterThan(0);
+
+    const revenue = await service.getRevenueByDateRange(from, to);
+    expect(typeof revenue).toBe('number');
+    expect(cents(revenue)).toBe(expected);
+
+    const report = await service.exportReport('revenue', { startDate: from, endDate: to });
+    expect(cents(report.data.periodRevenue as number)).toBe(expected);
+  });
+});
+
+/**
+ * getSalesMetricsByPeriod always looks back from "now", so these orders are
+ * placed relative to the real clock, a few hours past midnight UTC so each one
+ * lands unambiguously on its calendar day.
+ */
+describe('Analytics sales metrics by period (AnalyticsService + repositories, real Postgres)', () => {
+  let ds: DataSource;
+  let service: AnalyticsService;
+
+  beforeAll(async () => {
+    ds = await createTestDatabase();
+    service = new AnalyticsService(
+      new OrderRepository(ds.getRepository(Order)),
+      new ProductRepository(ds.getRepository(Product)),
+      new UserRepository(ds.getRepository(User))
+    );
+  });
+
+  afterAll(async () => {
+    await dropTestDatabase(ds);
+  });
+
+  beforeEach(async () => {
+    await truncateAll(ds);
+  });
+
+  it('groups recent revenue by day with numeric totals', async () => {
+    const today = new Date();
+    today.setUTCHours(6, 0, 0, 0);
+    const rows = Array.from({ length: 24 }, (_, i) =>
+      orderRow(`ORD-DAY-${i}`, `buyer-${i % 3}`, [{ productId: 'p', quantity: 1 + (i % 3), unitPrice: 19.99 }], {
+        createdAt: new Date(today.getTime() - (2 + (i % 8)) * 24 * 60 * 60 * 1000 + i * 60 * 1000),
+      })
+    );
+    await bulkInsert(ds, Order, rows);
+
+    const expected = new Map<string, { cents: number; count: number }>();
+    for (const row of rows) {
+      const key = row.createdAt!.toISOString().split('T')[0];
+      const entry = expected.get(key) ?? { cents: 0, count: 0 };
+      expected.set(key, { cents: entry.cents + cents(row.total!), count: entry.count + 1 });
+    }
+
+    const metrics = await service.getSalesMetricsByPeriod('day');
+
+    expect(metrics).toHaveLength(expected.size);
+    for (const metric of metrics) {
+      expect(typeof metric.revenue).toBe('number');
+      expect({ period: metric.period, cents: cents(metric.revenue), count: metric.orderCount }).toEqual({
+        period: metric.period,
+        ...expected.get(metric.period),
+      });
+      expect(metric.averageOrderValue).toBeCloseTo(metric.revenue / metric.orderCount, 10);
+    }
   });
 });

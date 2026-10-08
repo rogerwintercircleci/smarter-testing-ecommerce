@@ -139,6 +139,25 @@ describe('Wishlists (WishlistService + repositories, real Postgres)', () => {
     ]);
   });
 
+  it('keeps cents in the price recorded when an item was saved', async () => {
+    // catalog[20] costs 25 (5 + 20).
+    const item = await wishlist.create({ userId: 'u1', productId: catalog[20].id, priceWhenAdded: 30.49 });
+
+    expect((await wishlist.findById(item.id)).priceWhenAdded).toBe(30.49);
+    const [alert] = await service.getPriceDropAlerts('u1');
+    expect(alert.priceDrop).toBeCloseTo(5.49, 10);
+  });
+
+  it('totals the current price of everything saved', async () => {
+    // Fixture prices are 5 + index: 6 + 8 + 17 = 31.
+    for (const product of [catalog[1], catalog[3], catalog[12]]) {
+      await service.addToWishlist({ userId: 'u1', productId: product.id });
+    }
+
+    await expect(service.getWishlistTotalValue('u1')).resolves.toBe(31);
+    await expect(service.getWishlistTotalValue('nobody')).resolves.toBe(0);
+  });
+
   it('issues unique share links', async () => {
     const first = await service.shareWishlist('u1');
     const second = await service.shareWishlist('u1');

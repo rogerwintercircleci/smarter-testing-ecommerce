@@ -103,7 +103,9 @@ describe('Login and account lockout (UserService + UserRepository, real Postgres
     await users.update(user.id, { lockedUntil: new Date('2020-01-01T00:00:00Z') });
 
     await service.login('expired-lock@example.com', PASSWORD);
-    expect((await users.findById(user.id)).loginAttempts).toBe(0);
+    const stored = await users.findById(user.id);
+    expect(stored.loginAttempts).toBe(0);
+    expect(stored.lockedUntil).toBeNull();
   });
 
   it('resets the failure counter after a successful login', async () => {

@@ -6,6 +6,7 @@ import {
   UpdateDateColumn,
   Index,
 } from 'typeorm';
+import { numericTransformer } from '@libs/database/numeric.transformer';
 
 export enum ProductStatus {
   DRAFT = 'draft',
@@ -30,10 +31,10 @@ export class Product {
   @Index()
   sku!: string;
 
-  @Column('decimal', { precision: 10, scale: 2 })
+  @Column('decimal', { precision: 10, scale: 2, transformer: numericTransformer })
   price!: number;
 
-  @Column('decimal', { precision: 10, scale: 2, nullable: true })
+  @Column('decimal', { precision: 10, scale: 2, nullable: true, transformer: numericTransformer })
   compareAtPrice?: number;
 
   @Column('int', { default: 0 })
@@ -55,7 +56,7 @@ export class Product {
   @Column('jsonb', { nullable: true })
   metadata?: Record<string, unknown>;
 
-  @Column({ default: 0 })
+  @Column('decimal', { precision: 3, scale: 2, default: 0, transformer: numericTransformer })
   @Index()
   rating!: number;
 

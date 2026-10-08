@@ -109,10 +109,28 @@ describe('Order creation (OrderService + OrderRepository, real Postgres)', () =>
       shippingAddress: address,
     });
 
-    expect(created.orderNumber).toMatch(/^ORD-\d{4}-\d{14,16}$/);
+    expect(created.orderNumber).toMatch(/^ORD-\d{4}-\d{13}-[0-9A-F]{8}$/);
     const found = await orders.findByOrderNumber(created.orderNumber);
     expect(found!.id).toBe(created.id);
     expect(await orders.findByOrderNumber('ORD-0000-0')).toBeNull();
+  });
+
+  it('assigns distinct order numbers to orders placed in the same millisecond', async () => {
+    jest.spyOn(Date, 'now').mockReturnValue(Date.parse('2024-06-01T12:00:00.000Z'));
+    jest.spyOn(Math, 'random').mockReturnValue(0.5);
+
+    const numbers = new Set<string>();
+    for (let i = 0; i < 25; i++) {
+      const created = await service.createOrder({
+        userId: 'buyer-1',
+        items: [{ productId: 'p-1', quantity: 1, unitPrice: 5 }],
+        shippingAddress: address,
+      });
+      numbers.add(created.orderNumber);
+    }
+
+    expect(numbers.size).toBe(25);
+    expect(await orders.count()).toBe(25);
   });
 
   it('enforces order-number uniqueness at the database level', async () => {

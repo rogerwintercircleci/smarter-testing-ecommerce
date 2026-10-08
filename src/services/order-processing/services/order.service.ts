@@ -7,6 +7,7 @@
 import { OrderRepository, OrderStats } from '../repositories/order.repository';
 import { Order, OrderStatus, PaymentStatus, OrderItem } from '../entities/order.entity';
 import { BadRequestError } from '@libs/errors';
+import { randomUUID } from 'crypto';
 
 export interface CreateOrderItemDto {
   productId: string;
@@ -254,7 +255,7 @@ export class OrderService {
   private generateOrderNumber(): string {
     const year = new Date().getFullYear();
     const timestamp = Date.now();
-    const random = Math.floor(Math.random() * 1000);
-    return `ORD-${year}-${timestamp}${random}`;
+    const suffix = randomUUID().replace(/-/g, '').slice(0, 8).toUpperCase();
+    return `ORD-${year}-${timestamp}-${suffix}`;
   }
 }

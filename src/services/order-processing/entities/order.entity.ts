@@ -6,6 +6,7 @@ import {
   UpdateDateColumn,
   Index,
 } from 'typeorm';
+import { numericTransformer } from '@libs/database/numeric.transformer';
 
 export enum OrderStatus {
   PENDING = 'pending',
@@ -48,13 +49,13 @@ export class OrderItem {
   @Column()
   productSku!: string;
 
-  @Column('decimal', { precision: 10, scale: 2 })
+  @Column('decimal', { precision: 10, scale: 2, transformer: numericTransformer })
   unitPrice!: number;
 
   @Column('int')
   quantity!: number;
 
-  @Column('decimal', { precision: 10, scale: 2 })
+  @Column('decimal', { precision: 10, scale: 2, transformer: numericTransformer })
   subtotal!: number;
 
   /**
@@ -100,19 +101,19 @@ export class Order {
   })
   paymentMethod?: PaymentMethod;
 
-  @Column('decimal', { precision: 10, scale: 2 })
+  @Column('decimal', { precision: 10, scale: 2, transformer: numericTransformer })
   subtotal!: number;
 
-  @Column('decimal', { precision: 10, scale: 2, default: 0 })
+  @Column('decimal', { precision: 10, scale: 2, default: 0, transformer: numericTransformer })
   taxAmount!: number;
 
-  @Column('decimal', { precision: 10, scale: 2, default: 0 })
+  @Column('decimal', { precision: 10, scale: 2, default: 0, transformer: numericTransformer })
   shippingCost!: number;
 
-  @Column('decimal', { precision: 10, scale: 2, default: 0 })
+  @Column('decimal', { precision: 10, scale: 2, default: 0, transformer: numericTransformer })
   discountAmount!: number;
 
-  @Column('decimal', { precision: 10, scale: 2 })
+  @Column('decimal', { precision: 10, scale: 2, transformer: numericTransformer })
   total!: number;
 
   @Column({ nullable: true })
