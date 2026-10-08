@@ -1,16 +1,39 @@
+# Smarter Testing suite definitions.
+# Reference: https://circleci.com/docs/reference/testsuite-configuration-reference/
 ---
 name: unit tests
 discover: npx jest --listTests
 run: JEST_JUNIT_OUTPUT_FILE="<< outputs.junit >>" npx jest --ci << test.atoms >>
+analysis: CIRCLECI_COVERAGE="<< outputs.circleci-coverage >>" npx jest --ci --runInBand << test.atoms >>
 outputs:
   junit: test-results/unit/results.xml
 options:
   store-test-results: true
+  impact-key: unit
+  test-impact-analysis: true
+  # Files that coverage can't attribute to individual tests.
+  # A change to any of them runs the whole suite.
+  full-test-run-paths:
+    - package-lock.json
+    - tsconfig.json
+    - jest.config.js
+    - jest.shared.js
+    - tests/setup.ts
 ---
 name: integration tests
 discover: npx jest -c jest.integration.config.js --listTests
 run: JEST_JUNIT_OUTPUT_FILE="<< outputs.junit >>" npx jest -c jest.integration.config.js --ci << test.atoms >>
+analysis: CIRCLECI_COVERAGE="<< outputs.circleci-coverage >>" npx jest -c jest.integration.config.js --ci --runInBand << test.atoms >>
 outputs:
   junit: test-results/integration/results.xml
 options:
   store-test-results: true
+  impact-key: integration
+  test-impact-analysis: true
+  full-test-run-paths:
+    - package-lock.json
+    - tsconfig.json
+    - jest.integration.config.js
+    - jest.shared.js
+    - tests/setup.ts
+    - tests/integration/support/**
