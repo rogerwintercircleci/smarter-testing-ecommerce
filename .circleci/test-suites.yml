@@ -30,6 +30,7 @@ options:
   store-test-results: true
   impact-key: integration
   test-impact-analysis: true
+  dynamic-test-splitting: true
   full-test-run-paths:
     - package-lock.json
     - tsconfig.json
