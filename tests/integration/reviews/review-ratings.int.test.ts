@@ -1,9 +1,9 @@
 import { DataSource } from 'typeorm';
 import { createTestDatabase, dropTestDatabase, truncateAll } from '../support/database';
-import { addMinutes, BASE_DATE, bulkInsert, productRow, seededRandom } from '../support/fixtures';
+import { addMinutes, BASE_DATE, bulkInsert, orderRow, productRow, seededRandom } from '../support/fixtures';
 import { Product } from '../../../src/services/product-catalog/entities/product.entity';
 import { Review } from '../../../src/services/product-catalog/entities/review.entity';
-import { Order } from '../../../src/services/order-processing/entities/order.entity';
+import { Order, PaymentStatus } from '../../../src/services/order-processing/entities/order.entity';
 import { ProductRepository } from '../../../src/services/product-catalog/repositories/product.repository';
 import { ReviewRepository } from '../../../src/services/product-catalog/repositories/review.repository';
 import { OrderRepository } from '../../../src/services/order-processing/repositories/order.repository';
@@ -11,9 +11,9 @@ import { ReviewService } from '../../../src/services/product-catalog/services/re
 import { BadRequestError, NotFoundError, UnauthorizedError } from '../../../src/libs/errors';
 
 /**
- * Reviews are seeded through the repository. ReviewService.createReview is only
- * exercised up to its validation steps: its verified-purchase lookup uses
- * MySQL-only JSON functions that fail on Postgres (reported separately).
+ * Reviews are mostly seeded through the repository; ReviewService.createReview
+ * is exercised end to end, including its verified-purchase lookup against the
+ * orders' JSONB line items.
  */
 describe('Review ratings and aggregation (ReviewService + repositories, real Postgres)', () => {
   let ds: DataSource;
@@ -166,14 +166,14 @@ describe('Review ratings and aggregation (ReviewService + repositories, real Pos
       UnauthorizedError
     );
 
-    // (4 + 4) / 2 = 4: a whole-number average (see report on fractional averages).
-    await service.updateReview(mine.id, 'author', { rating: 4, comment: 'Grew on me' });
+    // (5 + 4) / 2 = 4.5: the product rating must keep the fraction.
+    await service.updateReview(mine.id, 'author', { rating: 5, comment: 'Grew on me' });
 
     const stored = await reviews.findById(mine.id);
-    expect(stored.rating).toBe(4);
+    expect(stored.rating).toBe(5);
     expect(stored.comment).toBe('Grew on me');
     const refreshed = await products.findById(product.id);
-    expect(refreshed.rating).toBe(4);
+    expect(refreshed.rating).toBe(4.5);
     expect(refreshed.reviewCount).toBe(2);
   });
 
@@ -191,6 +191,31 @@ describe('Review ratings and aggregation (ReviewService + repositories, real Pos
     const refreshed = await products.findById(product.id);
     expect(refreshed.rating).toBe(4);
     expect(refreshed.reviewCount).toBe(2);
+  });
+
+  it('creates reviews, flags verified purchases from paid orders and stores a fractional average', async () => {
+    const product = await products.createProduct(productRow(1));
+    const other = await products.createProduct(productRow(2));
+    const line = (productId: string) => [{ productId, quantity: 1, unitPrice: 10 }];
+    await bulkInsert(ds, Order, [
+      orderRow('ORD-REV-1', 'buyer', [...line(other.id), ...line(product.id)], {
+        paymentStatus: PaymentStatus.PAID,
+      }),
+      orderRow('ORD-REV-2', 'unpaid-buyer', line(product.id)),
+      orderRow('ORD-REV-3', 'other-buyer', line(other.id), { paymentStatus: PaymentStatus.PAID }),
+    ]);
+
+    const verified = await service.createReview({ productId: product.id, userId: 'buyer', rating: 5 });
+    const unpaid = await service.createReview({ productId: product.id, userId: 'unpaid-buyer', rating: 4 });
+    const stranger = await service.createReview({ productId: product.id, userId: 'other-buyer', rating: 4 });
+
+    expect(verified.isVerifiedPurchase).toBe(true);
+    expect(unpaid.isVerifiedPurchase).toBe(false);
+    expect(stranger.isVerifiedPurchase).toBe(false);
+    const refreshed = await products.findById(product.id);
+    expect(refreshed.reviewCount).toBe(3);
+    // (5 + 4 + 4) / 3 = 4.333..., stored to two decimal places.
+    expect(refreshed.rating).toBeCloseTo(13 / 3, 2);
   });
 
   it('validates new reviews before any purchase lookup', async () => {

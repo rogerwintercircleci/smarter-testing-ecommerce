@@ -124,7 +124,7 @@ export class UserRepository extends BaseRepository<User> {
 
     const updated = this.repository.merge(user, {
       loginAttempts: 0,
-      lockedUntil: undefined,
+      lockedUntil: null,
     });
 
     return this.repository.save(updated);
@@ -158,7 +158,7 @@ export class UserRepository extends BaseRepository<User> {
     }
 
     const updated = this.repository.merge(user, {
-      emailVerificationToken: undefined,
+      emailVerificationToken: null,
       emailVerifiedAt: new Date(),
       status: UserStatus.ACTIVE,
     });
@@ -201,8 +201,8 @@ export class UserRepository extends BaseRepository<User> {
 
     const updated = this.repository.merge(user, {
       password: newPassword,
-      passwordResetToken: undefined,
-      passwordResetExpires: undefined,
+      passwordResetToken: null,
+      passwordResetExpires: null,
     });
 
     return this.repository.save(updated);

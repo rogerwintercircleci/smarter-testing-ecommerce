@@ -1,4 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { numericTransformer } from '@libs/database/numeric.transformer';
 
 @Entity('discounts')
 export class Discount {
@@ -11,7 +12,7 @@ export class Discount {
   @Column()
   type: string;
 
-  @Column('decimal')
+  @Column('decimal', { transformer: numericTransformer })
   value: number;
 
   @Column()
@@ -23,10 +24,10 @@ export class Discount {
   @Column({ nullable: true })
   startsAt: Date;
 
-  @Column({ nullable: true })
+  @Column('decimal', { precision: 10, scale: 2, nullable: true, transformer: numericTransformer })
   minPurchaseAmount: number;
 
-  @Column({ nullable: true })
+  @Column('decimal', { precision: 10, scale: 2, nullable: true, transformer: numericTransformer })
   maxDiscountAmount: number;
 
   @Column({ nullable: true })

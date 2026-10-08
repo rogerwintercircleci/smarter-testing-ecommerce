@@ -86,16 +86,15 @@ export class InventoryService {
 
   async confirmReservation(reservationId: string) {
     const reservation = await this.inventoryRepository.findReservation(reservationId);
-    const inventory = await this.inventoryRepository.findByProductId(reservation.productId);
 
-    const updated = await this.inventoryRepository.update(reservation.productId, {
-      quantity: inventory.quantity - reservation.quantity,
-      reserved: (inventory.reserved || 0) - reservation.quantity,
-    });
-
+    // Releasing the reservation already removes its quantity from `reserved`,
+    // so only the on-hand quantity is decremented here.
     await this.inventoryRepository.releaseReservation(reservationId);
 
-    return updated;
+    const inventory = await this.inventoryRepository.findByProductId(reservation.productId);
+    return this.inventoryRepository.update(reservation.productId, {
+      quantity: inventory.quantity - reservation.quantity,
+    });
   }
 
   async checkAvailability(productId: string, quantity: number) {

@@ -1,4 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { numericTransformer } from '@libs/database/numeric.transformer';
 
 export enum RefundStatus {
   PENDING = 'pending',
@@ -51,7 +52,7 @@ export class RefundRequest {
     quantity: number;
   }>;
 
-  @Column({ type: 'decimal', precision: 10, scale: 2 })
+  @Column({ type: 'decimal', precision: 10, scale: 2, transformer: numericTransformer })
   refundAmount: number;
 
   @Column({

@@ -79,6 +79,24 @@ describe('Order status lifecycle (OrderService + OrderRepository, real Postgres)
     expect(stored.paidAt).toBeNull();
   });
 
+  it('applies a discount and recalculates the stored total', async () => {
+    // 2 x 30 = 60 subtotal, 6 tax, 10 shipping: 76 before the discount.
+    const order = await pendingOrder();
+    expect(await service.getOrderTotal(order.id)).toBe(76);
+
+    await service.applyDiscount(order.id, 'SPRING', 12.5);
+
+    const stored = await orders.findById(order.id);
+    expect(stored.discountCode).toBe('SPRING');
+    expect(stored.discountAmount).toBe(12.5);
+    expect(stored.total).toBe(63.5);
+    expect(await service.getOrderTotal(order.id)).toBe(63.5);
+
+    const viaRepository = await orders.applyDiscount(order.id, 'SUMMER', 20);
+    expect(viaRepository.total).toBe(56);
+    expect((await orders.findById(order.id)).total).toBe(56);
+  });
+
   it.each([OrderStatus.PENDING, OrderStatus.CONFIRMED])('cancels a %s order', async (status) => {
     const order = await pendingOrder();
     await orders.updateStatus(order.id, status);

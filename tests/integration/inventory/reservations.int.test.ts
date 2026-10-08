@@ -100,6 +100,18 @@ describe('Stock reservations and expiry (InventoryService + InventoryRepository,
     expect(stock.available).toBe(7);
   });
 
+  it('confirms one reservation without releasing stock held for other orders', async () => {
+    await inventory.update('sku-1', { quantity: 10 });
+    const first = await service.reserveStock({ productId: 'sku-1', quantity: 3, orderId: 'order-1' });
+    await service.reserveStock({ productId: 'sku-1', quantity: 4, orderId: 'order-2' });
+
+    const updated = await service.confirmReservation(first.id);
+
+    expect(updated).toMatchObject({ quantity: 7, reserved: 4 });
+    expect(await service.getStock('sku-1')).toMatchObject({ quantity: 7, reserved: 4, available: 3 });
+    expect(await reservations.count()).toBe(1);
+  });
+
   it('identifies only reservations whose expiry has passed', async () => {
     await inventory.update('sku-1', { quantity: 100 });
     await inventory.createReservation({ productId: 'sku-1', orderId: 'old', quantity: 2, expiresAt: LONG_AGO });

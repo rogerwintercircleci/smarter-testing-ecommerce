@@ -208,7 +208,7 @@ export class OrderRepository extends BaseRepository<Order> {
       .createQueryBuilder('order')
       .where('order.userId = :userId', { userId })
       .andWhere('order.paymentStatus = :status', { status: PaymentStatus.PAID })
-      .andWhere('JSON_CONTAINS(order.items, JSON_OBJECT("productId", :productId))', { productId })
+      .andWhere('order.items @> :item::jsonb', { item: JSON.stringify([{ productId }]) })
       .getOne();
 
     return !!order;

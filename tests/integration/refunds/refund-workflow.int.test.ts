@@ -189,6 +189,36 @@ describe('Refunds and returns (RefundService + repositories, real Postgres)', ()
     expect((await inventory.findByProductId('sku-tent')).quantity).toBe(9);
   });
 
+  it('totals completed refunds in the refund statistics', async () => {
+    const lines = [
+      [{ productId: 'sku-tent', quantity: 2 }],
+      [{ productId: 'sku-stove', quantity: 1 }],
+      [{ productId: 'sku-stove', quantity: 1 }],
+    ];
+    const ids: string[] = [];
+    for (const [i, items] of lines.entries()) {
+      const order = await deliveredOrder(`ORD-R-STATS-${i}`);
+      const refund = await service.createRefundRequest({
+        orderId: order.id,
+        reason: ReturnReason.CHANGED_MIND,
+        items,
+      });
+      ids.push(refund.id);
+    }
+    // Complete the first two (399.98 + 49.50); leave the third pending.
+    for (const id of ids.slice(0, 2)) {
+      await service.approveRefund(id);
+      await service.processRefund(id);
+    }
+
+    const stats = await service.getRefundStatistics();
+
+    expect(cents(stats.totalRefunded)).toBe(39998 + 4950);
+    expect(stats).toMatchObject({ completed: 2, pending: 1, approved: 0, rejected: 0 });
+    const future = await service.getRefundStatistics({ startDate: new Date(Date.now() + DAY) });
+    expect(future.totalRefunded).toBe(0);
+  });
+
   it('creates an inventory record when restocking a product that had none', async () => {
     const order = await deliveredOrder('ORD-R-NEWINV');
     const refund = await service.createRefundRequest({
