@@ -1,0 +1,16 @@
+---
+name: unit tests
+discover: npx jest --listTests
+run: JEST_JUNIT_OUTPUT_FILE="<< outputs.junit >>" npx jest --ci << test.atoms >>
+outputs:
+  junit: test-results/unit/results.xml
+options:
+  store-test-results: true
+---
+name: integration tests
+discover: npx jest -c jest.integration.config.js --listTests
+run: JEST_JUNIT_OUTPUT_FILE="<< outputs.junit >>" npx jest -c jest.integration.config.js --ci << test.atoms >>
+outputs:
+  junit: test-results/integration/results.xml
+options:
+  store-test-results: true
