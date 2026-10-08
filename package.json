@@ -24,6 +24,7 @@
     "demo:new-test": "scripts/demo.sh new-test",
     "demo:config": "scripts/demo.sh config",
     "demo:coverage-gap": "scripts/demo.sh coverage-gap",
+    "demo:flaky": "scripts/demo.sh flaky",
     "demo:reset": "scripts/demo.sh reset"
   },
   "keywords": [

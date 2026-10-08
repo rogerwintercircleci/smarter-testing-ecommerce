@@ -11,6 +11,8 @@ options:
   store-test-results: true
   impact-key: unit
   test-impact-analysis: true
+  # Retry failed test files up to twice in the same job.
+  max-auto-rerun: 2
   # Files that coverage can't attribute to individual tests.
   # A change to any of them runs the whole suite.
   full-test-run-paths:

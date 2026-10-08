@@ -5,7 +5,7 @@
 #   scripts/demo.sh <scenario>   make a change on a demo/<scenario> branch and preview selection
 #   scripts/demo.sh reset        delete demo branches and return to main
 #
-# Scenarios: leaf, shared, new-test, config, coverage-gap
+# Scenarios: leaf, shared, new-test, config, coverage-gap, flaky
 #
 # Everything here uses --local: impact data stays in .circleci/ on your machine
 # and nothing is sent to CircleCI.
@@ -22,7 +22,7 @@ preview() {
   log="$(circleci testsuite run "$SUITE" --local --run-tests=impacted --analyze-tests=none 2>&1 \
     | sed 's/\x1b\[[0-9;]*[A-Za-z]//g')" || true
   # Selection report from Smarter Testing
-  grep -E '^(Selecting|Found test|Using|- [0-9]|Selected|Running [0-9])' <<<"$log"
+  grep -E '^(Selecting|Found test|Using|- [0-9]|Selected|Running [0-9]|Rerunning|Reran)' <<<"$log"
   # Which files Jest ran, and the result
   { grep -oE '(PASS|FAIL) +[^ ]+\.ts' <<<"$log" || true; } | sort -u | sed 's/^/  /'
   { grep -oE 'Tests: +[0-9a-z, ]+total' <<<"$log" || true; } | tail -1 | sed 's/^/  /'
@@ -107,6 +107,34 @@ TS
     echo
     echo "▶ npm run typecheck   (the CI job that catches what coverage can't see)"
     npm run --silent typecheck || true
+    ;;
+  flaky)
+    start_branch flaky
+    # A simulated flaky test: it fails on its first attempt in each run and
+    # passes when retried, like a test with a timing or ordering problem.
+    cat > tests/workflows/simulated-flake.workflow.test.ts <<'TS'
+/**
+ * Simulated flaky test for the auto rerun demo (npm run demo:flaky).
+ * It fails on its first attempt in each run and passes when retried.
+ */
+import { execSync } from 'child_process';
+import { existsSync, writeFileSync } from 'fs';
+import { tmpdir } from 'os';
+import { join } from 'path';
+
+const revision = process.env.CIRCLE_SHA1 ?? execSync('git rev-parse HEAD').toString().trim();
+const marker = join(tmpdir(), `smarter-testing-flake-${revision}`);
+
+describe('simulated flaky test', () => {
+  it('passes when retried', () => {
+    const firstAttempt = !existsSync(marker);
+    writeFileSync(marker, '');
+    expect(firstAttempt).toBe(false);
+  });
+});
+TS
+    commit flaky
+    preview
     ;;
   reset)
     git switch --quiet main

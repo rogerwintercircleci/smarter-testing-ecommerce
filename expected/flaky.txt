@@ -1,0 +1,24 @@
+Committed on branch demo/flaky. To see the same selection in CircleCI:
+  git push -u origin demo/flaky
+
+▶ circleci testsuite run "unit tests" --local --run-tests=impacted --analyze-tests=none
+
+Selecting tests...
+Found test impact version: 1
+Using 'impact-key' 'unit'
+- 1 new test atoms
+- 0 test atoms impacted by new files
+- 0 test atoms impacted by modified files
+- 0 test atoms impacted by removed files
+- 0 test atoms failed previously
+- 0 test atoms with no source file mappings in impact data
+- 0 test atoms impacted by include rule
+- 0 test atoms impacted by full test run paths
+Selected 1 test atoms, Skipped 25 test atoms in Nms
+Running 1 test atoms
+Rerunning failed tests...
+Running 1 test atoms
+Reran 1 test atoms in 1 attempts in N.NNNs
+  FAIL  tests/workflows/simulated-flake.workflow.test.ts
+  PASS  tests/workflows/simulated-flake.workflow.test.ts
+  Tests:       1 passed, 1 total
