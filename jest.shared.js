@@ -3,7 +3,9 @@
  */
 module.exports = {
   preset: 'ts-jest',
-  testEnvironment: 'node',
+  // Records which source files each test file executes, for
+  // CircleCI test impact analysis. Behaves like the 'node' environment.
+  testEnvironment: '@circleci/jest-circleci-coverage/environment-node',
   moduleFileExtensions: ['ts', 'js', 'json'],
   moduleNameMapper: {
     '^@libs/(.*)$': '<rootDir>/src/libs/$1',
@@ -13,8 +15,9 @@ module.exports = {
   setupFilesAfterEnv: ['<rootDir>/tests/setup.ts'],
   reporters: [
     'default',
-    // JUnit results for the CircleCI Tests tab. The file attribute records which test file each result came from.
+    // Smarter Testing reads JUnit results; the file attribute maps each result to its test file.
     ['jest-junit', { addFileAttribute: 'true', suiteNameTemplate: '{filepath}' }],
+    '@circleci/jest-circleci-coverage/reporter',
   ],
   cacheDirectory: '.jest-cache',
   clearMocks: true,

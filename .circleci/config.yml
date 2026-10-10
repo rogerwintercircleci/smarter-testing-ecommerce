@@ -44,26 +44,17 @@ jobs:
     executor: node
     steps:
       - install
-      - run:
-          command: npx jest --ci
-          environment:
-            JEST_JUNIT_OUTPUT_DIR: test-results/unit
-      - store_test_results:
-          path: test-results
+      - run: circleci testsuite run "unit tests"
 
   integration-tests:
     executor: node-with-postgres
+    parallelism: 3
     steps:
       - install
       - run:
           name: Wait for Postgres
           command: dockerize -wait tcp://localhost:5432 -timeout 1m
-      - run:
-          command: npx jest -c jest.integration.config.js --ci
-          environment:
-            JEST_JUNIT_OUTPUT_DIR: test-results/integration
-      - store_test_results:
-          path: test-results
+      - run: circleci testsuite run "integration tests"
 
 workflows:
   test:
